@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css?ver=1.1">
+    <link rel="shortcut icon" href="/static/ico/favicon.ico" type="image/x-icon">
+    <title>Index</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+
+<body>
+    <header class="home" id="after-loading">
+        <nav>
+            <div class="nav">
+                <a class="title" href="/">Groupie tracker</a>
+                <div class="align-right">
+                    <ul class="menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/artists" aria-current="page">Artists</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/events">Events</a>
+                        </li>
+                    </ul>
+                </div>
+                <a id="onpen-menu">
+                    <span class="burger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </a>
+            </div>
+            <div class="mobile-nav" id="onclick-mobile-btn">
+                <a id="closebtn">X</a>
+                <ul class="menu-mobile">
+                    <li class="nav-item-mobile">
+                        <a class="nav-link-mobile" href="/artists" aria-current="page">Artists</a>
+                    </li>
+                    <li class="nav-item-mobile">
+                        <a class="nav-link-mobile" href="/events">Events</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="containner">
+            <br>
+            <h1 class="nav-title">
+                Discover, Explore, and Experience <br>
+                Music with <br>
+                Groupie Tracker! <br>
+            </h1>
+            <div class="searchbar">
+                <form action="/search" method="get">
+                    <i class="fa fa-user icon"></i>
+                    <input class="search-input" type="search" placeholder="Explore" name="search" id="search">
+                    <ul class="sugestion" id="ul-item">
+                    </ul>
+                    <button type="submit">
+                        <svg class="icons" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                            viewBox="0 0 1024 1024">
+                            <path fill="currentColor"
+                                d="M1014.64 969.04L703.71 656.207c57.952-69.408 92.88-158.704 92.88-256.208c0-220.912-179.088-400-400-400s-400 179.088-400 400s179.088 400 400 400c100.368 0 192.048-37.056 262.288-98.144l310.496 312.448c12.496 12.497 32.769 12.497 45.265 0c12.48-12.496 12.48-32.752 0-45.263zM396.59 736.527c-185.856 0-336.528-150.672-336.528-336.528S210.734 63.471 396.59 63.471c185.856 0 336.528 150.672 336.528 336.528S582.446 736.527 396.59 736.527z" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+    <section id="loader">
+        <div class="main-loader">
+            <div class="loading">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+    </section>
+    <main id="after-loading1">
+        <div class="main-content">
+            <span class="main-header">
+                <h1 class="title-h">Explore</h1>
+                <h3>Upcoming concert</h3>
+            </span>
+            <div class="concert-image">
+                <div class="artist">
+                    <h2 class="artist-title">
+                        {{ (index .Artists 0).Name}}
+                    </h2>
+                    <span class="artist-name fomat-location">{{ index .Location.Locations 0}} </span>
+                </div>
+                <div class="artist-date">
+                    {{ slice (index .Date.Dates 0) 1 10}}
+                </div>
+            </div>
+            <div class="event-list">
+                <span class="main-header">
+                    <h3>Next Month</h3>
+                </span>
+                <div class="event-card">
+                    {{ range .Events }}
+                    <a href="/event/{{.Id}}">
+                        <div class="one-event-card">
+                            <h2 class="event-card-title">
+                                {{ if gt (len .Artistname) 11}}
+                                {{slice .Artistname 0 8}}...
+                                {{else}}
+                                {{ .Artistname }}
+                                {{end}}
+                            </h2>
+                            <span class="location-date1">
+                                {{ $do := true }}
+                                {{ range $key, $value := .DatesLocations }}
+                                {{ if $do}}
+                                {{ if gt (len $key) 14}}
+                                <svg width="17" height="17" viewBox="0 0 17 17" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M8.49967 1.8334C12.1797 1.8334 15.1663 4.82007 15.1663 8.50007C15.1663 12.1867 12.1797 15.1667 8.49967 15.1667C4.81301 15.1667 1.83301 12.1867 1.83301 8.50007C1.83301 4.82007 4.81301 1.8334 8.49967 1.8334ZM11.0663 6.30673C11.1397 6.0734 10.9263 5.8534 10.693 5.92673L7.27967 6.9934C7.13967 7.04007 7.02634 7.14673 6.98634 7.28673L5.91967 10.7067C5.84634 10.9334 6.06634 11.1534 6.29301 11.0801L9.69301 10.0134C9.83301 9.9734 9.94634 9.86007 9.98634 9.72007L11.0663 6.30673Z"
+                                        fill="white" />
+                                </svg>
+                                <span class="fomat-location">
+                                    {{slice $key 0 11}}...
+                                </span>
+                                {{else}}
+                                <svg width="17" height="17" viewBox="0 0 17 17" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M8.49967 1.8334C12.1797 1.8334 15.1663 4.82007 15.1663 8.50007C15.1663 12.1867 12.1797 15.1667 8.49967 15.1667C4.81301 15.1667 1.83301 12.1867 1.83301 8.50007C1.83301 4.82007 4.81301 1.8334 8.49967 1.8334ZM11.0663 6.30673C11.1397 6.0734 10.9263 5.8534 10.693 5.92673L7.27967 6.9934C7.13967 7.04007 7.02634 7.14673 6.98634 7.28673L5.91967 10.7067C5.84634 10.9334 6.06634 11.1534 6.29301 11.0801L9.69301 10.0134C9.83301 9.9734 9.94634 9.86007 9.98634 9.72007L11.0663 6.30673Z"
+                                        fill="white" />
+                                </svg>
+                                <span class="fomat-location">
+                                    {{ $key}}
+                                </span>
+                                {{end}}
+                                <p><svg width="18" height="18" viewBox="0 0 17 17" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M10.9331 1.92792C11.2161 1.92725 11.4399 2.14714 11.4406 2.44033L11.4413 2.94008C13.2777 3.08401 14.4908 4.33538 14.4928 6.25442L14.5 11.8716C14.5026 13.9639 13.1882 15.2512 11.0812 15.2546L5.93459 15.2613C3.8408 15.2639 2.50988 13.9459 2.50725 11.8476L2.5 6.2964C2.49738 4.3647 3.66769 3.11666 5.50412 2.94808L5.50346 2.44833C5.5028 2.15514 5.72001 1.93458 6.00963 1.93458C6.29925 1.93392 6.51646 2.15381 6.51712 2.44699L6.51778 2.91343L10.4276 2.9081L10.4269 2.44166C10.4263 2.14848 10.6435 1.92859 10.9331 1.92792ZM11.2017 11.3892H11.1951C10.8923 11.3965 10.6494 11.6504 10.656 11.9569C10.6567 12.2634 10.9009 12.516 11.2036 12.5226C11.5123 12.5219 11.7625 12.2681 11.7618 11.9549C11.7618 11.6417 11.511 11.3892 11.2017 11.3892ZM5.77794 11.3898C5.47516 11.4032 5.2382 11.657 5.23886 11.9636C5.25268 12.2701 5.5028 12.51 5.80558 12.496C6.10244 12.4826 6.33874 12.2288 6.32492 11.9222C6.31834 11.6224 6.07414 11.3892 5.77794 11.3898ZM8.4898 11.3865C8.18702 11.4005 7.95072 11.6537 7.95072 11.9602C7.96454 12.2667 8.21466 12.506 8.51744 12.4926C8.81364 12.4786 9.0506 12.2254 9.03678 11.9183C9.0302 11.6191 8.786 11.3859 8.4898 11.3865ZM5.77465 8.99105C5.47187 9.00438 5.23557 9.25825 5.23622 9.56476C5.24939 9.87128 5.50017 10.1112 5.80295 10.0972C6.09915 10.0838 6.33545 9.82996 6.32163 9.52345C6.31504 9.2236 6.0715 8.99038 5.77465 8.99105ZM8.48717 8.96773C8.18439 8.98105 7.94743 9.23493 7.94808 9.54144C7.96125 9.84795 8.21203 10.0872 8.51481 10.0738C8.81101 10.0598 9.04731 9.80664 9.03414 9.50013C9.0269 9.20028 8.78336 8.96706 8.48717 8.96773ZM11.199 8.97106C10.8962 8.97772 10.6593 9.22427 10.6599 9.53078V9.53811C10.6665 9.84462 10.9167 10.0772 11.2201 10.0705C11.5163 10.0632 11.7526 9.80931 11.746 9.50279C11.7322 9.20961 11.4946 8.97039 11.199 8.97106ZM10.4289 3.93425L6.51909 3.93958L6.51975 4.47864C6.51975 4.76583 6.3032 4.99239 6.01358 4.99239C5.72396 4.99305 5.50609 4.76717 5.50609 4.47998L5.50544 3.9669C4.22191 4.0955 3.51169 4.84979 3.51366 6.29507L3.51432 6.5023L13.4798 6.48897V6.25575C13.4514 4.82314 12.7327 4.07151 11.4426 3.95957L11.4432 4.47265C11.4432 4.75917 11.2201 4.98639 10.9371 4.98639C10.6474 4.98706 10.4296 4.7605 10.4296 4.47398L10.4289 3.93425Z"
+                                            fill="white"></path>
+                                    </svg>{{index $value 0}}</p>
+                                {{$do = false}}
+                                {{ end }}
+                                {{end}}
+                            </span>
+                        </div>
+                    </a>
+                    {{end}}
+                </div>
+            </div>
+            <div class="see-all">
+                <a href="/events">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
+                        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2">
+                            <circle cx="17" cy="15" r="1" />
+                            <circle cx="16" cy="16" r="6" />
+                            <path d="M2 16S7 6 16 6s14 10 14 10s-5 10-14 10S2 16 2 16Z" />
+                        </g>
+                    </svg> See all concerts
+                </a>
+            </div>
+            <div class="artist-list">
+                <span class="main-header">
+                    <h3>Artist</h3>
+                </span>
+                <div class="artist-card">
+                    {{ range .Artists }}
+                    <a href="/artist/{{.Id}}">
+                        <div class="one-artist-card">
+                            <img src="{{.Image}}">
+                            <h2 class="artist-card-title">
+                                {{ if gt (len .Name) 14}}
+                                {{slice .Name 0 11}}...
+                                {{else}}
+                                {{ .Name}}
+                                {{end}}
+                            </h2>
+                            <span class="groups">
+                                {{ if gt (len .Members) 1 }}
+                                <p>Group</p>
+                                {{ else }}
+                                <p>Solo</p>
+                                {{end}}
+                            </span>
+                        </div>
+                    </a>
+                    {{ end }}
+                </div>
+            </div>
+            <div class="see-all">
+                <a href="/artists">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
+                        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2">
+                            <circle cx="17" cy="15" r="1" />
+                            <circle cx="16" cy="16" r="6" />
+                            <path d="M2 16S7 6 16 6s14 10 14 10s-5 10-14 10S2 16 2 16Z" />
+                        </g>
+                    </svg> See all Artists
+                </a>
+            </div>
+
+            <div id="map" style="height: 400px; width: 400px;"></div>
+            <script>
+                // Coordonnées pour le centre de la carte
+                var myLatLng = L.latLng(14.735596, -17.453809);
+                /*
+                var markersData = [
+                    { lat: 48.858844, lng: 2.294351, title: 'Marqueur 1' },
+                    { lat: 51.507222, lng: -0.1275, title: 'Marqueur 2' },
+                    { lat: 40.712776, lng: -74.005974, title: 'Marqueur 3' }
+                    // Ajoutez d'autres coordonnées de marqueurs ici
+                ];
+                */
+                // Options de la carte
+                var mapOptions = {
+                    center: myLatLng,
+                    zoom: 5
+                };
+                // Créer la carte
+                var map = L.map('map', mapOptions);
+
+                // Ajouter une couche de tuiles (OpenStreetMap)
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+                // Marqueur
+                var marker = L.marker(myLatLng).addTo(map)
+                    .bindPopup("Bonjour, je suis ici!")
+                    .openPopup();
+                // Ajouter les marqueurs sur la carte
+                /*
+                    for (var i = 0; i < markersData.length; i++) {
+                        var marker = L.marker([markersData[i].lat, markersData[i].lng]).addTo(map);
+                        marker.bindPopup(markersData[i].title); // Afficher le titre du marqueur au survol
+                    }
+                    */
+
+            </script>
+            <div class="footer">
+                <p class="footer-title">Groupie tracker</p>
+                <p class="footer-title2">
+                    Made with love❤️
+                </p>
+                <p class="footer-title3">
+                    Copyright 2023
+                </p>
+            </div>
+        </div>
+    </main>
+    <script src="/static/js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+{{ define "layout"}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css?ver=1.1">
+    <link rel="shortcut icon" href="/static/ico/favicon.ico" type="image/x-icon">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.0/slimselect.min.css"></link>
+    
+    <title>{{.Title}}</title>
+</head>
+<body>
+    <header class="artist" id="after-loading">
+        <nav>
+            <div class="nav">
+                <a class="title" href="/">Groupie tracker</a>  
+                <div class="align-right">
+                    <ul class="menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/artists" aria-current="page">Artists</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/events">Events</a>
+                        </li>
+                    </ul>
+                </div>
+                <a id="onpen-menu">
+                    <span class="burger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                  </a>
+              </div>
+              <div class="mobile-nav" id="onclick-mobile-btn">
+                  <a  id="closebtn">X</a>
+                  <ul class="menu-mobile">
+                      <li class="nav-item-mobile">
+                          <a class="nav-link-mobile" href="/artists" aria-current="page">Artists</a>
+                      </li>
+                      <li class="nav-item-mobile">
+                          <a class="nav-link-mobile" href="/events">Events</a>
+                      </li>
+                  </ul>
+              </div>
+        </nav>
+        <div class="title-page">
+            {{.Title}}
+        </div>
+    </header>
+    <section id="loader">
+        <div class="main-loader">
+            <div class="loading">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+    </section>
+    {{template "content" .}}
+<script type="text/javascript" src="https://redbangle.com/wp-content/themes/master-theme-child/dropdownjscss/slimselect.min.js" ></script>
+<script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+
+<script src="static/js/script.js"></script>
+<script src="static/js/filter.js"></script>
+<script src="static/js/map.js"></script>
+
+</body>
+</html>
+{{end}}
