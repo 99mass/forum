@@ -1,0 +1,30 @@
+{{ template "header" . }}
+
+{{ define "content"}}
+<div style="display: flex; justify-content: center;">
+    <div class="content">
+
+    <div class="element1">
+        <img src={{.Image}} alt="" style="border-radius: 25%; width: 250px;">
+
+        <p><h1>{{ .Name }}</h1> </p>
+        <p style="margin: 0px;"> <h1>{{ .CreationDate}} </h1></p>
+    </div>
+    <div class="element2">
+        <h1>Membres </h1>
+        {{range .Members}}
+        <h4>{{.}}</h4>
+        {{end}}
+    </div>
+    <div class="element3">
+        <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTKADsn0_-T_jqEBX8AxssaGerjLq61J4N6zIOosPwzrQdfC6P6" alt="" style="width: 250px;">
+        <h1>First Album </h1>
+        <h1>{{.FirstAlbum}} </h1>
+    </div>
+
+</div>
+</div>
+
+</main>
+{{ end }}
+
