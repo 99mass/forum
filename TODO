@@ -1,0 +1,15 @@
+Objects:
+- User
+- Post
+- Comment
+- Caterogy
+
+
+Pages:
+- Login
+- Register
+- Home
+- Post
+- UserPage
+- Profil
+
