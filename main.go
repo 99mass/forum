@@ -14,7 +14,10 @@ import (
 var PORT = ":8080"
 
 func main() {
-	helper.createDatabase()
+	bd, er := helper.CreateDatabase()
+	fmt.Println(er)
+	err := helper.CreateTables(bd)
+	fmt.Println(err)
 	args := os.Args[1:]
 	if len(args) > 0 {
 		tab := strings.Split(args[0], "=")

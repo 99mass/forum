@@ -7,17 +7,17 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func createDatabase() (*sql.DB, error) {
-	db, err := sql.Open("sqlite3", "../database/forum.db")
+func CreateDatabase() (*sql.DB, error) {
+	db, err := sql.Open("sqlite3", "./database/forum.db")
 	if err != nil {
 		return nil, err
 	}
-	defer db.Close()
+	//defer db.Close()
 	return db, nil
 }
 
-func createTables(db *sql.DB) error {
-	schema, err := ioutil.ReadFile("../database/structure.sql")
+func CreateTables(db *sql.DB) error {
+	schema, err := ioutil.ReadFile("./database/structure.sql")
 	if err != nil {
 		return err
 	}
@@ -26,6 +26,6 @@ func createTables(db *sql.DB) error {
 	if err != nil {
 		return err
 	}
-
+	
 	return nil
 }
