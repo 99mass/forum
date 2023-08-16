@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	// "forum/handler"
+	"forum/controller"
 	"forum/helper"
+	"forum/models"
 	"forum/routes"
 	"net/http"
 	"os"
@@ -14,10 +16,20 @@ import (
 var PORT = ":8080"
 
 func main() {
-	bd, er := helper.CreateDatabase()
-	fmt.Println(er)
-	err := helper.CreateTables(bd)
-	fmt.Println(err)
+	db, _ := helper.CreateDatabase()
+
+	err := helper.CreateTables(db)
+	if err != nil {
+		fmt.Println(err)
+	}
+	user := new(models.User)
+	user.Username = "mouhamed"
+	user.Email = "mouha@gmail.com"
+	user.Password = "password"
+	id, _ := controller.CreateUser(db, *user)
+	fmt.Println(id)
+	fmt.Println(user.ID)
+
 	args := os.Args[1:]
 	if len(args) > 0 {
 		tab := strings.Split(args[0], "=")
