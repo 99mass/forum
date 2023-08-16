@@ -29,3 +29,10 @@ func CreateTables(db *sql.DB) error {
 
 	return nil
 }
+
+func Comment(content string, id int) {
+
+}
+
+
+
