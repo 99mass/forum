@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- Create the categories table
 CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL
+    name_category TEXT NOT NULL
 );
 
 -- Create the posts table

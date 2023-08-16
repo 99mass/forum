@@ -14,10 +14,11 @@ import (
 var PORT = ":8080"
 
 func main() {
+	helper.createDatabase()
 	args := os.Args[1:]
 	if len(args) > 0 {
 		tab := strings.Split(args[0], "=")
-		if len(tab) ==2 && helper.IsInt(tab[1]) && tab[1] != "" && tab[0]=="--port" {
+		if len(tab) == 2 && helper.IsInt(tab[1]) && tab[1] != "" && tab[0] == "--port" {
 			t, _ := strconv.Atoi(tab[1])
 			if t >= 1024 && t <= 65535 {
 				PORT = ":" + tab[1]
