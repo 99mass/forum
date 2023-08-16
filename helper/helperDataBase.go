@@ -1,9 +1,13 @@
 package helper
 
-import "database/sql"
+import (
+	"database/sql"
+
+	_ "github.com/mattn/go-sqlite3"
+)
 
 func createDatabase() (*sql.DB, error) {
-	db, err:= sql.Open("sqlite3", "../static/rsc/forum.db")
+	db, err := sql.Open("sqlite3", "../static/rsc/forum.db")
 	if err != nil {
 		return nil, err
 	}
@@ -11,7 +15,7 @@ func createDatabase() (*sql.DB, error) {
 }
 
 func createTable(db *sql.DB) error {
-	_,err := db.Exec(`
+	_, err := db.Exec(`
 		CREATE TABLE IF NOT EXISTS users (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			name TEXT,
@@ -20,4 +24,3 @@ func createTable(db *sql.DB) error {
 	`)
 	return err
 }
-
