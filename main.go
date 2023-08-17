@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	"os"
+	"strconv"
+	"strings"
+
 	// "forum/handler"
 	"forum/controller"
 	"forum/helper"
 	"forum/models"
 	"forum/routes"
-	"net/http"
-	"os"
-	"strconv"
-	"strings"
 )
 
 var PORT = ":8080"

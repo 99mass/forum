@@ -5,8 +5,9 @@ import (
 	"errors"
 	"time"
 
-	"forum/helper"
 	"forum/models"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func CreateUser(db *sql.DB, user models.User) (int64, error) {
@@ -20,7 +21,12 @@ func CreateUser(db *sql.DB, user models.User) (int64, error) {
 		return 0, errors.New("l'utilisateur avec cet email existe deja")
 	}
 
-	hashedPassword := helper.HashPassword(user.Password)
+	//hashedPassword := helper.HashPassword(user.Password)
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return 0, err
+	}
 
 	query := `
         INSERT INTO users (username, email, password, created_at)
