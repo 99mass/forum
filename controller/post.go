@@ -2,17 +2,19 @@ package controller
 
 import (
 	"database/sql"
+	"errors"
+	"time"
+
 	"forum/models"
 )
 
-// CreatePost inserts a new post into the database.
 func CreatePost(db *sql.DB, post models.Post) (int64, error) {
 	query := `
-        INSERT INTO posts (user_id, title, content, category_id)
-        VALUES (?, ?, ?, ?);
+        INSERT INTO posts (user_id, title, content, category_id, created_at)
+        VALUES (?, ?, ?, ?, ?);
     `
 
-	result, err := db.Exec(query, post.UserID, post.Title, post.Content, post.CategoryID)
+	result, err := db.Exec(query, post.UserID, post.Title, post.Content, post.CategoryID, time.Now())
 	if err != nil {
 		return 0, err
 	}
@@ -21,32 +23,62 @@ func CreatePost(db *sql.DB, post models.Post) (int64, error) {
 	return postID, nil
 }
 
-// GetPostByID retrieves a post from the database by ID.
 func GetPostByID(db *sql.DB, postID int64) (models.Post, error) {
 	var post models.Post
 	query := `
         SELECT id, user_id, title, content, category_id, created_at
         FROM posts
-        WHERE id = ?;
+        WHERE id = ?
+        LIMIT 1;
     `
 
 	err := db.QueryRow(query, postID).Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.CategoryID, &post.CreatedAt)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return models.Post{}, errors.New("publication non trouvée")
+		}
 		return models.Post{}, err
 	}
 
 	return post, nil
 }
 
-// GetPostsByCategory retrieves all posts from a specific category.
-func GetPostsByCategory(db *sql.DB, categoryID int64) ([]models.Post, error) {
+func UpdatePost(db *sql.DB, post models.Post) error {
 	query := `
-        SELECT id, user_id, title, content, category_id, created_at
-        FROM posts
-        WHERE category_id = ?;
+        UPDATE posts
+        SET title = ?, content = ?, category_id = ?
+        WHERE id = ?;
     `
 
-	rows, err := db.Query(query, categoryID)
+	_, err := db.Exec(query, post.Title, post.Content, post.CategoryID, post.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DeletePost(db *sql.DB, postID int64) error {
+	query := `
+        DELETE FROM posts
+        WHERE id = ?;
+    `
+
+	_, err := db.Exec(query, postID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func GetAllPosts(db *sql.DB) ([]models.Post, error) {
+	query := `
+        SELECT id, user_id, title, content, category_id, created_at
+        FROM posts;
+    `
+
+	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
 	}
@@ -63,27 +95,4 @@ func GetPostsByCategory(db *sql.DB, categoryID int64) ([]models.Post, error) {
 	}
 
 	return posts, nil
-}
-
-// UpdatePost updates the content of a post in the database.
-func UpdatePost(db *sql.DB, postID int64, newContent string) error {
-    query := `
-        UPDATE posts
-        SET content = ?
-        WHERE id = ?;
-    `
-
-    _, err := db.Exec(query, newContent, postID)
-    return err
-}
-
-// DeletePost deletes a post from the database.
-func DeletePost(db *sql.DB, postID int64) error {
-    query := `
-        DELETE FROM posts
-        WHERE id = ?;
-    `
-
-    _, err := db.Exec(query, postID)
-    return err
 }

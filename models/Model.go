@@ -11,17 +11,17 @@ type User struct {
 }
 
 type Category struct {
-	ID          int64  `db:"id"`
+	ID           int64  `db:"id"`
 	NameCategory string `db:"name_category"`
 }
 
 type Post struct {
-	ID        int64     `db:"id"`
-	UserID    int64     `db:"user_id"`
-	Title     string    `db:"title"`
-	Content   string    `db:"content"`
-	CategoryID int64    `db:"category_id"`
-	CreatedAt time.Time `db:"created_at"`
+	ID         int64     `db:"id"`
+	UserID     int64     `db:"user_id"`
+	Title      string    `db:"title"`
+	Content    string    `db:"content"`
+	CategoryID int64     `db:"category_id"`
+	CreatedAt  time.Time `db:"created_at"`
 }
 
 type Comment struct {

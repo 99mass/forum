@@ -2,16 +2,32 @@ package controller
 
 import (
 	"database/sql"
+	"errors"
+	"time"
+
+	"forum/helper"
 	"forum/models"
 )
 
 func CreateUser(db *sql.DB, user models.User) (int64, error) {
+	//Verifier si l'utilisateur exixte deja par email
+	existingUser, err := GetUserByEmail(db, user.Email)
+	if err != nil && err != sql.ErrNoRows {
+		return 0, err
+	}
+
+	if existingUser.ID != 0 {
+		return 0, errors.New("l'utilisateur avec cet email existe deja")
+	}
+
+	hashedPassword := helper.HashPassword(user.Password)
+
 	query := `
-        INSERT INTO users (username, email, password)
-        VALUES (?, ?, ?);
+        INSERT INTO users (username, email, password, created_at)
+        VALUES (?, ?, ?, ?);
     `
 
-	result, err := db.Exec(query, user.Username, user.Email, user.Password)
+	result, err := db.Exec(query, user.Username, user.Email, hashedPassword, time.Now())
 	if err != nil {
 		return 0, err
 	}
@@ -52,11 +68,15 @@ func GetUserByID(db *sql.DB, userID int64) (models.User, error) {
 	query := `
         SELECT id, username, email, password, created_at
         FROM users
-        WHERE id = ?;
+        WHERE id = ?
+		LIMIT 1;
     `
 
 	err := db.QueryRow(query, userID).Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return models.User{}, errors.New("Utilisateur non trouvé")
+		}
 		return models.User{}, err
 	}
 
@@ -69,13 +89,48 @@ func GetUserByEmail(db *sql.DB, email string) (models.User, error) {
 	query := `
         SELECT id, username, email, password, created_at
         FROM users
-        WHERE email = ?;
+        WHERE email = ?
+		LIMIT 1;
     `
 
 	err := db.QueryRow(query, email).Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return models.User{}, errors.New("Utilisateur non trouvé")
+		}
 		return models.User{}, err
 	}
 
 	return user, nil
+}
+
+func UpdateUser(db *sql.DB, user models.User) error {
+	// Mettre à jour uniquement les champs non vides
+	query := `
+        UPDATE users
+        SET username = COALESCE(?, username),
+            email = COALESCE(?, email)
+        WHERE id = ?;
+    `
+
+	_, err := db.Exec(query, user.Username, user.Email, user.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DeleteUser(db *sql.DB, userID int64) error {
+	query := `
+        DELETE FROM users
+        WHERE id = ?;
+    `
+
+	_, err := db.Exec(query, userID)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
