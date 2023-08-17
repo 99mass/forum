@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY,
     name_category TEXT NOT NULL
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 );
 
 -- Create the posts table
