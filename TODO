@@ -24,8 +24,8 @@ Pages:
 
     Authentication:
         [ ] Implement user registration with email, username, and password.
-        [ ] Check for duplicate emails during registration.
-        [ ] Encrypt and securely store passwords.
+        [x] Check for duplicate emails during registration.
+        [x] Encrypt and securely store passwords.
         [ ] Create login sessions using cookies with expiration dates.
         [ ] Implement UUID for session management (Bonus task).
 
