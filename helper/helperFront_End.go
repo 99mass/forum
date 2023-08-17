@@ -1,25 +1,84 @@
 package helper
 
 import (
+	"bytes"
+	"fmt"
 	"html/template"
+	"log"
 	"net/http"
+	"path/filepath"
 	"strconv"
 )
 
-func RenderTemplate(w http.ResponseWriter, s string, Data interface{}) error {
-	page, err := template.ParseFiles("template/" + s + ".html")
+func RenderTemplate(w http.ResponseWriter, tmplName string, tmplDir string, data interface{}) {
+
+	templateCache, err := createTemplateCache(tmplDir)
+
 	if err != nil {
-		return err
+		panic(err)
 	}
-	return page.Execute(w, Data)
+	// templateCache["home.page.tmpl"]
+	tmpl, ok := templateCache[tmplName+".page.tmpl"]
+
+	if !ok {
+		http.Error(w, "le template n'existe pas", http.StatusInternalServerError)
+		return
+	}
+
+	buffer := new(bytes.Buffer)
+	tmpl.Execute(buffer, data)
+	buffer.WriteTo(w)
 }
-func RenderTemplateWithLoyout(w http.ResponseWriter, s string, Data interface{}) error {
-	page, err := template.ParseFiles("template/layouts/header.layout.tmpl","template/" + s + ".html")
+
+func createTemplateCache(tmplDir string) (map[string]*template.Template, error) {
+	cache := map[string]*template.Template{}
+	pages, err := filepath.Glob("./template/pages/" + tmplDir + "/*.page.tmpl")
 	if err != nil {
-		return err
+		return cache, err
 	}
-	
-	return page.ExecuteTemplate(w,"layout" ,Data)
+	fmt.Println("not error cache")
+	for _, page := range pages {
+		//fmt.Println("for pages :", page)
+		name := filepath.Base(page)
+		//fmt.Println(name)
+		tmpl := template.Must(template.ParseFiles(page))
+
+		//fmt.Println(tmpl.Name())
+		layouts, err := filepath.Glob("./template/layouts/*.layout.tmpl")
+		if err != nil {
+			return cache, err
+		}
+		//fmt.Println("not layout error")
+		if len(layouts) > 0 {
+			tmpl.ParseGlob("./template/layouts/*.layout.tmpl")
+		}
+		cache[name] = tmpl
+	}
+	return cache, nil
+}
+
+func RenderError(w http.ResponseWriter, tmplName string, tmplDir string) {
+	log.Println("RenderErrorStart")
+	templateCache, err := createTemplateCache(tmplDir)
+
+	if err != nil {
+		fmt.Println("error detected")
+		return
+	}
+	// templateCache["home.page.tmpl"]
+	fmt.Println("RenderErro templateCach")
+	tmpl, ok := templateCache[tmplName+".page.tmpl"]
+
+	if !ok {
+		RenderTemplate(w, "404", "error", 404)
+		//http.Error(w, "le template n'existe pas", http.StatusInternalServerError)
+		return
+	}
+
+	buffer := new(bytes.Buffer)
+	tmpl.Execute(buffer, nil)
+	buffer.WriteTo(w)
+	log.Println("RenderError end")
 }
 
 func ErrorPage(w http.ResponseWriter, i int) error {

@@ -1,29 +1,8 @@
 {{ template "header" . }}
 
-{{ define "content"}}
+{{ define "content" }}
 <div class="Artist">
-    <h2 class="font-b">Liste of Artists</h2>
-
-    <div class="sample">
-        {{ range . }}
-        {{ if lt .Id 10 }}
-        <a href="http://localhost:8081/artist/{{ .Id}}">
-            <div class="Card-Artist">
-                <img src={{ .Image }} alt="" class="Card-imgSample">
-                <div class="Card-Artist-Name"> {{ .Name }} </div>
-                <div> {{ .CreationDate }} </div>
-            </div>
-        </a>
-
-        {{ end }}
-        {{ end }}
-    </div>
-
-
-    <form class="pagination" method="POST">
-        <button class="page-button" type="submit" id="1"> See All Artists </button>
-
-    </form>
+   
 </div>
 
 {{ end }}

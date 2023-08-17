@@ -1,0 +1,16 @@
+
+body {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0%;
+    background-color: rgb(34, 4, 63);
+}
+
+.auth_content {
+    display: flex;
+    width: 70%;
+    background-color: blueviolet;
+}
