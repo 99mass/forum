@@ -3,7 +3,13 @@
 
 Table categories {
   id integer [primary key]
-  followed_user_id integer
+  name_category varchar
+  created_at timestamp 
+}
+Table sessions {
+  id integer [primary key]
+  user_id integer
+  expired_at timestamp
   created_at timestamp 
 }
 
@@ -55,6 +61,7 @@ Table comment_dislikes {
   created_at timestamp
 }
 
+Ref: sessions.user_id > users.id
 Ref: posts.user_id > users.id // many-to-one
 Ref: posts.categories_id > categories.id
 Ref: comment.user_id > users.id

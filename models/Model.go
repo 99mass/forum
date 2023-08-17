@@ -10,6 +10,13 @@ type User struct {
 	CreatedAt time.Time `db:"created_at"`
 }
 
+type Session struct {
+	ID        string
+	UserID    int64
+	ExpiresAt time.Time
+	CreatedAt time.Time
+}
+
 type Category struct {
 	ID           int64  `db:"id"`
 	NameCategory string `db:"name_category"`
