@@ -1,0 +1,25 @@
+:root{
+    --color-gray:gray;
+}
+.input{
+    background-color:  var(--color-gray);
+}
+.monform {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Aligne les éléments horizontalement au centre */
+    justify-content: center; /* Aligne les éléments verticalement au centre */
+    max-width: 300px; /* Limite la largeur du formulaire */
+    margin: 0 auto; /* Centre le formulaire horizontalement */
+}
+
+.input {
+    width: 100%; /* Remplit la largeur du parent (dans ce cas, le formulaire) */
+    margin-bottom: 10px; /* Ajoute un espace entre les champs */
+}
+button  {
+    margin-top: 10px;
+}
+button a{
+    text-decoration: none;
+}
