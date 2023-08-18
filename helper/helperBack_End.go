@@ -1,9 +1,12 @@
 package helper
 
 import (
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"forum/controller"
+	"forum/models"
 	"net/http"
 	"strconv"
 	"strings"
@@ -108,4 +111,36 @@ func GetYear(date string) (int, error) {
 		return year, err
 	}
 	return 0, errors.New("len error")
+}
+
+func GetPostForHome(db *sql.DB) ([]models.HomeData, error) {
+	posts, err := controller.GetAllPosts(db)
+	if err != nil {
+		return nil, err
+	}
+	var HomeDatas []models.HomeData
+	for _, post := range posts {
+		var HomeData models.HomeData
+		likes, err := controller.GetPostLikesByPostID(db, post.ID)
+		if err != nil {
+			return nil, err
+		}
+		nbrlikes := len(likes)
+		comments, err := controller.GetCommentsByPostID(db, post.ID)
+		if err != nil {
+			return nil, err
+		}
+		dislike, err := controller.GetDislikesByPostID(db, post.ID)
+		if err != nil {
+			return nil, err
+		}
+		nbrdislikes := len(dislike)
+		HomeData.Posts = post
+		HomeData.Comment = comments
+		HomeData.PostLike = nbrlikes
+		HomeData.PostDislike = nbrdislikes
+
+		HomeDatas = append(HomeDatas, HomeData)
+	}
+	return HomeDatas, nil
 }

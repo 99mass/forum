@@ -101,3 +101,30 @@ func GetAllComments(db *sql.DB) ([]models.Comment, error) {
 
 	return comments, nil
 }
+
+// GetCommentsByPostID retrieves all comments for a specific post by post ID.
+func GetCommentsByPostID(db *sql.DB, postID uuid.UUID) ([]models.Comment, error) {
+    query := `
+        SELECT id, user_id, post_id, content, created_at
+        FROM comments
+        WHERE post_id = ?;
+    `
+
+    rows, err := db.Query(query, postID)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var comments []models.Comment
+    for rows.Next() {
+        var comment models.Comment
+        err := rows.Scan(&comment.ID, &comment.UserID, &comment.PostID, &comment.Content, &comment.CreatedAt)
+        if err != nil {
+            return nil, err
+        }
+        comments = append(comments, comment)
+    }
+
+    return comments, nil
+}

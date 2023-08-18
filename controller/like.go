@@ -211,3 +211,29 @@ func GetAllCommentLikes(db *sql.DB) ([]models.CommentLike, error) {
 
 	return commentLikes, nil
 }
+
+func GetPostLikesByPostID(db *sql.DB, postID uuid.UUID) ([]models.PostLike, error) {
+    query := `
+        SELECT id, user_id, post_id, created_at
+        FROM post_likes
+        WHERE post_id = ?;
+    `
+
+    rows, err := db.Query(query, postID)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var likes []models.PostLike
+    for rows.Next() {
+        var like models.PostLike
+        err := rows.Scan(&like.ID, &like.UserID, &like.PostID, &like.CreatedAt)
+        if err != nil {
+            return nil, err
+        }
+        likes = append(likes, like)
+    }
+
+    return likes, nil
+}

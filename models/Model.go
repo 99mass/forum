@@ -70,3 +70,10 @@ type CommentDislike struct {
 	CommentID uuid.UUID
 	CreatedAt time.Time
 }
+
+type HomeData struct{
+	Posts	Post
+	Comment []Comment
+	PostLike int
+	PostDislike int
+}
