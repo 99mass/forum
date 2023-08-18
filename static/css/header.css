@@ -4,7 +4,8 @@
     box-sizing: border-box;
 }
 :root{
-    --header-color: #57534E;
+    --header-color1: #57534E;
+    --header-color: #8b5615;
     --fontSize18:18px;
 }
 

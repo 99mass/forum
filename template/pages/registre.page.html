@@ -7,23 +7,50 @@
     <title>Registre</title>
 </head>
 <body>
-    <form class="monform">
+    <div class="inscription">
+        <H1>REGISTER</H1>
+         <form class="monform">
         <!-- <label for="nom">Nom :</label> -->
-        <input type="text" id="username" name="username"  class="input" placeholder="Nom" required>
+        <input type="text" id="username" name="username"  class="input" placeholder="Nom"  required  >
         
         <!-- <label for="email">Email :</label> -->
         <input type="email" id="email" name="email"class="input" placeholder="Email"  required>
         
         <!-- <label for="motdepasse">Mot de passe :</label> -->
         <input type="password" id="motdepasse" name="motdepasse" class="input" placeholder="Password"  required>
-        <input type="password" id="confirmotdepasse" name="confirmmotdepasse" class="input" placeholder=" Confirm Password"  required>
+        <input type="password" id="confirmotdepasse" name="motdepasse" class="input" placeholder=" Confirm Password"  required>
         
-        <input type="submit" value="Create">
+        <input type="submit" name="submit" value="Create" disabled>
        
         <button>
             <a href="login.page.html">I have Account</a>
+            <a href="index.page.html">Go Home</a>
+        </button>
+        <button>
+            <a href="index.page.html">Go Home</a>
         </button>
 
       </form>
+    </div>
+
+
+    <script>
+        let nom = document.getElementById("nom");
+        let email = document.getElementById("email");
+        let motdepasse = document.getElementById("motdepasse");
+        let submit = document.getElementById("submit");
+    
+        let verifie = () => {
+            if (nom.value != "" && motdepasse.value != "" && email.value != "") {
+                submit.style.backgroundColor = "#5fdde5";
+                submit.disabled = false;
+            } else {
+                
+                submit.style.backgroundColor = "#e5e5e5";
+                submit.disabled = true;
+            }
+        }
+    </script>
+   
 </body>
 </html>
