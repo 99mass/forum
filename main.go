@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	// "forum/handler"
+
 	"forum/controller"
 	"forum/helper"
 	"forum/models"
@@ -28,6 +29,7 @@ func main() {
 	user.Email = "mouha@gmail.com"
 	user.Password = "password"
 	id, _ := controller.CreateUser(db, *user)
+	user.ID = id
 	fmt.Println(id)
 	fmt.Println(user.ID)
 

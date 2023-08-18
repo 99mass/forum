@@ -7,40 +7,42 @@ import (
 
 	"forum/models"
 
-	"golang.org/x/crypto/bcrypt"
+	"github.com/gofrs/uuid"
 )
 
-func CreateUser(db *sql.DB, user models.User) (int64, error) {
-	//Verifier si l'utilisateur exixte deja par email
-	existingUser, err := GetUserByEmail(db, user.Email)
-	if err != nil && err != sql.ErrNoRows {
-		return 0, err
-	}
-
-	if existingUser.ID != 0 {
-		return 0, errors.New("l'utilisateur avec cet email existe deja")
-	}
-
-	//hashedPassword := helper.HashPassword(user.Password)
-
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return 0, err
-	}
-
+func CreateUser(db *sql.DB, user models.User) (uuid.UUID, error) {
 	query := `
-        INSERT INTO users (username, email, password, created_at)
-        VALUES (?, ?, ?, ?);
+        INSERT INTO users (id, username, email, password, created_at)
+        VALUES (?, ?, ?, ?, ?);
     `
 
-	result, err := db.Exec(query, user.Username, user.Email, hashedPassword, time.Now())
+	newUUID, err := uuid.NewV4()
 	if err != nil {
-		return 0, err
+		return uuid.UUID{}, err
 	}
 
-	userID, _ := result.LastInsertId()
-	return userID, nil
+	_, err = db.Exec(query, newUUID.String(), user.Username, user.Email, user.Password, time.Now())
+	if err != nil {
+		return uuid.UUID{}, err
+	}
+
+	return newUUID, nil
 }
+
+// func CreateUser(db *sql.DB, user models.User) (int64, error) {
+// 	query := `
+//         INSERT INTO users (username, email, password, created_at)
+//         VALUES (?, ?, ?, ?);
+//     `
+
+// 	result, err := db.Exec(query, user.Username, user.Email, user.Password, time.Now())
+// 	if err != nil {
+// 		return 0, err
+// 	}
+
+// 	userID, _ := result.LastInsertId()
+// 	return userID, nil
+// }
 
 // GetAllUsers retrieves all users from the database.
 func GetAllUsers(db *sql.DB) ([]models.User, error) {
@@ -81,7 +83,7 @@ func GetUserByID(db *sql.DB, userID int64) (models.User, error) {
 	err := db.QueryRow(query, userID).Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return models.User{}, errors.New("Utilisateur non trouvé")
+			return models.User{}, errors.New("utilisateur non trouvé")
 		}
 		return models.User{}, err
 	}
@@ -102,7 +104,7 @@ func GetUserByEmail(db *sql.DB, email string) (models.User, error) {
 	err := db.QueryRow(query, email).Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return models.User{}, errors.New("Utilisateur non trouvé")
+			return models.User{}, errors.New("utilisateur non trouvé")
 		}
 		return models.User{}, err
 	}
@@ -127,7 +129,7 @@ func UpdateUser(db *sql.DB, user models.User) error {
 	return nil
 }
 
-func DeleteUser(db *sql.DB, userID int64) error {
+func DeleteUser(db *sql.DB, userID uuid.UUID) error {
 	query := `
         DELETE FROM users
         WHERE id = ?;

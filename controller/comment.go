@@ -5,24 +5,30 @@ import (
 	"errors"
 	"forum/models"
 	"time"
+
+	"github.com/gofrs/uuid"
 )
 
-func CreateComment(db *sql.DB, comment models.Comment) (int64, error) {
+func CreateComment(db *sql.DB, comment models.Comment) (uuid.UUID, error) {
 	query := `
-        INSERT INTO comments (user_id, post_id, content, created_at)
-        VALUES (?, ?, ?, ?);
+        INSERT INTO comments (id, user_id, post_id, content, created_at)
+        VALUES (?, ?, ?, ?, ?);
     `
 
-	result, err := db.Exec(query, comment.UserID, comment.PostID, comment.Content, time.Now())
+	newUUID, err := uuid.NewV4()
 	if err != nil {
-		return 0, err
+		return uuid.UUID{}, err
 	}
 
-	commentID, _ := result.LastInsertId()
-	return commentID, nil
+	_, err = db.Exec(query, newUUID.String(), comment.UserID, comment.PostID, comment.Content, time.Now())
+	if err != nil {
+		return uuid.UUID{}, err
+	}
+
+	return newUUID, nil
 }
 
-func GetCommentByID(db *sql.DB, commentID int64) (models.Comment, error) {
+func GetCommentByID(db *sql.DB, commentID uuid.UUID) (models.Comment, error) {
 	var comment models.Comment
 	query := `
         SELECT id, user_id, post_id, content, created_at
@@ -57,7 +63,7 @@ func UpdateComment(db *sql.DB, comment models.Comment) error {
 	return nil
 }
 
-func DeleteComment(db *sql.DB, commentID int64) error {
+func DeleteComment(db *sql.DB, commentID uuid.UUID) error {
 	query := `
         DELETE FROM comments
         WHERE id = ?;

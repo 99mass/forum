@@ -6,24 +6,30 @@ import (
 	"time"
 
 	"forum/models"
+
+	"github.com/gofrs/uuid"
 )
 
-func CreatePost(db *sql.DB, post models.Post) (int64, error) {
+func CreatePost(db *sql.DB, post models.Post) (uuid.UUID, error) {
 	query := `
-        INSERT INTO posts (user_id, title, content, category_id, created_at)
-        VALUES (?, ?, ?, ?, ?);
+        INSERT INTO posts (id, user_id, title, content, category_id, created_at)
+        VALUES (?, ?, ?, ?, ?, ?);
     `
 
-	result, err := db.Exec(query, post.UserID, post.Title, post.Content, post.CategoryID, time.Now())
+	newUUID, err := uuid.NewV4()
 	if err != nil {
-		return 0, err
+		return uuid.UUID{}, err
 	}
 
-	postID, _ := result.LastInsertId()
-	return postID, nil
+	_, err = db.Exec(query, newUUID.String(), post.UserID, post.Title, post.Content, post.CategoryID, time.Now())
+	if err != nil {
+		return uuid.UUID{}, err
+	}
+
+	return newUUID, nil
 }
 
-func GetPostByID(db *sql.DB, postID int64) (models.Post, error) {
+func GetPostByID(db *sql.DB, postID uuid.UUID) (models.Post, error) {
 	var post models.Post
 	query := `
         SELECT id, user_id, title, content, category_id, created_at
@@ -58,7 +64,7 @@ func UpdatePost(db *sql.DB, post models.Post) error {
 	return nil
 }
 
-func DeletePost(db *sql.DB, postID int64) error {
+func DeletePost(db *sql.DB, postID uuid.UUID) error {
 	query := `
         DELETE FROM posts
         WHERE id = ?;
