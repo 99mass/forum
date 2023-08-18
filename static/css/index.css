@@ -6,6 +6,7 @@
 :root{
     --color-gray:gray;
     --color-black:black;
+    --color-white:#fff;
     --fontSize16:16px;
 }
 .container{
@@ -13,12 +14,13 @@
     height: 1000px;
    
     position: absolute;
-    top: 105px;
+    top: 150px;
     display: flex;
     justify-content: space-between;
-    padding: 2rem;
+    padding: 1rem;
     padding-right: 1rem;
-    border: 2px solid var(--color-black);
+    /* border: 2px solid var(--color-black); */
+    z-index: -1;
 }
 .container *{
    font-size: var(  --fontSize16);
@@ -31,11 +33,11 @@
    text-align: center;
 }
 .container .container-1 .btn-filter{
-   width: 80%;
+   width: 90%;
    height: 50px;
    cursor: pointer;
    background-color: var(--header-color);
-   color: #fff;
+   color: var(--color-white);
    border: none;
    box-shadow: 4px 4px 2px var(--color-gray);
    text-transform: capitalize;
@@ -63,6 +65,60 @@
 }
 .container .container-2 .bloc-add-post{
     padding-top: 2rem;
- display: flex;
- /* justify-content: center; */
+    display: block;
+    
 }
+.container .container-2 .bloc-add-post form{
+    width: 100%;
+    margin-bottom: 2rem;
+
+}
+.container .container-2 .bloc-add-post form div *{
+    width: 50%;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: transparent;
+    border: 1px solid var(--header-color);
+    text-transform: capitalize;
+    resize: none;
+    outline: none;
+}
+.container .container-2 .bloc-add-post form button{
+    padding:1rem 6rem;
+    background-color: var(--header-color);
+    color: var(--color-white);
+    text-transform: capitalize;
+    box-shadow: 3px 3px 1px var(--color-gray);
+}
+.new-post{
+    padding:1rem 0rem;
+    margin-bottom: 2rem;
+    width: 10%;
+    background-color:var(--header-color) ;
+    text-align: center;
+    color: var(--color-white);
+}
+.new-post i{
+    font-size: var(--fontSize18);
+}
+.post-displaying{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 150;
+}
+ h3 {
+    width: 100%;
+    padding: 1rem 0.1rem;
+    background-color: gainsboro;
+    margin-bottom: 1.5rem;
+    color: var(--header-color);
+}
+.categorie-specifique {
+    margin-bottom: 10%;
+}
+.categorie-specifique div{
+    padding-left: 0.2rem;
+}
+
+
