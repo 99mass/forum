@@ -6,30 +6,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
     <title>Document</title>
 </head>
 
 <body>
-    
-    <div>
-        <!-- {{ template "navbarre"}} -->
-        
-        <!-- {{ block "wellcome" . }}
 
-        {{ end }}
-         -->
-         
-        {{ block "contents" . }}
-            <div>
-                <p>hidsf </p>
-            </div>
-        {{ end }}
-<!-- 
-        {{ template "footer"}} -->
+    {{ block "content" . }}
 
-    </div>
-    
+    {{ end }}
+
 </body>
 
 </html>
