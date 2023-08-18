@@ -1,71 +1,72 @@
 package models
 
 import (
-	"github.com/gofrs/uuid"
 	"time"
+
+	"github.com/gofrs/uuid"
 )
 
 type User struct {
-	ID        uuid.UUID `db:"id"`
-	Username  string    `db:"username"`
-	Email     string    `db:"email"`
-	Password  string    `db:"password"`
-	CreatedAt time.Time `db:"created_at"`
+	ID        uuid.UUID
+	Username  string
+	Email     string
+	Password  string
+	CreatedAt time.Time
 }
 
 type Session struct {
-	ID        string
+	ID        uuid.UUID
 	UserID    uuid.UUID
 	ExpiresAt time.Time
 	CreatedAt time.Time
 }
 
 type Category struct {
-	ID           uuid.UUID `db:"id"`
-	NameCategory string    `db:"name_category"`
+	ID           uuid.UUID
+	NameCategory string
 }
 
 type Post struct {
-	ID         uuid.UUID `db:"id"`
-	UserID     uuid.UUID `db:"user_id"`
-	Title      string    `db:"title"`
-	Content    string    `db:"content"`
-	CategoryID uuid.UUID `db:"category_id"`
-	CreatedAt  time.Time `db:"created_at"`
+	ID         uuid.UUID
+	UserID     uuid.UUID
+	Title      string
+	Content    string
+	CategoryID uuid.UUID
+	CreatedAt  time.Time
 }
 
 type Comment struct {
-	ID        uuid.UUID `db:"id"`
-	UserID    uuid.UUID `db:"user_id"`
-	PostID    uuid.UUID `db:"post_id"`
-	Content   string    `db:"content"`
-	CreatedAt time.Time `db:"created_at"`
+	ID        uuid.UUID
+	UserID    uuid.UUID
+	PostID    uuid.UUID
+	Content   string
+	CreatedAt time.Time
 }
 
 type PostLike struct {
-	ID        uuid.UUID `db:"id"`
-	UserID    uuid.UUID `db:"user_id"`
-	PostID    uuid.UUID `db:"post_id"`
-	CreatedAt time.Time `db:"created_at"`
+	ID        uuid.UUID
+	UserID    uuid.UUID
+	PostID    uuid.UUID
+	CreatedAt time.Time
 }
 
 type PostDislike struct {
-	ID        uuid.UUID `db:"id"`
-	UserID    uuid.UUID `db:"user_id"`
-	PostID    uuid.UUID `db:"post_id"`
-	CreatedAt time.Time `db:"created_at"`
+	ID        uuid.UUID
+	UserID    uuid.UUID
+	PostID    uuid.UUID
+	CreatedAt time.Time
 }
 
 type CommentLike struct {
-	ID        uuid.UUID `db:"id"`
-	UserID    uuid.UUID `db:"user_id"`
-	CommentID uuid.UUID `db:"comment_id"`
-	CreatedAt time.Time `db:"created_at"`
+	ID        uuid.UUID
+	UserID    uuid.UUID
+	CommentID uuid.UUID
+	CreatedAt time.Time
 }
 
 type CommentDislike struct {
-	ID        uuid.UUID `db:"id"`
-	UserID    uuid.UUID `db:"user_id"`
-	CommentID uuid.UUID `db:"comment_id"`
-	CreatedAt time.Time `db:"created_at"`
+	ID        uuid.UUID
+	UserID    uuid.UUID
+	CommentID uuid.UUID
+	CreatedAt time.Time
 }
