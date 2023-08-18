@@ -29,22 +29,6 @@ func CreateUser(db *sql.DB, user models.User) (uuid.UUID, error) {
 	return newUUID, nil
 }
 
-// func CreateUser(db *sql.DB, user models.User) (int64, error) {
-// 	query := `
-//         INSERT INTO users (username, email, password, created_at)
-//         VALUES (?, ?, ?, ?);
-//     `
-
-// 	result, err := db.Exec(query, user.Username, user.Email, user.Password, time.Now())
-// 	if err != nil {
-// 		return 0, err
-// 	}
-
-// 	userID, _ := result.LastInsertId()
-// 	return userID, nil
-// }
-
-// GetAllUsers retrieves all users from the database.
 func GetAllUsers(db *sql.DB) ([]models.User, error) {
 	query := `
         SELECT id, username, email, password, created_at

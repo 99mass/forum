@@ -30,8 +30,14 @@ func main() {
 	user.Password = "password"
 	id, _ := controller.CreateUser(db, *user)
 	user.ID = id
-	fmt.Println(id)
-	fmt.Println(user.ID)
+	user2, _ := controller.GetAllUsers(db)
+	for _, v := range user2 {
+		fmt.Println("ID:",v.ID)
+		fmt.Println("username:",v.Username)
+		fmt.Println("Email:",v.Email)
+		fmt.Println("password:",v.Password)
+		fmt.Println("Created_at:",v.CreatedAt)
+	}
 
 	args := os.Args[1:]
 	if len(args) > 0 {
