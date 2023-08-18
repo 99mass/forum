@@ -140,3 +140,20 @@ func DeleteUser(db *sql.DB, userID int64) error {
 
 	return nil
 }
+
+// Verification duplicatat pseudo ou email.
+func IsDuplicateUsernameOrEmail(db *sql.DB, username, email string) (bool, error) {
+	query := `
+        SELECT COUNT(*)
+        FROM users
+        WHERE username = ? OR email = ?;
+    `
+
+	var count int
+	err := db.QueryRow(query, username, email).Scan(&count)
+	if err != nil {
+		return false, err
+	}
+
+	return count > 0, nil
+}

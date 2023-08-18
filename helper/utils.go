@@ -3,6 +3,8 @@ package helper
 import (
 	"errors"
 	"regexp"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func CheckEmail(email string) (bool, error) {
@@ -57,7 +59,16 @@ func CheckContent(content string) {
 
 }
 
-// func HashPassword(password string) string {
-// 	hash := sha256.Sum256([]byte(password))
-// 	return fmt.Sprintf("%x", hash)
-// }
+// Cryptage du mot de passe
+func HashPassword(password string) (string, error) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+	return string(hashedPassword), nil
+}
+
+// Confirmation du mot de passe lors de l'inscription d'uun nouveau client
+func ConfirmPasswordsMatch(password, confirmPassword string) bool {
+	return password == confirmPassword
+}
