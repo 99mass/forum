@@ -31,11 +31,13 @@ header .nav1 a,
 header .nav2 form,
 header .nav2 a {
     margin-right: 30px;
+    text-transform: capitalize;
 }
 header .nav2 form input{
     padding: 5px;
     border: none;
     outline: none;
+    
 }
 
 header .nav2 form .input{
@@ -48,6 +50,7 @@ header .nav2 form .button--submit{
   background: linear-gradient(92.18deg, #096624 -9.52%, #17A53F 120.36%);
   color: white;
  box-shadow: 2px 2px 2px var(--header-color);
+ text-transform: capitalize;
 }
 header a{
     text-decoration: none;

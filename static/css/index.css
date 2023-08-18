@@ -6,6 +6,7 @@
 :root{
     --color-gray:gray;
     --color-black:black;
+    --fontSize16:16px;
 }
 .container{
     width: 100%;
@@ -16,14 +17,52 @@
     display: flex;
     justify-content: space-between;
     padding: 2rem;
+    padding-right: 1rem;
     border: 2px solid var(--color-black);
 }
+.container *{
+   font-size: var(  --fontSize16);
+
+}
 .container .container-1{
-   width: 25%;
+   width: 20%;
    border-right: 2px solid var(--color-gray);
    height: 300px;
+   text-align: center;
+}
+.container .container-1 .btn-filter{
+   width: 80%;
+   height: 50px;
+   cursor: pointer;
+   background-color: var(--header-color);
+   color: #fff;
+   border: none;
+   box-shadow: 4px 4px 2px var(--color-gray);
+   text-transform: capitalize;
 }
 .container .container-2{
- width: 73%;
- border: 2px solid var(--color-gray);
+    width: 78%;
+    /* border: 2px solid var(--color-gray); */
+    box-sizing: border-box;
+}
+.container .container-2 .categori-menu{
+    display: flex;
+    width: 100%;
+    overflow-x: scroll;
+    padding-bottom: 1rem;
+    
+}
+.container .container-2 .categori-menu input{
+    width: 120px;
+    height: 50px;
+    margin-right: 2rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid var( --header-color);
+    text-transform: capitalize;
+}
+.container .container-2 .bloc-add-post{
+    padding-top: 2rem;
+ display: flex;
+ /* justify-content: center; */
 }
