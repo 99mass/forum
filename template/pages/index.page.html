@@ -33,16 +33,54 @@
 
 <!-- begin body -->
    <main class="container">
+    <!-- filter form -->
       <div class="container-1">
-         <button  class="btn-filter">filter</button>
-          <div class="filter-menue">
-              
+         <button  class="btn-filter"><i class="fa-solid fa-filter"></i> filter</button>
+        
+          <div class="filter-form">
+            <form action="" method="post">
+              <select name="categorie" required >
+                <option selected>categories </option>
+                  <option value="education">education</option>
+                  <option value="sport">sport</option>
+                  <option value="art">art</option>
+                  <option value="culture">culture</option>
+                  <option value="cooking">cooking</option>
+                  <option value="science">science</option>
+                  <option value="dance">dance</option>
+                  <option value="music">music</option>
+                  <option value="politic">politic</option>
+                  <option value="religion">religion</option>
+              </select>
+            <div> 
+                <label for="creation-date">created posts</label>
+                <input type="date">
+            </div>
+            <div> 
+              <label for="creation-date">time posted</label>
+              <input type="time">
+          </div>
+            <div>
+              <div>
+                <label for="">liked posts</label>
+                <input type="number" min="0">
+              </div>
+              <div>
+                <label for="">disliked posts</label>
+                <input type="number" min="0">
+             </div>
+            </div>
+            <div>
+              <label ></label>
+            </div>
+            <button type="submit">filter</button>
+            </form>
           </div>
         </div>
+
       <div class="container-2">
         <div class="categori-menu">
-           <form action="#" method="post">
-             
+           <form action="#" method="post">             
              <input type="submit" placeholder="education" value="education">
             </form>
            <form action="#" method="post">
@@ -73,18 +111,19 @@
             <input type="submit"  value="religion">
           </form>
           <form action="#" method="post">
-            <input type="submit"  value="religion">
+            <input type="submit"  value="actuality">
           </form>
           <form action="#" method="post">
-            <input type="submit"  value="religion">
+            <input type="submit"  value="beauty">
           </form>
         </div>
 
+        <!-- form add post -->
         <div class="bloc-add-post">
-          <div class="new-post"><i class="fa-solid fa-plus"></i> new post</div>
-            <!-- <form action="#" method="post">
+          <div class="new-post"><i class="fa-solid fa-plus"></i> New Post</div>
+           <form class="form-new-post" action="#" method="post">
               <div>
-                <select name="categorie" >
+                <select name="categorie" required >
                   <option selected>post categorie </option>
                     <option value="education">education</option>
                     <option value="sport">sport</option>
@@ -99,108 +138,129 @@
                 </select>
               </div>
               <div>
-                <input type="text" placeholder="title post" >
+                <input type="text" placeholder="title post" required>
               </div>
               <div>
-                <textarea name="" id="" cols="30" rows="10"></textarea>
+                <textarea name="" id="" cols="30" rows="10" required>content here</textarea>
               </div>
                <button type="submit">add post</button>
-            </form> -->
+            </form> 
            
         </div>
         
        <!-- block post and comment -->
-        <h3>education</h3>
+      <h3>education</h3>
         <div class="post-displaying">         
-          <div class="categorie-specifique">                             
-               <div>
+            <div class="categorie-specifique">                             
                 <!-- posts -->
-                  <div><span>auteur:</span></div>
-                  <div><span>date: </span></div>
-                  <div>title post</div>
-                  <div>
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate, necessitatibus odit odio exercitationem itaque beatae.
+                  <div class="author-date">
+                    <div><span><i class="fa-solid fa-at"></i>author:</span>ssambadi</div>
+                    <span>|</span>
+                    <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 à 12h </div>
                   </div>
-              </div>
-              <div><span><i class="fa-regular fa-thumbs-up"></i></span> <span><i class="fa-regular fa-thumbs-down"></i></span></div>
-              
-              <!-- comment -->
-               <h5>comments</h5>
-               <div><span>auteur:</span></div>
-               <div><span>date:</span></div>
-               <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
-               <span><i class="fa-solid fa-circle-right"></i>see more...</span>
-         </div>
-         <!-- <div class="categorie-specifique">                             
-          <div>
-           < !-- posts -- >
-             <div><span>auteur:</span></div>
-             <div><span>date: </span></div>
-             <div>title post</div>
-             <div>
-                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate, necessitatibus odit odio exercitationem itaque beatae.
-             </div>
-         </div>
-         <div><span><i class="fa-regular fa-thumbs-up"></i></span> <span><i class="fa-regular fa-thumbs-down"></i></span></div>
-         
-         < !-- comment -- >
-          <h5>comments</h5>
-          <div><span>auteur:</span></div>
-          <div><span>date:</span></div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
-          <span><i class="fa-solid fa-circle-right"></i>see more...</span>
-        </div> -->
-        
-      </div>
-      <!-- <h3>sport</h3>
-      <div class="post-displaying">         
-        <div class="categorie-specifique">                             
-             <div>
-              < !-- posts -- >
-                <div><span>auteur:</span></div>
-                <div><span>date: </span></div>
-                <div>title post</div>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate, necessitatibus odit odio exercitationem itaque beatae.
-                </div>
+                  <div><span><i class="fa-solid fa-heading"></i>title:</span>sit amet consectetur</div>
+                  <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate, necessitatibus odit odio exercitationem itaque beatae.</div>
+                  <div><span><i class="fa-regular fa-thumbs-up"></i></span> <span><i class="fa-regular fa-thumbs-down"></i></span></div>
+                  
+                  <!-- comment -->
+                  <h5>comments</h5>
+                  <div class="author-date2">
+                    <div><span><i class="fa-solid fa-at"></i>author:</span>alo</div>
+                    <span>|</span>
+                    <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 à 12h </div>
+                  </div>
+                  <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
+                  <div><a href=""><i class="fa-solid fa-circle-right"></i>see more comments...</a> </div>
             </div>
-            <div><span><i class="fa-regular fa-thumbs-up"></i></span> <span><i class="fa-regular fa-thumbs-down"></i></span></div>
-            
-            < !-- comment -- >
-             <h5>comments</h5>
-             <div><span>auteur:</span></div>
-             <div><span>date:</span></div>
-             <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
-             <span><i class="fa-solid fa-circle-right"></i>see more...</span>
-       </div>
-       <div class="categorie-specifique">                             
-        <div>
-         < !-- posts -- >
-           <div><span>auteur:</span></div>
-           <div><span>date: </span></div>
-           <div>title post</div>
-           <div>
-               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate, necessitatibus odit odio exercitationem itaque beatae.
-           </div>
-       </div>
-       <div><span><i class="fa-regular fa-thumbs-up"></i></span> <span><i class="fa-regular fa-thumbs-down"></i></span></div>
-       
-       < !-- comment -- >
-        <h5>comments</h5>
-        <div><span>auteur:</span></div>
-        <div><span>date:</span></div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
-        <span><i class="fa-solid fa-circle-right"></i>see more...</span>
-      </div>
-    </div> -->
-      
+            <!-- ----------- -->
+            <div class="categorie-specifique">                             
+              <!-- posts -->
+                <div class="author-date">
+                  <div><span><i class="fa-solid fa-at"></i>author:</span>ssambadi</div>
+                  <span>|</span>
+                  <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 à 12h </div>
+                </div>
+                <div><span><i class="fa-solid fa-heading"></i>title:</span>sit amet consectetur</div>
+                <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate, necessitatibus odit odio exercitationem itaque beatae.</div>
+                <div><span><i class="fa-regular fa-thumbs-up"></i></span> <span><i class="fa-regular fa-thumbs-down"></i></span></div>
+                
+                <!-- comment -->
+                <h5>comments</h5>
+                <div class="author-date2">
+                  <div><span><i class="fa-solid fa-at"></i>author:</span>alo</div>
+                  <span>|</span>
+                  <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 à 12h </div>
+                </div>
+                <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
+                <div><a href=""><i class="fa-solid fa-circle-right"></i>see more comments...</a> </div>
+             </div>
+             
+          </div>
+          <div class="see-post"><a href=""><i class="fa-solid fa-circle-right"></i>see more posts...</a></div>
+        <!-- ======================================== -->
+        <h3>sport</h3>
+        <div class="post-displaying">         
+            <div class="categorie-specifique">                             
+                <!-- posts -->
+                  <div class="author-date">
+                    <div><span><i class="fa-solid fa-at"></i>author:</span>ssambadi</div>
+                    <span>|</span>
+                    <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 à 12h </div>
+                  </div>
+                  <div><span><i class="fa-solid fa-heading"></i>title:</span>sit amet consectetur</div>
+                  <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate, necessitatibus odit odio exercitationem itaque beatae.</div>
+                  <div><span><i class="fa-regular fa-thumbs-up"></i></span> <span><i class="fa-regular fa-thumbs-down"></i></span></div>
+                  
+                  <!-- comment -->
+                  <h5>comments</h5>
+                  <div class="author-date2">
+                    <div><span><i class="fa-solid fa-at"></i>author:</span>alo</div>
+                    <span>|</span>
+                    <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 à 12h </div>
+                  </div>
+                  <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
+                  <div><a href=""><i class="fa-solid fa-circle-right"></i>see more comments...</a> </div>
+            </div>
+            <!-- ----------- -->
+            <div class="categorie-specifique">                             
+              <!-- posts -->
+                <div class="author-date">
+                  <div><span><i class="fa-solid fa-at"></i>author:</span>ssambadi</div>
+                  <span>|</span>
+                  <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 à 12h </div>
+                </div>
+                <div><span><i class="fa-solid fa-heading"></i>title:</span>sit amet consectetur</div>
+                <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate, necessitatibus odit odio exercitationem itaque beatae.</div>
+                <div><span><i class="fa-regular fa-thumbs-up"></i></span> <span><i class="fa-regular fa-thumbs-down"></i></span></div>
+                
+                <!-- comment -->
+                <h5>comments</h5>
+                <div class="author-date2">
+                  <div><span><i class="fa-solid fa-at"></i>author:</span>alo</div>
+                  <span>|</span>
+                  <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 à 12h </div>
+                </div>
+                <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
+                <div><a href=""><i class="fa-solid fa-circle-right"></i>see more comments...</a> </div>
+             </div>
+             
+          </div>
+          <div class="see-post"><a href=""><i class="fa-solid fa-circle-right"></i>see more posts...</a></div>
+
 
       </div>
+      <!--begin footer -->
+
    </main>
-
 <!-- end body -->
 
+   <!--begin footer -->
+<footer>
+    <p>Copyright ©<span> Zone01 Dakar</span> | 2023 - Tous droits réservés</p>
+    <p>Ce thème a été développé par <span>@osamb</span> - <span>@mouhametadiouf</span> - <span>@dAlassane</span> - <span>@alo</span> - <span>@ssambadi</span> </p>
+</footer>
+<!-- end footer -->
 
-
+<script src="/static/js/index.js"></script>
 </body>
 </html>
