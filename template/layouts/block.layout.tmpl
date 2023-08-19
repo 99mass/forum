@@ -1,17 +1,31 @@
 {{ define "nav_bar"}}
 <div class="nav_bar">
     <div class="nav_bar_content">
-        <a href="">Home</a>
-        <a href="">My Page</a>
+        <a href="/">Home</a>
+        <a href="/mypage">My Page</a>
     </div>
     <div class="nav_bar_content">
-        <a href="">SignIn</a>
-        <a href="">SignOut</a>
-        <a href="">Register</a>
-        <a href="">Account</a>
+        <a href="/signin">SignIn</a>
+        <a href="/">SignOut</a>
+        <a href="/register">Register</a>
+        <a href="/myaccount">Account</a>
 
     </div>
 </div>
+
+
+{{end}}
+
+{{ define "register"}}
+<form class="auth_form" action="" method="post">
+    <input class="auth_input" type="text" name="user_name" id="user_name" placeholder="Enter your user name">
+    <input class="auth_input" type="email" name="email" id="email" placeholder="Enter your email">
+    <input class="auth_input" type="password" name="password" id="password" placeholder="Enter your password">
+    <input class="auth_input" type="password" name="password_validation" id="password_validation"
+        placeholder="Confirm your password">
+    <button class="auth_btn">Register</button>
+    <a href="/signin">I have an account</a>
+</form>
 
 
 {{end}}
@@ -21,10 +35,9 @@
     <input class="auth_input" type="text" name="user_name" id="user_name" placeholder="Enter your user name">
     <input class="auth_input" type="email" name="email" id="email" placeholder="Enter your email">
     <input class="auth_input" type="password" name="password" id="password" placeholder="Enter your password">
-    <input class="auth_input" type="password" name="password_validation" id="password_validation"
-        placeholder="Confirm your password">
+
     <button class="auth_btn">Register</button>
-    <a href="/signin">I have an account</a>
+    <a href="/register">I don't have an account</a>
 </form>
 
 

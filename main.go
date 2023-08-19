@@ -8,29 +8,32 @@ import (
 	"strings"
 
 	// "forum/handler"
-	"forum/controller"
+
 	"forum/helper"
-	"forum/models"
 	"forum/routes"
 )
 
 var PORT = ":8080"
 
 func main() {
+
+	// Openning the database
 	db, _ := helper.CreateDatabase()
 
+	// Create tables
 	err := helper.CreateTables(db)
 	if err != nil {
 		fmt.Println(err)
 	}
-	user := new(models.User)
-	user.Username = "mouhamed"
-	user.Email = "mouha@gmail.com"
-	user.Password = "password"
-	id, _ := controller.CreateUser(db, *user)
-	fmt.Println(id)
-	fmt.Println(user.ID)
+	// user := new(models.User)
+	// user.Username = "mouhamed"
+	// user.Email = "mouha@gmail.com"
+	// user.Password = "password"
+	// id, _ := controller.CreateUser(db, *user)
+	// fmt.Println(id)
+	// fmt.Println(user.ID)
 
+	// Allowing the client to chose the PORT server listenning
 	args := os.Args[1:]
 	if len(args) > 0 {
 		tab := strings.Split(args[0], "=")
@@ -44,7 +47,9 @@ func main() {
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	routes.Route()
+	// Run Handlers
+	routes.Route(db)
+
 	fmt.Println("Listening in http://localhost" + PORT)
 
 	http.ListenAndServe(PORT, nil)
