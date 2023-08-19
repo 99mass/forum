@@ -44,7 +44,7 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 				// Redirect to home
 				helper.RenderTemplate(w, "index", "index", user)
 			} else {
-				helper.RenderTemplate(w, "signin", "auth", user)
+				helper.RenderTemplate(w, "signin", "auth", "error")
 			}
 
 		}
@@ -59,7 +59,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 		switch r.Method {
 		case http.MethodPost:
 			fmt.Println("envoie du formulaire")
-			ok, pageError := middlewares.CheckRequest(r, "register", "post")
+			ok, pageError := middlewares.CheckRequest(r, "/register", "post")
 			if !ok {
 				helper.ErrorPage(w, pageError)
 				return
@@ -89,7 +89,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			_, err := user.Register(db)
 			if err != nil {
 				//http.Error(w, err.Error(), http.StatusBadRequest)
-				fmt.Println(err)
+				helper.Debug(err.Error())
 				helper.RenderTemplate(w, "register", "auth", "error")
 				return
 			}
@@ -107,7 +107,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, pageError)
 				return
 			}
-			helper.RenderTemplate(w, "register", "auth", "")
+			helper.RenderTemplate(w, "register", "auth", "error")
 		default:
 			helper.ErrorPage(w, 404)
 			return

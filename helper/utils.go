@@ -63,8 +63,10 @@ func CheckContent(content string) {
 func HashPassword(password string) (string, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
+		Debug("Erreur du hashage")
 		return "", err
 	}
+	Debug("hashage réussi")
 	return string(hashedPassword), nil
 }
 

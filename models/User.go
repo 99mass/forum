@@ -3,6 +3,8 @@ package models
 import (
 	"database/sql"
 	"errors"
+	"forum/helper"
+	"strconv"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -16,16 +18,17 @@ type User struct {
 	CreatedAt time.Time `db:"created_at"`
 }
 
+// CreateUser returns the "Id" of the user or "0" and an error
 func (user *User) CreateUser(db *sql.DB) (int64, error) {
 	//Verifier si l'utilisateur exixte deja par email
-	existingUser, err := user.GetUserByEmail(db)
-	if err != nil && err != sql.ErrNoRows {
-		return 0, err
+	err := user.GetUserByEmail(db)
+	if err != sql.ErrNoRows {
+		return 0, errors.New("L'utilisateur existe déjà")
 	}
 
-	if existingUser.ID != 0 {
-		return 0, errors.New("l'utilisateur avec cet email existe deja")
-	}
+	// if existingUser.ID != 0 {
+	// 	return 0, errors.New("l'utilisateur avec cet email existe deja")
+	// }
 
 	//hashedPassword := helper.HashPassword(user.Password)
 
@@ -48,14 +51,14 @@ func (user *User) CreateUser(db *sql.DB) (int64, error) {
 }
 
 func (user *User) ConnectUser(db *sql.DB) bool {
-
-	newUser, err := user.GetUserByEmail(db)
+	clientTOconnect := user
+	err := user.GetUserByEmail(db)
 
 	if err != nil {
 		return false
 	}
 
-	if user.Password == newUser.Password {
+	if user.Password == clientTOconnect.Password {
 		return true
 	}
 
@@ -64,24 +67,29 @@ func (user *User) ConnectUser(db *sql.DB) bool {
 }
 
 // GetUserByEmail retrieves a user from the database by email.
-func (user *User) GetUserByEmail(db *sql.DB) (User, error) {
-	var newUser User
+// The GetUserByEMail can only be "ErrNoRows" or "nil"
+func (user *User) GetUserByEmail(db *sql.DB) error {
 	query := `
-        SELECT id, username, email, password, created_at
-        FROM users
-        WHERE email = ?
+		SELECT id, username, email, password, created_at
+		FROM users
+		WHERE email = ?
 		LIMIT 1;
-    `
+	`
 
-	err := db.QueryRow(query, newUser.Email).Scan(&newUser.ID, &newUser.Username, &newUser.Email, &newUser.Password, &newUser.CreatedAt)
+	stmt, err := db.Prepare(query)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return User{}, errors.New("Utilisateur non trouvé")
-		}
-		return User{}, err
+		return err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(user.Email)
+	err = row.Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
+	if err != nil {
+		helper.Debug("Utilisateur non trouvé.")
+		return err
 	}
 
-	return newUser, nil
+	return nil
 }
 
 func (user *User) IsDuplicated(db *sql.DB) bool {
@@ -111,10 +119,11 @@ func (user *User) Register(db *sql.DB) (bool, error) {
 		return false, errors.New("Nom d'utilisateur ou adresse e-mail déjà pris")
 	}
 
-	_, err := user.CreateUser(db)
+	id, err := user.CreateUser(db)
 	if err != nil {
+		helper.Debug(err.Error())
 		return false, errors.New("Erreur lors de l'enregistrement de l'utilisateur")
 	}
-
+	helper.Debug("Register succeed, Id: " + strconv.FormatInt(id, 10))
 	return true, nil
 }

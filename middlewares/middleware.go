@@ -1,17 +1,21 @@
 package middlewares
 
 import (
+	"forum/helper"
 	"net/http"
 	"strings"
 )
 
 func CheckRequest(r *http.Request, path, methode string) (bool, int) {
-	if strings.ToLower(r.Method) == methode && r.URL.Path == path{
+	helper.Debug(r.Method + " " + methode + " " + r.URL.Path + " " + path)
+	if strings.ToLower(r.Method) == methode && r.URL.Path == path {
+		helper.Debug("Request validated")
 		return true, 0
-	} else if strings.ToLower(r.Method) != methode{
+	} else if strings.ToLower(r.Method) != methode {
+		helper.Debug("Request Methode doesn't match")
 		return false, 405
 	} else {
+		helper.Debug("Requset page not foung")
 		return false, 404
 	}
 }
-

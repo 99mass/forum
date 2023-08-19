@@ -109,3 +109,7 @@ func GetYear(date string) (int, error) {
 	}
 	return 0, errors.New("len error")
 }
+
+func Debug(str string) {
+	fmt.Println(str)
+}
