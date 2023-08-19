@@ -195,12 +195,36 @@
    margin-bottom: 2rem;
    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
-
+.categorie-specifique .comment-btn{
+  text-decoration: none;
+  margin-bottom: 10px;
+  width: fit-content;
+ border: 2px solid transparent;
+ padding: 5px 10px;
+ background: var(--color-linear-gradient);
+ color: var(--color-white);
+ text-transform: capitalize;
+}
+.categorie-specifique .comment-btn i {
+  margin-right: 2px;
+}
 .categorie-specifique div,
 .categorie-specifique h5{
     margin-bottom: 0.5rem;
 }
 
+.categorie-specifique  .like-dislik-content
+{
+    display: flex;
+}
+.categorie-specifique  .like-dislik-content form{
+    margin-right: 15px;
+}
+.categorie-specifique  .like-dislik-content form button{
+ border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
 .categorie-specifique div span i,
 .categorie-specifique div i{
    font-size: 1.2rem;
