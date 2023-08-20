@@ -8,6 +8,7 @@
     --color-gray:gray;
     --color-black:black;
     --color-white:#fff;
+    --color-back:#303960;
     --fontSize16:16px;
     --color-linear-gradient:linear-gradient(to right,#77530a,#ffd277,#77530a,#77530a,#ffd277,#77530a);
 }
@@ -32,6 +33,9 @@
   display: flex;
   flex-direction: column;
 }
+/* body{
+    background-color:var(--color-back);
+ } */
 .container .container-1 .btn-filter{
    width: 90%;
    padding: 8px 0rem;

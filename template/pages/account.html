@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/login.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <title>Account</title>
+</head>
+<body>
+    <header>
+        <nav class="nav1">
+           <a href="/template/pages/index.page.html">Home</a>
+           <a href="/template/pages/myPage.page.html">my page</a>
+        </nav>
+        <nav class="nav2">
+             <form action="#" method="post">
+                 <input type="search" class="input"  placeholder="search here">
+                 <input class="button--submit" value="search" type="submit">
+             </form>
+             <a href="registre.page.html">register</a>
+             <a href="login.page.html">sign in</a>
+             <a href="#">account</a>
+             <a href="#">sign out</a>
+             
+        </nav>
+  </header>
+    <div class="SignIn-Registre">
+         <h1>Update</h1>
+        <form action="/update" method="post" >
+
+            <input type="text" id="username" name="username" placeholder="Nouveau nom d'utilisateur" class="inputForm" required><br><br>
+            
+            <input type="password" id="old_password" name="old_password" placeholder="Ancien mot de pass" class="inputForm" required><br><br>
+
+            <input type="password" id="new_password" name="new_password" placeholder="Nouveau mot de passe"class="inputForm"  required><br><br>
+            
+            <input type="submit"  class="submitForm" value="Update"> 
+        </form>
+    </div>
+    
+   
+</body>
+</html>

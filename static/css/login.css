@@ -1,11 +1,14 @@
 *{
     box-sizing: border-box;
 }
+
 :root{
    --color-gray:gray;
    --color-fig:rgb(179, 153, 153);
    --color-back:#303960;
-  
+   --color-linear-gradient:linear-gradient(to right,#77530a,#ffd277,#77530a,#77530a,#ffd277,#77530a);
+   
+
    --color-h1:#303960;
    --color-create:#e5e5e5;
    --header-color-ssmabdi: #8b5615;
@@ -45,12 +48,19 @@ body{
    width: 100%;
    font-size:larger ;
   text-transform: capitalize;
+  background: var(--color-linear-gradient);
+ 
    
 }
-form input[type="submit"]:disabled {
+
+.submitForm:hover{
+   background-color: var(--color-h1);
+}
+
+/* form input[type="submit"]:disabled {
    cursor: not-allowed;
    background-color: var(--header-color-ssmabdi);
-}
+} */
 .inputForm{
    padding: 10px; border: none;
    border-radius: 5px;
@@ -58,7 +68,7 @@ form input[type="submit"]:disabled {
    /* background-color:  var(--color-fig); */
    border: 1px solid var(--color-back);
    width: 100%; /* Remplit la largeur du parent (dans ce cas, le formulaire) */
-   margin-bottom: 10px; /* Ajoute un espace entre les champs */
+   margin-bottom: 15px; /* Ajoute un espace entre les champs */
 }
 .monform {
    text-align: center;
@@ -73,9 +83,12 @@ form input[type="submit"]:disabled {
 
 button  {
    margin-top: 10px;
+   background: var(--color-linear-gradient);
+   padding: 5px;
+  
 }
 button a{
-   text-decoration: none;
- 
+   text-decoration:double;
+   color: var(--color-create);
    
 }

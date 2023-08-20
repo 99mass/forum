@@ -23,25 +23,25 @@
              </form>
              <a href="#">register</a>
              <a href="login.page.html">sign in</a>
-             <a href="#">account</a>
+             <a href="account.html">account</a>
              <a href="#">sign out</a>
              
         </nav>
  </header>
     <div class="SignIn-Registre">
         <H1>Registre</H1>
-         <form class="monform">
+         <form class="monform" action="/registe" method="post">
         <!-- <label for="nom">Nom :</label> -->
-        <input type="text" id="username" name="username" onkeyup="verifie()" class="inputForm" placeholder="Nom"  required  >
+        <input type="text" id="username" name="username" class="inputForm" placeholder="Nom"  required  >
         
         <!-- <label for="email">Email :</label> -->
-        <input type="email" id="email" name="email"class="inputForm" onkeyup="verifie()"  placeholder="Email"  required>
+        <input type="email" id="email" name="email"class="inputForm"  placeholder="Email"  required>
         
         <!-- <label for="motdepasse">Mot de passe :</label> -->
-        <input type="password" id="motdepasse" name="motdepasse" class="inputForm" onkeyup="verifie()"  placeholder="Password"  required>
-        <input type="password" id="confirmotdepasse" name="motdepasse" class="inputForm" onkeyup="verifie()"  placeholder=" Confirm Password"  required>
+        <input type="password" id="motdepasse" name="motdepasse" class="inputForm"  placeholder="Password"  required>
+        <input type="password" id="confirmotdepasse" name="motdepasse" class="inputForm"  placeholder=" Confirm Password"  required>
         
-        <input type="submit" class="submitForm" name="submit" value="Create" disabled>
+        <input type="submit" class="submitForm" name="submit" value="Create" >
        
         <button>
             <a href="login.page.html" class="IhavCount">I have Account</a>
@@ -53,7 +53,7 @@
     </div>
 
 
-    <script>
+<!--     <script>
         let username = document.getElementById("username");
         let email = document.getElementById("email");
         let motdepasse = document.getElementById("motdepasse");
@@ -70,7 +70,52 @@
                 submit.disabled = true;
             }
         }
-    </script>
+    </script> -->
    
 </body>
 </html>
+
+<!-- package main
+
+import (
+	"html/template"
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet {
+			tmpl := template.Must(template.ParseFiles("template/pages/index.html")) // Chemin d'accès au modèle HTML
+			tmpl.Execute(w, nil)
+		}
+	})
+
+
+
+	http.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet {
+			tmpl := template.Must(template.ParseFiles("template/pages/register.html")) // Chemin d'accès au modèle HTML
+			tmpl.Execute(w, nil)
+		} else if r.Method == http.MethodPost {
+			r.ParseForm()
+
+			// Traiter les données d'inscription
+			username := r.FormValue("username")
+			email := r.FormValue("email")
+			password := r.FormValue("motdepasse")
+
+			// Ici, vous pouvez enregistrer les informations d'inscription
+
+			// Rediriger vers une page de succès ou d'erreur
+			http.Redirect(w, r, "/success", http.StatusSeeOther)
+		}
+	})
+
+	http.HandleFunc("/success", func(w http.ResponseWriter, r *http.Request) {
+		// Page de succès
+		w.Write([]byte("Opération réussie !"))
+	})
+
+	http.ListenAndServe(":8080", nil)
+}
+ -->

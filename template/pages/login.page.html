@@ -21,18 +21,18 @@
              </form>
              <a href="registre.page.html">register</a>
              <a href="#">sign in</a>
-             <a href="#">account</a>
+             <a href="account.html">account</a>
              <a href="#">sign out</a>
              
         </nav>
   </header>
     <div class="SignIn-Registre">
         <h1>Sign in</h1>
-        <form class="monform">
-            <input type="text" id="nom" name="nom" onkeyup="verifie()" class="inputForm" placeholder="Nom" required>
-            <input type="email" id="email" name="email" onkeyup="verifie()" class="inputForm" placeholder="Email" required>
-            <input type="password" id="motdepasse" name="motdepasse" onkeyup="verifie()" class="inputForm" placeholder="Password" required>
-            <input type="submit" id="submit" class="submitForm" value="Sign in" disabled>
+        <form class="monform" action="/login" method="post">
+            <input type="text" id="nom" name="nom"  class="inputForm" placeholder="Nom" required>
+            <input type="email" id="email" name="email"  class="inputForm" placeholder="Email" required>
+            <input type="password" id="motdepasse" name="motdepasse"  class="inputForm" placeholder="Password" required>
+            <input type="submit" id="submit" class="submitForm" value="Sign in" >
         </form>
         <button>
             <a href="registre.page.html">I don't have Account</a>
@@ -41,7 +41,7 @@
         
         
     </div>
-    
+  <!--   
     <script>
         let nom = document.getElementById("nom");
         let email = document.getElementById("email");
@@ -59,8 +59,50 @@
             }
         }
     </script>
-    
+     -->
     
       
 </body>
 </html>
+
+<!-- package main
+
+import (
+	"html/template"
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet {
+			tmpl := template.Must(template.ParseFiles("template/pages/index.html")) // Chemin d'accès au modèle HTML
+			tmpl.Execute(w, nil)
+		}
+	})
+
+	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet {
+			tmpl := template.Must(template.ParseFiles("template/pages/login.html")) // Chemin d'accès au modèle HTML
+			tmpl.Execute(w, nil)
+		} else if r.Method == http.MethodPost {
+			r.ParseForm()
+
+			// Traiter les données de connexion
+			username := r.FormValue("username")
+			password := r.FormValue("password")
+
+			// Ici, vous pouvez vérifier les informations de connexion
+
+			// Rediriger vers une page de succès ou d'erreur
+			http.Redirect(w, r, "/success", http.StatusSeeOther)
+		}
+	})
+
+	http.HandleFunc("/success", func(w http.ResponseWriter, r *http.Request) {
+		// Page de succès
+		w.Write([]byte("Inscription réussie !"))
+	})
+
+	http.ListenAndServe(":8080", nil)
+}
+ -->
