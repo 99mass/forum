@@ -4,23 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/login.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/index.css">
     <title>Login</title>
 </head>
 <body>
-    <div class="connecter">
+    <header>
+        <nav class="nav1">
+           <a href="/template/pages/index.page.html">Home</a>
+           <a href="/template/pages/myPage.page.html">my page</a>
+        </nav>
+        <nav class="nav2">
+             <form action="#" method="post">
+                 <input type="search" class="input"  placeholder="search here">
+                 <input class="button--submit" value="search" type="submit">
+             </form>
+             <a href="registre.page.html">register</a>
+             <a href="#">sign in</a>
+             <a href="#">account</a>
+             <a href="#">sign out</a>
+             
+        </nav>
+  </header>
+    <div class="SignIn-Registre">
         <h1>Sign in</h1>
         <form class="monform">
-            <input type="text" id="nom" name="nom" onkeyup="verifie()" class="input" placeholder="Nom" required>
-            <input type="email" id="email" name="email" onkeyup="verifie()" class="input" placeholder="Email" required>
-            <input type="password" id="motdepasse" name="motdepasse" onkeyup="verifie()" class="input" placeholder="Password" required>
-            <input type="submit" id="submit" value="Sign in" disabled>
+            <input type="text" id="nom" name="nom" onkeyup="verifie()" class="inputForm" placeholder="Nom" required>
+            <input type="email" id="email" name="email" onkeyup="verifie()" class="inputForm" placeholder="Email" required>
+            <input type="password" id="motdepasse" name="motdepasse" onkeyup="verifie()" class="inputForm" placeholder="Password" required>
+            <input type="submit" id="submit" class="submitForm" value="Sign in" disabled>
         </form>
         <button>
             <a href="registre.page.html">I don't have Account</a>
         </button><br>
-        <button>
-            <a href="index.page.html">Go Home</a>
-        </button>
+        
         
         
     </div>
@@ -33,11 +50,11 @@
     
         let verifie = () => {
             if (nom.value != "" && motdepasse.value != "" && email.value != "") {
-                submit.style.backgroundColor = "#5fdde5";
+                submit.style.backgroundColor = "#303960";
                 submit.disabled = false;
             } else {
                 
-                submit.style.backgroundColor = "#e5e5e5";
+                submit.style.backgroundColor = "#8b5615";
                 submit.disabled = true;
             }
         }

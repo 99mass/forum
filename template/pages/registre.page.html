@@ -4,49 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/login.css">
-    <title>Registre</title>
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
+    <title>RegistrhvxeN</title>
 </head>
 <body>
-    <div class="inscription">
-        <H1>REGISTER</H1>
+    <header>
+        <nav class="nav1">
+           <a href="index.page.html">Home</a>
+           <a href="#">my page</a>
+        </nav>
+        <nav class="nav2">
+             <form action="#" method="post">
+                 <input type="search" class="input"  placeholder="search here">
+                 <input class="button--submit" value="search" type="submit">
+             </form>
+             <a href="#">register</a>
+             <a href="login.page.html">sign in</a>
+             <a href="#">account</a>
+             <a href="#">sign out</a>
+             
+        </nav>
+ </header>
+    <div class="SignIn-Registre">
+        <H1>Registre</H1>
          <form class="monform">
         <!-- <label for="nom">Nom :</label> -->
-        <input type="text" id="username" name="username"  class="input" placeholder="Nom"  required  >
+        <input type="text" id="username" name="username" onkeyup="verifie()" class="inputForm" placeholder="Nom"  required  >
         
         <!-- <label for="email">Email :</label> -->
-        <input type="email" id="email" name="email"class="input" placeholder="Email"  required>
+        <input type="email" id="email" name="email"class="inputForm" onkeyup="verifie()"  placeholder="Email"  required>
         
         <!-- <label for="motdepasse">Mot de passe :</label> -->
-        <input type="password" id="motdepasse" name="motdepasse" class="input" placeholder="Password"  required>
-        <input type="password" id="confirmotdepasse" name="motdepasse" class="input" placeholder=" Confirm Password"  required>
+        <input type="password" id="motdepasse" name="motdepasse" class="inputForm" onkeyup="verifie()"  placeholder="Password"  required>
+        <input type="password" id="confirmotdepasse" name="motdepasse" class="inputForm" onkeyup="verifie()"  placeholder=" Confirm Password"  required>
         
-        <input type="submit" name="submit" value="Create" disabled>
+        <input type="submit" class="submitForm" name="submit" value="Create" disabled>
        
         <button>
-            <a href="login.page.html">I have Account</a>
-            <a href="index.page.html">Go Home</a>
+            <a href="login.page.html" class="IhavCount">I have Account</a>
+           
         </button>
-        <button>
-            <a href="index.page.html">Go Home</a>
-        </button>
+       
 
       </form>
     </div>
 
 
     <script>
-        let nom = document.getElementById("nom");
+        let username = document.getElementById("username");
         let email = document.getElementById("email");
         let motdepasse = document.getElementById("motdepasse");
+        let confirmotdepasse= document.getElementById("confirmotdepasse")
         let submit = document.getElementById("submit");
     
         let verifie = () => {
-            if (nom.value != "" && motdepasse.value != "" && email.value != "") {
-                submit.style.backgroundColor = "#5fdde5";
+            if (username.value != "" && email.value != "" && motdepasse.value != ""  && confirmotdepasse.value!="") {
+                submit.style.backgroundColor = "#303960";
                 submit.disabled = false;
             } else {
                 
-                submit.style.backgroundColor = "#e5e5e5";
+                submit.style.backgroundColor = "#8b5615";
                 submit.disabled = true;
             }
         }
