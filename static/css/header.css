@@ -60,14 +60,17 @@ header .nav2 form .button--submit{
 }
 header a{
     text-decoration: none;
+    height: fit-content;
 }
+
 header  a:hover,
 header .nav1 a:hover{
     background: var(--color-linear-gradient);
     color: var(--color-white);
     padding: 7px 15px;
-
 }
+
+
 /* footer */
 
 footer{

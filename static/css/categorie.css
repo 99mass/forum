@@ -79,6 +79,7 @@ h4{
 .categorie-specifique  .like-dislik-content
 {
     display: flex;
+    margin-top: 1rem;
 }
 .categorie-specifique  .like-dislik-content form{
     margin-right: 15px;
@@ -89,7 +90,7 @@ h4{
     cursor: pointer;
 }
 .categorie-specifique div,
-.categorie-specifique h5{
+.categorie-specifique h6{
     margin-bottom: 0.5rem;
 }
 
@@ -114,17 +115,22 @@ h4{
     text-decoration: none;
     color: var(--color-gray);
 }
-.categorie-specifique h5{
+.categorie-specifique h6{
    text-transform: capitalize;
+   font-style: italic;
+   color: var(--color-gray);
 }
-.author-date{
+.title{
+    font-size: 22px;
+    padding-bottom: 1rem;
+    font-weight: 600;
+}
+.author-date,.author-date2{
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
+    margin-top: 1rem;
 }
-.author-date2{
-    display: flex;
-    justify-content:  flex-end;
-}
+
 .categorie-specifique .author-date span,
 .categorie-specifique .author-date2 span{
     margin: 0px 3px;

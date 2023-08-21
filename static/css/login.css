@@ -17,78 +17,70 @@
 
 }
 body{
-   background-color: var(--color-back);
    font-family: Arial, Helvetica, sans-serif;
    text-align: center;
 }
 
 
 .SignIn-Registre{
-   background-color: var(--color-create);
    display: inline-block;
-   padding: 20px 30px;
+   padding: 25px 8px;
+   width: 25%;
    border-radius: 10px;
    margin-top: 200px;
-  
-  
+   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 .SignIn-Registre h1{
-   text-transform: uppercase;
+   text-transform: capitalize;
    color: var(--color-h1);
-
+   margin-bottom: 2rem;
    
 }
+form{
+   padding-bottom: 2rem;
+}
 .submitForm{
-   /* background-color: var(--color-create); */
    cursor: pointer;
    font-family: var(--font-family);
-   /* background: linear-gradient(92.18deg, #096624 -9.52%, #17A53F 120.36%); */
-  
+  padding: 10px 0px;
+  margin-top: 15px;
    color: white;
    width: 100%;
-   font-size:larger ;
+   font-size: 17px;
+   text-align: center;
+   border: none;
   text-transform: capitalize;
   background: var(--color-linear-gradient);
- 
-   
+
 }
 
 .submitForm:hover{
    background-color: var(--color-h1);
 }
 
-/* form input[type="submit"]:disabled {
-   cursor: not-allowed;
-   background-color: var(--header-color-ssmabdi);
-} */
+
 .inputForm{
    padding: 10px; border: none;
    border-radius: 5px;
   
-   /* background-color:  var(--color-fig); */
    border: 1px solid var(--color-back);
-   width: 100%; /* Remplit la largeur du parent (dans ce cas, le formulaire) */
-   margin-bottom: 15px; /* Ajoute un espace entre les champs */
+   width: 100%; 
+   margin-bottom: 15px; 
+   outline: none;
 }
 .monform {
    text-align: center;
    display: flex;
    flex-direction: column;
-   align-items: center; /* Aligne les éléments horizontalement au centre */
-   justify-content: center; /* Aligne les éléments verticalement au centre */
-   max-width: 300px; /* Limite la largeur du formulaire */
-   margin: 0 auto; /* Centre le formulaire horizontalement */
+   align-items: center; 
+   justify-content: center; 
+   max-width: 300px; 
+   margin: 0 auto; 
 }
 
 
-button  {
-   margin-top: 10px;
-   background: var(--color-linear-gradient);
-   padding: 5px;
-  
-}
-button a{
-   text-decoration:double;
-   color: var(--color-create);
+
+.SignIn-Registre .link{
+   color: #8b5615;
    
 }

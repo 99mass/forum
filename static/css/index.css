@@ -33,9 +33,7 @@
   display: flex;
   flex-direction: column;
 }
-/* body{
-    background-color:var(--color-back);
- } */
+
 .container .container-1 .btn-filter{
    width: 90%;
    padding: 8px 0rem;
@@ -125,6 +123,7 @@
     height: 40px;
     margin-right: 2rem;
     cursor: pointer;
+    text-align: center;
     background-color: transparent;
     border: 1px solid var( --header-color);
     text-transform: capitalize;
@@ -199,10 +198,21 @@
    margin-bottom: 2rem;
    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
+.title{
+    font-size: 22px;
+    padding-bottom: 1rem;
+}
+.comment{
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 .categorie-specifique .comment-btn{
   text-decoration: none;
   margin-bottom: 10px;
   width: fit-content;
+  
  border: 2px solid transparent;
  padding: 5px 10px;
  background: var(--color-linear-gradient);
@@ -211,15 +221,17 @@
 }
 .categorie-specifique .comment-btn i {
   margin-right: 2px;
+  color: var(--color-white);
 }
 .categorie-specifique div,
-.categorie-specifique h5{
+.categorie-specifique h6{
     margin-bottom: 0.5rem;
 }
 
 .categorie-specifique  .like-dislik-content
 {
     display: flex;
+    margin: 0.5rem 0rem;
 }
 .categorie-specifique  .like-dislik-content form{
     margin-right: 15px;
@@ -237,10 +249,14 @@
 }
 .categorie-specifique div span{
     margin-right: 0.3rem;
-    font-size: var(--fontSize16);
+    font-size: var(--fontSize18);
     text-transform: capitalize;
-    font-weight: 700;
+    font-weight: bold;
     color: var(--color-gray);
+}
+.title {
+    font-size: 22px;
+    font-weight: 600;
 }
 .categorie-specifique div .fa-comments{
     margin-right: 0.5rem;
@@ -250,17 +266,17 @@
     text-decoration: none;
     color: var(--color-gray);
 }
-.categorie-specifique h5{
+.categorie-specifique h6{
    text-transform: capitalize;
+   font-style: italic;
+   color: var(--color-gray);
 }
-.author-date{
+.author-date,.author-date2{
     display: flex;
     justify-content: flex-end;
+    margin-top: 1rem;
 }
-.author-date2{
-    display: flex;
-    justify-content: flex-start;
-}
+
 .categorie-specifique .author-date span,
 .categorie-specifique .author-date2 span{
     margin: 0px 3px;
