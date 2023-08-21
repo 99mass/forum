@@ -139,25 +139,28 @@ footer{
         display: flex;
         flex-direction: column;
      }
-     header .nav3 .content-link {
-        display: flex;
-        flex-direction: column;
-     }
+    
      header .nav3  .content-link  *{
         display: flex;
         flex-direction: column;
      }
+     header .nav3  .content-link  form{
+      display: flex;
+      flex-direction: row;
+   }
+     header .nav3 form .button--submit{
+      margin-left: 6px;
+      margin-top: 10px;
+    }
      header .nav3 a {
         margin-bottom: 10px;
      }
-     .drop-daown{
-        display: flex;
-        flex-direction: row;
-    }
+     
    
   }
   @media screen and (max-width:375px) {
-    header .nav3 form .button--submit{
-      margin-top: 15px;
-    }
+      header .nav3  .content-link  form{
+      display: flex;
+      flex-direction: column;
+   }
   }
