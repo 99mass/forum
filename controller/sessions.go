@@ -9,23 +9,23 @@ import (
 	"github.com/gofrs/uuid"
 )
 
-func CreateSession(db *sql.DB, session models.Session) (error) {
+func CreateSession(db *sql.DB, session models.Session) (uuid.UUID, error) {
 	query := `
         INSERT INTO sessions (id, user_id, expires_at)
         VALUES (?, ?, ?);
     `
 
-	// newUUID, err := uuid.NewV4()
-	// if err != nil {
-	// 	return uuid.UUID{}, err
-	// }
-
-	_, err := db.Exec(query, session.ID, session.UserID, session.ExpiresAt)
+	newUUID, err := uuid.NewV4()
 	if err != nil {
-		return err
+		return uuid.UUID{}, err
 	}
 
-	return  nil
+	_, err = db.Exec(query, newUUID.String(), session.UserID, session.ExpiresAt)
+	if err != nil {
+		return uuid.UUID{}, err
+	}
+
+	return newUUID, nil
 }
 
 // GetSessionByID retrieves a session by ID from the database.

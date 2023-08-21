@@ -13,15 +13,20 @@ import (
 
 // Example function to create and send a login session cookie
 func AddSession(w http.ResponseWriter, userID uuid.UUID, db *sql.DB) {
-	// Generate a unique session ID using UUID
-	sessionID, err := uuid.NewV4()
+
+	
+	// Set session expiration time (e.g., 1 day from now)
+	expiration := time.Now().Add(24 * time.Hour)
+	session := models.Session{
+		UserID:    userID,
+		ExpiresAt: expiration,
+		CreatedAt: time.Now(),
+	}
+	sessionID,err := controller.CreateSession(db, session) // You'll need to implement this function
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
-
-	// Set session expiration time (e.g., 1 day from now)
-	expiration := time.Now().Add(24 * time.Hour)
 
 	// Create the session cookie
 	cookie := http.Cookie{
@@ -37,17 +42,7 @@ func AddSession(w http.ResponseWriter, userID uuid.UUID, db *sql.DB) {
 
 	// Store the session ID and user ID in your server-side data store (e.g., database)
 	// Here, you would use your database connection (db) to insert the session into your sessions table
-	session := models.Session{
-		ID:        sessionID,
-		UserID:    userID,
-		ExpiresAt: expiration,
-		CreatedAt: time.Now(),
-	}
-	err = controller.CreateSession(db, session) // You'll need to implement this function
-	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
+	
 }
 
 // Middleware to check session and authenticate user
