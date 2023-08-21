@@ -70,7 +70,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, pageError)
 				return
 			}
-			username := r.FormValue("user_name")
+			username := r.FormValue("username")
 			email := r.FormValue("email")
 			password := r.FormValue("password")
 			confirmPassword := r.FormValue("password_validation")
@@ -83,7 +83,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 				helper.RenderTemplate(w, "register", "auth", msgError)
 				return
 			}
-			_,err := controller.IsDuplicateUsernameOrEmail(db, username, email)
+			_, err := controller.IsDuplicateUsernameOrEmail(db, username, email)
 			if err != nil {
 				msgError.MsgError = "L'utilisateur existe déjà"
 				helper.RenderTemplate(w, "register", "auth", msgError)
@@ -103,14 +103,14 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 				Password:  hashedPassword,
 				CreatedAt: time.Now(),
 			}
-			
-			id,_ := controller.CreateUser(db, user)
-		
+
+			id, _ := controller.CreateUser(db, user)
+
 			// create a session - TODO
-			helper.AddSession(w, id,db)
+			helper.AddSession(w, id, db)
 			//Redirect to home page
 			//w.WriteHeader(http.StatusOK)
-			http.Redirect(w,r, "/", http.StatusSeeOther )
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 			//helper.RenderTemplate(w, "index", "index", "homedata")
 			return
 
