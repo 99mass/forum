@@ -38,18 +38,21 @@ header .nav2 a {
     margin-right: 30px;
     text-transform: capitalize;
 }
-header .nav2 form input{
+header .nav2 form input,
+header .nav3 form input{
     padding: 5px;
     border: none;
     outline: none;
     
 }
 
-header .nav2 form .input{
+header .nav2 form .input,
+header .nav3 form .input{
   border-bottom: 2px solid;
 }
 
-header .nav2 form .button--submit{
+header .nav2 form .button--submit,
+header .nav3 form .button--submit{
   padding-left: 15px;
   padding-right: 15px;
   background: var(--color-linear-gradient);
@@ -69,7 +72,32 @@ header .nav1 a:hover{
     color: var(--color-white);
     padding: 7px 15px;
 }
+header .nav3  div{
+    float: right;
+    width: fit-content;
+}
+header .nav3 .btn-fabars{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+header .nav3 .btn-fabars *{
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
 
+.title-forum{
+    font-size: 25px;
+    font-weight: bold;
+    text-transform: capitalize;
+   
+}
+header .nav3 {
+    display: none;
+}
 
 /* footer */
 
@@ -88,4 +116,48 @@ footer{
 }
   footer span{
     color: var(--header-color);
+  }
+
+  /* Medias query */
+
+  @media screen and (max-width:980px) {
+    header{
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+      text-align: left;
+      padding-top: 16px;
+    }
+      header .nav1,
+      header .nav2  {
+       display: none;
+       
+    }
+    header .nav3
+    {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+     }
+     header .nav3 .content-link {
+        display: flex;
+        flex-direction: column;
+     }
+     header .nav3  .content-link  *{
+        display: flex;
+        flex-direction: column;
+     }
+     header .nav3 a {
+        margin-bottom: 10px;
+     }
+     .drop-daown{
+        display: flex;
+        flex-direction: row;
+    }
+   
+  }
+  @media screen and (max-width:375px) {
+    header .nav3 form .button--submit{
+      margin-top: 15px;
+    }
   }
