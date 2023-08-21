@@ -78,31 +78,24 @@ func ValidateSession(session models.Session) bool {
 	return session.ExpiresAt.After(time.Now())
 }
 
-// func CreateSession(userID uuid.UUID, duration time.Duration) (uuid.UUID, error) {
-// 	sessionID, err := GenerateRandomID(32) // Génère un ID de session de 32 octets
-//     if err != nil {
-//         fmt.Println("Erreur lors de la génération de l'ID de session :", err)
-//         return
-//     }
+// GetSessionIDForUser retrieves the session ID for a given user ID from the database.
+func GetSessionIDForUser(db *sql.DB, userID uuid.UUID) (*uuid.UUID, error) {
+	var sessionID uuid.UUID
+	query := `
+		SELECT id FROM sessions
+		WHERE user_id = ? AND expires_at > NOW()
+		LIMIT 1;
+	`
 
-// 	expiresAt := time.Now().Add(duration)
-// 	createdAt := time.Now()
+	row := db.QueryRow(query, userID)
+	err := row.Scan(&sessionID)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			// No session found for the user
+			return nil, nil
+		}
+		return nil, err
+	}
 
-// 	_, err := db.Exec("INSERT INTO sessions (id, user_id, expires_at, created_at) VALUES (?, ?, ?, ?)",
-// 		sessionID, userID, expiresAt, createdAt)
-// 	if err != nil {
-// 		return "", err
-// 	}
-
-// 	return sessionID, nil
-// }
-
-// func GenerateRandomID(length int) (uuid.UUID, error) {
-// 	bytes := make([]byte, length)
-// 	_, err := rand.Read(bytes)
-// 	if err != nil {
-// 		return "", err
-// 	}
-
-// 	return hex.EncodeToString(bytes), nil
-// }
+	return &sessionID, nil
+}

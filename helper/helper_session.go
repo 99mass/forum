@@ -13,41 +13,36 @@ import (
 
 // Example function to create and send a login session cookie
 func AddSession(w http.ResponseWriter, userID uuid.UUID, db *sql.DB) {
-
-	existingSessionID, err := controller.GetSessionIDForUser(db, userID) // Implement this function to get the existing session ID
+	sessionID, err := uuid.NewV4()
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 
-	// Set session expiration time (e.g., 1 day from now)
 	expiration := time.Now().Add(24 * time.Hour)
-	session := models.Session{
-		UserID:    userID,
-		ExpiresAt: expiration,
-		CreatedAt: time.Now(),
-	}
-	sessionID,err := controller.CreateSession(db, session) // You'll need to implement this function
-	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
 
 	// Create the session cookie
 	cookie := http.Cookie{
 		Name:     "sessionID",
 		Value:    sessionID.String(),
 		Expires:  expiration,
-		HttpOnly: true, // Prevent JavaScript access
-		Path:     "/",  // Cookie is valid for all paths
+		HttpOnly: true,
+		Path:     "/",
 	}
 
-	// Set the cookie in the response
 	http.SetCookie(w, &cookie)
 
-	// Store the session ID and user ID in your server-side data store (e.g., database)
-	// Here, you would use your database connection (db) to insert the session into your sessions table
-	
+	session := models.Session{
+		ID:        sessionID,
+		UserID:    userID,
+		ExpiresAt: expiration,
+		CreatedAt: time.Now(),
+	}
+	_, err = controller.CreateSession(db, session) // You'll need to implement this function
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
 }
 
 // Middleware to check session and authenticate user
