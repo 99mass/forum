@@ -5,21 +5,27 @@ import (
 	"errors"
 
 	"forum/models"
+
+	"github.com/gofrs/uuid"
 )
 
-func CreateCategory(db *sql.DB, category models.Category) (int64, error) {
+func CreateCategory(db *sql.DB, category models.Category) (uuid.UUID, error) {
 	query := `
-        INSERT INTO categories (name_category)
-        VALUES (?);
+        INSERT INTO categories (id, name_category)
+        VALUES (?, ?);
     `
 
-	result, err := db.Exec(query, category.NameCategory)
+	newUUID, err := uuid.NewV4()
 	if err != nil {
-		return 0, err
+		return uuid.UUID{}, err
 	}
 
-	categoryID, _ := result.LastInsertId()
-	return categoryID, nil
+	_, err = db.Exec(query, newUUID.String(), category.NameCategory)
+	if err != nil {
+		return uuid.UUID{}, err
+	}
+
+	return newUUID, nil
 }
 
 func GetAllCategories(db *sql.DB) ([]models.Category, error) {
@@ -47,7 +53,7 @@ func GetAllCategories(db *sql.DB) ([]models.Category, error) {
 	return categories, nil
 }
 
-func GetCategoryByID(db *sql.DB, categoryID int64) (models.Category, error) {
+func GetCategoryByID(db *sql.DB, categoryID uuid.UUID) (models.Category, error) {
 	var category models.Category
 	query := `
         SELECT id, name_category
@@ -82,7 +88,7 @@ func UpdateCategory(db *sql.DB, category models.Category) error {
 	return nil
 }
 
-func DeleteCategory(db *sql.DB, categoryID int64) error {
+func DeleteCategory(db *sql.DB, categoryID uuid.UUID) error {
 	query := `
         DELETE FROM categories
         WHERE id = ?;

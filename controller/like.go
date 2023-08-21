@@ -6,39 +6,48 @@ import (
 	"time"
 
 	"forum/models"
+
+	"github.com/gofrs/uuid"
 )
 
-func CreatePostLike(db *sql.DB, like models.PostLike) (int64, error) {
+func CreatePostLike(db *sql.DB, like models.PostLike) (uuid.UUID, error) {
 	query := `
-        INSERT INTO post_likes (user_id, post_id, created_at)
-        VALUES (?, ?, ?);
+        INSERT INTO post_likes (id, user_id, post_id, created_at)
+        VALUES (?, ?, ?, ?);
     `
 
-	result, err := db.Exec(query, like.UserID, like.PostID, time.Now())
+	newUUID, err := uuid.NewV4()
 	if err != nil {
-		return 0, err
+		return uuid.UUID{}, err
 	}
 
-	likeID, _ := result.LastInsertId()
-	return likeID, nil
+	_, err = db.Exec(query, newUUID.String(), like.UserID, like.PostID, time.Now())
+	if err != nil {
+		return uuid.UUID{}, err
+	}
+
+	return newUUID, nil
 }
 
-func CreateCommentLike(db *sql.DB, like models.CommentLike) (int64, error) {
+func CreateCommentLike(db *sql.DB, like models.CommentLike) (uuid.UUID, error) {
 	query := `
-        INSERT INTO comment_likes (user_id, comment_id, created_at)
-        VALUES (?, ?, ?);
+        INSERT INTO comment_likes (id, user_id, comment_id, created_at)
+        VALUES (?, ?, ?, ?);
     `
 
-	result, err := db.Exec(query, like.UserID, like.CommentID, time.Now())
+	newUUID, err := uuid.NewV4()
 	if err != nil {
-		return 0, err
+		return uuid.UUID{}, err
 	}
 
-	likeID, _ := result.LastInsertId()
-	return likeID, nil
-}
+	_, err = db.Exec(query, newUUID.String(), like.UserID, like.CommentID, time.Now())
+	if err != nil {
+		return uuid.UUID{}, err
+	}
 
-func GetPostLikeByID(db *sql.DB, likeID int64) (models.PostLike, error) {
+	return newUUID, nil
+}
+func GetPostLikeByID(db *sql.DB, likeID uuid.UUID) (models.PostLike, error) {
 	var like models.PostLike
 	query := `
         SELECT id, user_id, post_id, created_at
@@ -58,7 +67,7 @@ func GetPostLikeByID(db *sql.DB, likeID int64) (models.PostLike, error) {
 	return like, nil
 }
 
-func GetCommentLikeByID(db *sql.DB, likeID int64) (models.CommentLike, error) {
+func GetCommentLikeByID(db *sql.DB, likeID uuid.UUID) (models.CommentLike, error) {
 	var like models.CommentLike
 	query := `
         SELECT id, user_id, comment_id, created_at
@@ -108,7 +117,7 @@ func UpdateCommentLike(db *sql.DB, like models.CommentLike) error {
 	return nil
 }
 
-func RemovePostLike(db *sql.DB, likeID int64) error {
+func RemovePostLike(db *sql.DB, likeID uuid.UUID) error {
 	query := `
         DELETE FROM post_likes
         WHERE id = ?;
@@ -122,7 +131,7 @@ func RemovePostLike(db *sql.DB, likeID int64) error {
 	return nil
 }
 
-func RemoveCommentLike(db *sql.DB, likeID int64) error {
+func RemoveCommentLike(db *sql.DB, likeID uuid.UUID) error {
 	query := `
         DELETE FROM comment_likes
         WHERE id = ?;
@@ -201,4 +210,57 @@ func GetAllCommentLikes(db *sql.DB) ([]models.CommentLike, error) {
 	}
 
 	return commentLikes, nil
+}
+
+func GetPostLikesByPostID(db *sql.DB, postID uuid.UUID) ([]models.PostLike, error) {
+    query := `
+        SELECT id, user_id, post_id, created_at
+        FROM post_likes
+        WHERE post_id = ?;
+    `
+
+    rows, err := db.Query(query, postID)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var likes []models.PostLike
+    for rows.Next() {
+        var like models.PostLike
+        err := rows.Scan(&like.ID, &like.UserID, &like.PostID, &like.CreatedAt)
+        if err != nil {
+            return nil, err
+        }
+        likes = append(likes, like)
+    }
+
+    return likes, nil
+}
+
+// GetCommentLikesByCommentID retrieves all likes for a specific comment by comment ID.
+func GetCommentLikesByCommentID(db *sql.DB, commentID uuid.UUID) ([]models.CommentLike, error) {
+    query := `
+        SELECT id, user_id, comment_id, created_at
+        FROM comment_likes
+        WHERE comment_id = ?;
+    `
+
+    rows, err := db.Query(query, commentID)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var commentLikes []models.CommentLike
+    for rows.Next() {
+        var commentLike models.CommentLike
+        err := rows.Scan(&commentLike.ID, &commentLike.UserID, &commentLike.CommentID, &commentLike.CreatedAt)
+        if err != nil {
+            return nil, err
+        }
+        commentLikes = append(commentLikes, commentLike)
+    }
+
+    return commentLikes, nil
 }

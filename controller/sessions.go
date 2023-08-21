@@ -5,21 +5,31 @@ import (
 	"time"
 
 	"forum/models"
+
+	"github.com/gofrs/uuid"
 )
 
-// CreateSession creates a new session in the database.
-func CreateSession(db *sql.DB, session models.Session) error {
+func CreateSession(db *sql.DB, session models.Session) (uuid.UUID, error) {
 	query := `
         INSERT INTO sessions (id, user_id, expires_at)
         VALUES (?, ?, ?);
     `
 
-	_, err := db.Exec(query, session.ID, session.UserID, session.ExpiresAt)
-	return err
+	newUUID, err := uuid.NewV4()
+	if err != nil {
+		return uuid.UUID{}, err
+	}
+
+	_, err = db.Exec(query, newUUID.String(), session.UserID, session.ExpiresAt)
+	if err != nil {
+		return uuid.UUID{}, err
+	}
+
+	return newUUID, nil
 }
 
 // GetSessionByID retrieves a session by ID from the database.
-func GetSessionByID(db *sql.DB, sessionID string) (models.Session, error) {
+func GetSessionByID(db *sql.DB, sessionID uuid.UUID) (models.Session, error) {
 	var session models.Session
 	query := `
         SELECT id, user_id, expires_at
@@ -36,24 +46,24 @@ func GetSessionByID(db *sql.DB, sessionID string) (models.Session, error) {
 }
 
 // GetSessionUserID retrieves the user ID associated with a session from the database.
-func GetSessionUserID(db *sql.DB, sessionID string) (int64, error) {
+func GetSessionUserID(db *sql.DB, sessionID uuid.UUID) (uuid.UUID, error) {
 	query := `
         SELECT user_id
         FROM sessions
         WHERE id = ? AND expires_at > ?;
     `
 
-	var userID int64
+	var userID uuid.UUID
 	err := db.QueryRow(query, sessionID, time.Now()).Scan(&userID)
 	if err != nil {
-		return 0, err
+		return uuid.UUID{}, err
 	}
 
 	return userID, nil
 }
 
 // DeleteSession deletes a session by ID from the database.
-func DeleteSession(db *sql.DB, sessionID string) error {
+func DeleteSession(db *sql.DB, sessionID uuid.UUID) error {
 	query := `
         DELETE FROM sessions
         WHERE id = ?;
@@ -68,7 +78,7 @@ func ValidateSession(session models.Session) bool {
 	return session.ExpiresAt.After(time.Now())
 }
 
-// func CreateSession(userID int64, duration time.Duration) (string, error) {
+// func CreateSession(userID uuid.UUID, duration time.Duration) (uuid.UUID, error) {
 // 	sessionID, err := GenerateRandomID(32) // Génère un ID de session de 32 octets
 //     if err != nil {
 //         fmt.Println("Erreur lors de la génération de l'ID de session :", err)
@@ -87,7 +97,7 @@ func ValidateSession(session models.Session) bool {
 // 	return sessionID, nil
 // }
 
-// func GenerateRandomID(length int) (string, error) {
+// func GenerateRandomID(length int) (uuid.UUID, error) {
 // 	bytes := make([]byte, length)
 // 	_, err := rand.Read(bytes)
 // 	if err != nil {

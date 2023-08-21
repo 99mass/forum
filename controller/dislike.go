@@ -6,39 +6,49 @@ import (
 	"time"
 
 	"forum/models"
+
+	"github.com/gofrs/uuid"
 )
 
-func CreatePostDislike(db *sql.DB, dislike models.PostDislike) (int64, error) {
-	query := `
-        INSERT INTO post_dislikes (user_id, post_id, created_at)
-        VALUES (?, ?, ?);
+func CreatePostDislike(db *sql.DB, dislike models.PostDislike) (uuid.UUID, error) {
+    query := `
+        INSERT INTO post_dislikes (id, user_id, post_id, created_at)
+        VALUES (?, ?, ?, ?);
     `
 
-	result, err := db.Exec(query, dislike.UserID, dislike.PostID, time.Now())
-	if err != nil {
-		return 0, err
-	}
+    newUUID, err := uuid.NewV4()
+    if err != nil {
+        return uuid.UUID{}, err
+    }
 
-	dislikeID, _ := result.LastInsertId()
-	return dislikeID, nil
+    _, err = db.Exec(query, newUUID.String(), dislike.UserID, dislike.PostID, time.Now())
+    if err != nil {
+        return uuid.UUID{}, err
+    }
+
+    return newUUID, nil
 }
 
-func CreateCommentDislike(db *sql.DB, dislike models.CommentDislike) (int64, error) {
-	query := `
-        INSERT INTO comment_dislikes (user_id, comment_id, created_at)
-        VALUES (?, ?, ?);
+func CreateCommentDislike(db *sql.DB, dislike models.CommentDislike) (uuid.UUID, error) {
+    query := `
+        INSERT INTO comment_dislikes (id, user_id, comment_id, created_at)
+        VALUES (?, ?, ?, ?);
     `
 
-	result, err := db.Exec(query, dislike.UserID, dislike.CommentID, time.Now())
-	if err != nil {
-		return 0, err
-	}
+    newUUID, err := uuid.NewV4()
+    if err != nil {
+        return uuid.UUID{}, err
+    }
 
-	dislikeID, _ := result.LastInsertId()
-	return dislikeID, nil
+    _, err = db.Exec(query, newUUID.String(), dislike.UserID, dislike.CommentID, time.Now())
+    if err != nil {
+        return uuid.UUID{}, err
+    }
+
+    return newUUID, nil
 }
 
-func GetPostDislikeByID(db *sql.DB, dislikeID int64) (models.PostDislike, error) {
+func GetPostDislikeByID(db *sql.DB, dislikeID uuid.UUID) (models.PostDislike, error) {
 	var dislike models.PostDislike
 	query := `
         SELECT id, user_id, post_id, created_at
@@ -58,7 +68,7 @@ func GetPostDislikeByID(db *sql.DB, dislikeID int64) (models.PostDislike, error)
 	return dislike, nil
 }
 
-func GetCommentDislikeByID(db *sql.DB, dislikeID int64) (models.CommentDislike, error) {
+func GetCommentDislikeByID(db *sql.DB, dislikeID uuid.UUID) (models.CommentDislike, error) {
 	var dislike models.CommentDislike
 	query := `
         SELECT id, user_id, comment_id, created_at
@@ -108,7 +118,7 @@ func UpdateCommentDislike(db *sql.DB, dislike models.CommentDislike) error {
 	return nil
 }
 
-func RemovePostDislike(db *sql.DB, dislikeID int64) error {
+func RemovePostDislike(db *sql.DB, dislikeID uuid.UUID) error {
 	query := `
         DELETE FROM post_dislikes
         WHERE id = ?;
@@ -122,7 +132,7 @@ func RemovePostDislike(db *sql.DB, dislikeID int64) error {
 	return nil
 }
 
-func RemoveCommentDislike(db *sql.DB, dislikeID int64) error {
+func RemoveCommentDislike(db *sql.DB, dislikeID uuid.UUID) error {
 	query := `
         DELETE FROM comment_dislikes
         WHERE id = ?;
@@ -201,4 +211,58 @@ func GetAllCommentDislikes(db *sql.DB) ([]models.CommentDislike, error) {
 	}
 
 	return commentDislikes, nil
+}
+
+// GetDislikesByPostID retrieves all dislikes for a specific post by post ID.
+func GetDislikesByPostID(db *sql.DB, postID uuid.UUID) ([]models.PostDislike, error) {
+    query := `
+        SELECT id, user_id, post_id, created_at
+        FROM post_dislikes 
+        WHERE post_id = ?;
+    `
+
+    rows, err := db.Query(query, postID)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var dislikes []models.PostDislike
+    for rows.Next() {
+        var dislike models.PostDislike
+        err := rows.Scan(&dislike.ID, &dislike.UserID, &dislike.PostID, &dislike.CreatedAt)
+        if err != nil {
+            return nil, err
+        }
+        dislikes = append(dislikes, dislike)
+    }
+
+    return dislikes, nil
+}
+
+// GetCommentDislikesByCommentID retrieves all dislikes for a specific comment by comment ID.
+func GetCommentDislikesByCommentID(db *sql.DB, commentID uuid.UUID) ([]models.CommentDislike, error) {
+    query := `
+        SELECT id, user_id, comment_id, created_at
+        FROM comment_dislikes
+        WHERE comment_id = ?;
+    `
+
+    rows, err := db.Query(query, commentID)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var commentDislikes []models.CommentDislike
+    for rows.Next() {
+        var commentDislike models.CommentDislike
+        err := rows.Scan(&commentDislike.ID, &commentDislike.UserID, &commentDislike.CommentID, &commentDislike.CreatedAt)
+        if err != nil {
+            return nil, err
+        }
+        commentDislikes = append(commentDislikes, commentDislike)
+    }
+
+    return commentDislikes, nil
 }
