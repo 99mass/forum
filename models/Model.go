@@ -73,7 +73,13 @@ type CommentDislike struct {
 
 type HomeData struct{
 	Posts	Post
-	Comment []Comment
+	Comment []CommentDetails
 	PostLike int
 	PostDislike int
+}
+
+type CommentDetails struct{
+	Comment Comment
+	CommentLike int
+	CommentDislike int
 }

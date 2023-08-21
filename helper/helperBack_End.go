@@ -130,13 +130,30 @@ func GetPostForHome(db *sql.DB) ([]models.HomeData, error) {
 		if err != nil {
 			return nil, err
 		}
+		var commentdetails []models.CommentDetails
+		for _,w := range comments{
+			var commentdetail models.CommentDetails
+			commentdetail.Comment = w
+			commentlike,err := controller.GetCommentLikesByCommentID(db,w.ID)
+			if err != nil {
+				return nil,err
+			}
+			commentdislike,err := controller.GetCommentDislikesByCommentID(db,w.ID)
+			if err != nil {
+				return nil,err
+			}
+			commentdetail.CommentLike = len(commentlike)
+			commentdetail.CommentDislike = len(commentdislike)
+			commentdetails = append(commentdetails, commentdetail)
+
+		}
 		dislike, err := controller.GetDislikesByPostID(db, post.ID)
 		if err != nil {
 			return nil, err
 		}
 		nbrdislikes := len(dislike)
 		HomeData.Posts = post
-		HomeData.Comment = comments
+		HomeData.Comment = commentdetails
 		HomeData.PostLike = nbrlikes
 		HomeData.PostDislike = nbrdislikes
 

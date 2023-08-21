@@ -239,3 +239,30 @@ func GetDislikesByPostID(db *sql.DB, postID uuid.UUID) ([]models.PostDislike, er
 
     return dislikes, nil
 }
+
+// GetCommentDislikesByCommentID retrieves all dislikes for a specific comment by comment ID.
+func GetCommentDislikesByCommentID(db *sql.DB, commentID uuid.UUID) ([]models.CommentDislike, error) {
+    query := `
+        SELECT id, user_id, comment_id, created_at
+        FROM comment_dislikes
+        WHERE comment_id = ?;
+    `
+
+    rows, err := db.Query(query, commentID)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var commentDislikes []models.CommentDislike
+    for rows.Next() {
+        var commentDislike models.CommentDislike
+        err := rows.Scan(&commentDislike.ID, &commentDislike.UserID, &commentDislike.CommentID, &commentDislike.CreatedAt)
+        if err != nil {
+            return nil, err
+        }
+        commentDislikes = append(commentDislikes, commentDislike)
+    }
+
+    return commentDislikes, nil
+}

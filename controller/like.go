@@ -237,3 +237,30 @@ func GetPostLikesByPostID(db *sql.DB, postID uuid.UUID) ([]models.PostLike, erro
 
     return likes, nil
 }
+
+// GetCommentLikesByCommentID retrieves all likes for a specific comment by comment ID.
+func GetCommentLikesByCommentID(db *sql.DB, commentID uuid.UUID) ([]models.CommentLike, error) {
+    query := `
+        SELECT id, user_id, comment_id, created_at
+        FROM comment_likes
+        WHERE comment_id = ?;
+    `
+
+    rows, err := db.Query(query, commentID)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var commentLikes []models.CommentLike
+    for rows.Next() {
+        var commentLike models.CommentLike
+        err := rows.Scan(&commentLike.ID, &commentLike.UserID, &commentLike.CommentID, &commentLike.CreatedAt)
+        if err != nil {
+            return nil, err
+        }
+        commentLikes = append(commentLikes, commentLike)
+    }
+
+    return commentLikes, nil
+}
