@@ -12,6 +12,10 @@ import (
 	"time"
 )
 
+type ErrRegister struct {
+	MsgError string
+}
+
 func SinginHandler(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -55,10 +59,12 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 func RegisterHandler(db *sql.DB) http.HandlerFunc {
 	fmt.Println("Register handler")
 	return func(w http.ResponseWriter, r *http.Request) {
+		msgError := new(ErrRegister)
 
+		// Handle according to the method
 		switch r.Method {
 		case http.MethodPost:
-			fmt.Println("envoie du formulaire")
+			helper.Debug("envoie du formulaire")
 			ok, pageError := middlewares.CheckRequest(r, "/register", "post")
 			if !ok {
 				helper.ErrorPage(w, pageError)
@@ -72,12 +78,11 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			hashedPassword, _ := helper.HashPassword(password)
 
 			if !helper.ConfirmPasswordsMatch(password, confirmPassword) {
-				//http.Error(w, "Les mots de passe ne correspondent pas", http.StatusBadRequest)
-				fmt.Println("Les mots de passe ne sont pas conformes")
-				helper.RenderTemplate(w, "register", "auth", "error")
+				//fmt.Println("Les mots de passe ne sont pas conformes")
+				msgError.MsgError = "Les mots de passe ne sont pas conformes"
+				helper.RenderTemplate(w, "register", "auth", msgError)
 				return
 			}
-			fmt.Println("password matches")
 
 			user := models.User{
 				Username:  username,
@@ -85,19 +90,26 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 				Password:  hashedPassword,
 				CreatedAt: time.Now(),
 			}
-
+			errFormat := helper.CheckRegisterFormat(username, email, password)
+			fmt.Println(errFormat)
+			if errFormat != nil {
+				msgError.MsgError = errFormat.Error()
+				helper.RenderTemplate(w, "register", "auth", msgError)
+				return
+			}
 			_, err := user.Register(db)
 			if err != nil {
 				//http.Error(w, err.Error(), http.StatusBadRequest)
+				msgError.MsgError = err.Error()
 				helper.Debug(err.Error())
-				helper.RenderTemplate(w, "register", "auth", "error")
+				helper.RenderTemplate(w, "register", "auth", msgError)
 				return
 			}
 
-			// create a session
+			// create a session - TODO
 
 			//Redirect to home page
-			fmt.Println("enregistrement réussi")
+			//fmt.Println("enregistrement réussi")
 			helper.RenderTemplate(w, "index", "index", "homedata")
 
 		case http.MethodGet:
@@ -107,7 +119,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, pageError)
 				return
 			}
-			helper.RenderTemplate(w, "register", "auth", "error")
+			helper.RenderTemplate(w, "register", "auth", "")
 		default:
 			helper.ErrorPage(w, 404)
 			return

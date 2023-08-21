@@ -25,6 +25,9 @@
         placeholder="Confirm your password">
     <button class="auth_btn">Register</button>
     <a href="/signin">I have an account</a>
+    {{if gt (len .MsgError) 0}}
+        <p class="msg_error"> Error: {{.MsgError}} </p>
+    {{end}}
 </form>
 
 
