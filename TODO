@@ -24,6 +24,10 @@ Pages:
 
     Authentication:
         [ ] Implement user registration with email, username, and password.
+            [x] Confirm Password
+            [v] check User Name Validation
+            [v] check Email validation
+            [v] check Password validation
         [x] Check for duplicate emails during registration.
         [x] Encrypt and securely store passwords.
         [ ] Create login sessions using cookies with expiration dates.

@@ -122,7 +122,7 @@ func (user *User) Register(db *sql.DB) (bool, error) {
 	id, err := user.CreateUser(db)
 	if err != nil {
 		helper.Debug(err.Error())
-		return false, errors.New("Erreur lors de l'enregistrement de l'utilisateur")
+		return false, errors.New(err.Error())
 	}
 	helper.Debug("Register succeed, Id: " + strconv.FormatInt(id, 10))
 	return true, nil

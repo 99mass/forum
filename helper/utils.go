@@ -2,18 +2,39 @@ package helper
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
+func CheckRegisterFormat(username, email, password string) error {
+	okUserName, errUN := CheckUserName(username)
+	okEmail, errE := CheckEmail(email)
+	okPassWord, errP := CheckPassword(password)
+	if !okUserName {
+		//Debug(errUN.Error())
+		fmt.Println(errUN)
+		return errUN
+	}
+	if !okEmail {
+		Debug(errE.Error())
+		return errE
+	}
+	if !okPassWord {
+		Debug(errP.Error())
+		return errP
+	}
+	return nil
+}
+
 func CheckEmail(email string) (bool, error) {
 
 	emailRegex := `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`
 
-	match, err := regexp.MatchString(emailRegex, email)
-	if err != nil {
-		return false, errors.New("Erreur lors de la validation de l'adresse e-mail")
+	match, _ := regexp.MatchString(emailRegex, email)
+	if !match {
+		return false, errors.New("Format email non valide!")
 	}
 
 	return match, nil
@@ -22,25 +43,53 @@ func CheckEmail(email string) (bool, error) {
 func CheckPassword(password string) (bool, error) {
 	// Cette expression exige au moins 8 caractères avec au moins une lettre majuscule,
 	// une lettre minuscule, un chiffre et un caractère spécial.
-	passwordRegex := `^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$`
+	// Vérification de la longueur
 
-	match, err := regexp.MatchString(passwordRegex, password)
-	if err != nil {
-		return false, errors.New("Erreur lors de la validation du mot de passe")
+	if len(password) < 8 || len(password) > 25 {
+		fmt.Println("Mot de passe invalide en termes de longueur")
+		return false, errors.New("Longueur mot de passe non valide: minimum 8, maximum 25")
 	}
 
-	return match, nil
+	// Vérification des autres conditions avec des expressions régulières
+	lowercaseRegex := regexp.MustCompile(`[a-z]`)
+	uppercaseRegex := regexp.MustCompile(`[A-Z]`)
+	digitRegex := regexp.MustCompile(`\d`)
+	specialCharRegex := regexp.MustCompile(`[@$!%*?&_\-]`)
+
+	if !lowercaseRegex.MatchString(password) {
+		fmt.Println("Le mot de passe doit contenir au moins une lettre minuscule")
+		return false, errors.New("Le mot de passe doit contenir au moins une lettre minuscule")
+	}
+	if !uppercaseRegex.MatchString(password) {
+		fmt.Println("Le mot de passe doit contenir au moins une lettre majuscule")
+		return false, errors.New("Le mot de passe doit contenir au moins une lettre majuscule")
+	}
+	if !digitRegex.MatchString(password) {
+		fmt.Println("Le mot de passe doit contenir au moins un chiffre")
+		return false, errors.New("Le mot de passe doit contenir au moins un chiffre")
+	}
+	if !specialCharRegex.MatchString(password) {
+		fmt.Println("Le mot de passe doit contenir au moins un caractère spécial")
+		return false, errors.New("Le mot de passe doit contenir au moins un caractère spécial")
+	}
+
+	// if !match {
+	// 	return false, errors.New("Format mot de passe non valide!")
+	// }
+
+	return true, nil
 
 }
 
 func CheckUserName(username string) (bool, error) {
-
+	Debug("checkusername:" + username)
 	// Cette expression exige que le pseudo ait entre 5 et 20 caractères alphanumériques.
 	usernameRegex := `^[a-zA-Z0-9]{5,20}$`
 
-	match, err := regexp.MatchString(usernameRegex, username)
-	if err != nil {
-		return false, errors.New("Erreur lors de la validation du pseudo")
+	match, _ := regexp.MatchString(usernameRegex, username)
+
+	if !match {
+		return false, errors.New("Format du username non valide!")
 	}
 
 	return match, nil
