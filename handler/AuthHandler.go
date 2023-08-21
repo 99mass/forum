@@ -111,7 +111,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			//Redirect to home page
 			//w.WriteHeader(http.StatusOK)
 			http.Redirect(w, r, "/", http.StatusSeeOther)
-			//helper.RenderTemplate(w, "index", "index", "homedata")
+			helper.RenderTemplate(w, "index", "index", "homedata")
 			return
 
 		case http.MethodGet:
