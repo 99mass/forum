@@ -25,7 +25,7 @@ func CreateUser(db *sql.DB, user models.User) (uuid.UUID, error) {
 	if err != nil {
 		return uuid.UUID{}, err
 	}
-
+	
 	return newUUID, nil
 }
 
@@ -85,12 +85,18 @@ func GetUserByEmail(db *sql.DB, email string) (models.User, error) {
 		LIMIT 1;
     `
 
-	err := db.QueryRow(query, email).Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
+	stmt, err := db.Prepare(query)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return models.User{}, errors.New("utilisateur non trouvé")
-		}
-		return models.User{}, err
+		return user, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(user.Email)
+	err = row.Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
+	
+	if err != nil {
+		
+		return user, err
 	}
 
 	return user, nil

@@ -2,118 +2,12 @@ package helper
 
 import (
 	"database/sql"
-	"encoding/json"
-	"errors"
 	"fmt"
 	"forum/controller"
 	"forum/models"
-	"net/http"
-	"strconv"
-	"strings"
 
 	"github.com/gofrs/uuid"
 )
-
-// ******************* VERIF IF THE STRING IS AN INT*****************************************************
-func IsInt(s string) bool {
-	for _, v := range s {
-		if v < '0' || v > '9' {
-			return false
-		}
-	}
-	return true
-}
-
-// ***************************** GET JSON DATA ************************************************************
-func GetJson(url string, model interface{}) error {
-	response, err := http.Get(url)
-	if err != nil {
-		return err
-	}
-	defer response.Body.Close()
-	return json.NewDecoder(response.Body).Decode(model)
-}
-
-// ******************************* PARSE FILE IN URL *****************
-func PArseUlr(r *http.Request, match string) (bool, int) {
-	index := strings.Split(r.URL.Path[1:], "/")
-	if len(index) == 2 && index[0] == match {
-		id, err := strconv.Atoi(index[1])
-		if err == nil {
-			return true, id
-		}
-	}
-	return false, 0
-}
-
-// *************************************** FILTER THE DATA WITH THE PARAM****************
-func FilterData() {
-
-}
-
-func FilterCategpry() {
-
-}
-
-func FilterCreationDate() {
-
-}
-
-func FilterLocation() {
-
-}
-
-// *************************************** FECTH ERROR **********************************
-func FecthError(ch <-chan error) bool {
-	for err := range ch {
-		if err != nil {
-			fmt.Println(err)
-			return true
-		}
-	}
-	return false
-}
-
-// ************************************** REMOVE THE DUP *********************************
-func removeDuplicateStr(strSlice []string) []string {
-	allKeys := make(map[string]bool)
-	list := []string{}
-	for _, item := range strSlice {
-		if _, value := allKeys[item]; !value {
-			allKeys[item] = true
-			list = append(list, item)
-		}
-	}
-	return list
-}
-
-func FilterLoc(_items []string, s string) []string {
-	items := []string{}
-	for _, v := range _items {
-		if strings.Contains(strings.ToLower(v), strings.ToLower(s)) {
-			items = append(items, v)
-		}
-	}
-	return items
-}
-
-func CheckErr(errs ...error) bool {
-	for _, v := range errs {
-		if v != nil {
-			return true
-		}
-	}
-	return false
-}
-
-func GetYear(date string) (int, error) {
-	stringyear := strings.Split(date, "-")[2]
-	if len(stringyear) == 4 {
-		year, err := strconv.Atoi(stringyear)
-		return year, err
-	}
-	return 0, errors.New("len error")
-}
 
 func Debug(str string) {
 	fmt.Println(str)
@@ -214,4 +108,37 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeData, error) {
 	HomeData.PostDislike = nbrdislikes
 
 	return HomeData, nil
+}
+
+// func Register(db *sql.DB, user *models.User) (bool, error) {
+
+// 	// Check Duplicated case
+// 	dup, err := controller.IsDuplicateUsernameOrEmail(db, user.Username, user.Email)
+// 	if dup {
+// 		return false, errors.New("Nom d'utilisateur ou adresse e-mail déjà pris")
+// 	}
+
+// 	id, err := controller.CreateUser(db, user)
+// 	if err != nil {
+// 		Debug(err.Error())
+// 		return false, errors.New("Erreur lors de l'enregistrement de l'utilisateur")
+// 	}
+// 	//Debug("Register succeed, Id: " + strconv.FormatInt(id, 10))
+// 	return true, nil
+// }
+
+func ConnectUser(db *sql.DB, user *models.User) bool {
+	clientTOconnect := user
+	_, err := controller.GetUserByEmail(db, user.Email)
+
+	if err != nil {
+		return false
+	}
+
+	if user.Password == clientTOconnect.Password {
+		return true
+	}
+
+	return false
+
 }

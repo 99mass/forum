@@ -42,7 +42,7 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 				Password:  hashedPassword,
 				CreatedAt: time.Now(),
 			}
-			if user.ConnectUser(db) {
+			if helper.ConnectUser(db, &user) {
 				// Create a session
 
 				// Redirect to home
@@ -83,12 +83,11 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 				helper.RenderTemplate(w, "register", "auth", msgError)
 				return
 			}
-
-			user := models.User{
-				Username:  username,
-				Email:     email,
-				Password:  hashedPassword,
-				CreatedAt: time.Now(),
+			_,err := controller.IsDuplicateUsernameOrEmail(db, username, email)
+			if err != nil {
+				msgError.MsgError = "L'utilisateur existe déjà"
+				helper.RenderTemplate(w, "register", "auth", msgError)
+				return
 			}
 			errFormat := helper.CheckRegisterFormat(username, email, password)
 			fmt.Println(errFormat)
@@ -97,19 +96,19 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 				helper.RenderTemplate(w, "register", "auth", msgError)
 				return
 			}
-			_, err := user.Register(db)
-			if err != nil {
-				//http.Error(w, err.Error(), http.StatusBadRequest)
-				msgError.MsgError = err.Error()
-				helper.Debug(err.Error())
-				helper.RenderTemplate(w, "register", "auth", msgError)
-				return
+
+			user := models.User{
+				Username:  username,
+				Email:     email,
+				Password:  hashedPassword,
+				CreatedAt: time.Now(),
 			}
-
+			
+			id,_ := controller.CreateUser(db, user)
+		
 			// create a session - TODO
-
+			helper.AddSession(w, id,db)
 			//Redirect to home page
-			//fmt.Println("enregistrement réussi")
 			helper.RenderTemplate(w, "index", "index", "homedata")
 
 		case http.MethodGet:

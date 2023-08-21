@@ -43,7 +43,7 @@ func AddSession(w http.ResponseWriter, userID uuid.UUID, db *sql.DB) {
 		ExpiresAt: expiration,
 		CreatedAt: time.Now(),
 	}
-	_, err = controller.CreateSession(db, session) // You'll need to implement this function
+	err = controller.CreateSession(db, session) // You'll need to implement this function
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
