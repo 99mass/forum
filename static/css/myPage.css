@@ -1,0 +1,287 @@
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+:root{
+    --color-gray:gray;
+    --color-black:black;
+    --color-white:#fff;
+    --fontSize16:16px;
+    --color-linear-gradient:linear-gradient(to right,#77530a,#ffd277,#77530a,#77530a,#ffd277,#77530a);
+}
+.container{
+    width: 100%;
+    height: auto;
+    margin-top:  150px;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    padding-right: 1rem;
+    z-index: -1;
+}
+.container *{
+   font-size: var(  --fontSize16);
+
+}
+.container .container-1{
+   width: 20%;
+   border-right: 2px solid var(--color-gray);
+   height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.container .container-1 .btn-filter{
+   width: 90%;
+   padding: 8px 0rem;
+   cursor: pointer;
+   background: var(--color-linear-gradient);
+   color: var(--color-white);
+   border: none;
+   box-shadow: 4px 4px 2px var(--color-gray);
+   text-transform: capitalize;
+   box-sizing: border-box;
+}
+.container .container-1 .btn-filter i{
+   font-size: 20px !important;
+}
+.container .container-1 .filter-form{
+    width: 90%;
+    height: auto;
+    margin-top: 0rem;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.container .container-1 .filter-form form{
+    display: flex;
+    flex-direction: column;
+    padding: 25px 5px 10px 5px;
+}
+.container .container-1 .filter-form form *{
+    width: 100%;
+    margin-bottom: 5px;
+}
+.container .container-1 .filter-form form select{
+    padding: 8px 5px;
+}
+.container .container-1 .filter-form form div  input,
+.container .container-1 .filter-form form div div input{
+    padding: 5px 5px;
+    margin-top: 0.5rem;
+}
+
+.container .container-1 .filter-form form div  label,
+.container .container-1 .filter-form form div div label{
+    text-transform: capitalize;
+   color: var(--color-gray);
+
+}
+.container .container-1 .filter-form form button{
+    padding: 8px 0px;
+    background: var(--color-linear-gradient);
+    border: none;
+    color: var(--color-white);
+    text-transform: capitalize;
+    cursor: pointer;
+}
+.container .container-2{
+    width: 78%;
+    box-sizing: border-box;
+}
+.container .container-2 .categori-menu{
+    display: flex;
+    width: 100%;
+    overflow-x: scroll;
+    padding-bottom: 1rem;
+    
+}
+.container .container-2 .categori-menu {
+    scrollbar-width: thin;
+    scrollbar-color:  var(--color-white) var(--color-white); 
+}
+
+.container .container-2 .categori-menu::-webkit-scrollbar {
+    height: 0px;
+}
+
+.container .container-2 .categori-menu::-webkit-scrollbar-thumb {
+    background-color: var(--color-white);
+}
+
+.container .container-2 .categori-menu::-webkit-scrollbar-track {
+    background-color:var(--color-white); 
+}
+
+.title{
+    font-size: 22px;
+    padding-bottom: 1rem;
+    font-weight: 600;
+}
+
+
+
+.container .container-2 .categori-menu input{
+    width: 120px;
+    height: 40px;
+    margin-right: 2rem;
+    cursor: pointer;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid var( --header-color);
+    text-transform: capitalize;
+}
+.container .container-2 .categori-menu input:hover {
+    background: var(--color-linear-gradient);
+   color: var(--color-white);
+   border-radius: 0.5rem;
+}
+.container .container-2 .bloc-add-post{
+    display: block;
+}
+.container .container-2 .bloc-add-post form{
+    width: 100%;
+    margin-bottom: 2rem;
+    text-align: center;
+
+}
+.container .container-2 .bloc-add-post form div *{
+    width: 50%;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: transparent;
+    border: 1px solid var(--header-color);
+    text-transform: capitalize;
+    resize: none;
+    outline: none;
+}
+.container .container-2 .bloc-add-post form button{
+    padding:1rem 6rem;
+    background: var(--color-linear-gradient);
+    color: var(--color-white);
+    text-transform: capitalize;
+    box-shadow: 3px 3px 1px var(--color-gray);
+    border: none;
+    cursor: pointer;
+}
+.new-post{
+    padding:0.5rem 0rem;
+    margin-bottom: 2rem;
+    width: 12%;
+    background: var(--color-linear-gradient);
+    text-align: center;
+    color: var(--color-white);
+    box-shadow: 4px 4px 2px var(--color-gray);
+    cursor: pointer;
+}
+
+.new-post i{
+    font-size: var(--fontSize18);
+    margin-right: 0.1rem;
+}
+.post-displaying{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 150;
+}
+ h3 {
+    width: 100%;
+    padding: 1rem 0.8rem;
+    background-color: gainsboro;
+    text-transform: capitalize;
+    margin-bottom: 1.5rem;
+    color: var(--header-color);
+}
+.categorie-specifique {
+    width: 95%;
+    height: fit-content;
+   display: flex;
+   flex-direction: column;
+   padding: 1rem;
+   margin-bottom: 2rem;
+   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.categorie-specifique .comment-btn{
+    text-decoration: none;
+    margin-bottom: 10px;
+    width: fit-content;
+   border: 2px solid transparent;
+   padding: 5px 10px;
+   background: var(--color-linear-gradient);
+   color: var(--color-white);
+   text-transform: capitalize;
+  }
+  .categorie-specifique .comment-btn i {
+    margin-right: 2px;
+  }
+.categorie-specifique  .like-dislik-content
+{
+    display: flex;
+}
+.categorie-specifique  .like-dislik-content form{
+    margin-right: 15px;
+}
+.categorie-specifique  .like-dislik-content form button{
+ border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.categorie-specifique div,
+.categorie-specifique h6{
+    margin-bottom: 0.5rem;
+}
+
+.categorie-specifique div span i,
+.categorie-specifique div i{
+   font-size: 1.2rem;
+   margin-right: 0.2rem;
+   color: var(--header-color);
+}
+.categorie-specifique div span{
+    margin-right: 0.3rem;
+    font-size: var(--fontSize16);
+    text-transform: capitalize;
+    font-weight: 700;
+    color: var(--color-gray);
+}
+.categorie-specifique div .fa-comments{
+    margin-right: 0.5rem;
+    font-size: 22px;
+}
+.categorie-specifique div a{
+    text-decoration: none;
+    color: var(--color-gray);
+}
+.categorie-specifique h6{
+   text-transform: capitalize;
+   font-style: italic;
+   color: var(--color-gray);
+}
+.author-date{
+    display: flex;
+    justify-content: flex-end;
+}
+.author-date2{
+    display: flex;
+    justify-content: flex-end;
+}
+.categorie-specifique .author-date span,
+.categorie-specifique .author-date2 span{
+    margin: 0px 3px;
+}
+
+.see-post{
+    margin: 2rem 0rem;
+    width: 100%;
+    text-align: center;
+}
+.see-post a{
+    text-decoration: none;
+    color: var(--header-color);
+}
+.categorie-specifique hr{
+    margin: 1rem;
+}
+.categorie-specifique hr:last-of-type{
+    display: none;
+}

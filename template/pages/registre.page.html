@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/login.css">  
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+  <!-- cdn font awsome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>forum</title>
+</head>
+<body>
+<!-- begin header -->
+<header>
+    <nav class="nav1">
+        <a href="/template/pages/index.page.html">Home</a>
+        <a href="/template/pages/myPage.page.html">my page</a>
+     
+    </nav>
+    <nav class="nav2">
+         <form action="#" method="post">
+             <input type="search" class="input"  placeholder="search here">
+             <input class="button--submit" value="search" type="submit">
+         </form>
+         <a href="registre.page.html">register</a>
+         <a href="login.page.html">sign in</a>
+         <a href="account.html">account</a>
+         <a href="#">sign out</a>
+         
+    </nav>
+    <nav class="nav3">
+        <div class="btn-fabars drop-daown"><span>forum</span><i class="fa-solid fa-bars"></i></div> 
+        <div class="content-link">
+            <a href="/template/pages/index.page.html">Home</a>
+            <a href="/template/pages/myPage.page.html">my page</a>
+            <a href="registre.page.html" class="drop-daown">register</a>
+            <a href="login.page.html" class="drop-daown">sign in</a>
+            <a href="account.html" class="drop-daown">account</a>
+            <a href="#" class="drop-daown">sign out</a>
+            <form action="#" method="post" class="drop-daown">
+                <input type="search" class="input"  placeholder="search here">
+                <input class="button--submit" value="search" type="submit">
+            </form>
+         </div>
+    </nav>
+</header>
+<!-- end header -->
+    <div class="SignIn-Registre">
+        <h1>Registre</h1>
+         <form class="monform" action="/registe" method="post">
+        <!-- <label for="nom">Nom :</label> -->
+        <input type="text" id="username" name="username" class="inputForm" placeholder="Nom"  required  >
+        
+        <!-- <label for="email">Email :</label> -->
+        <input type="email" id="email" name="email"class="inputForm"  placeholder="Email"  required>
+        
+        <!-- <label for="motdepasse">Mot de passe :</label> -->
+        <input type="password" id="motdepasse" name="motdepasse" class="inputForm"  placeholder="Password"  required>
+        <input type="password" id="confirmotdepasse" name="motdepasse" class="inputForm"  placeholder=" Confirm Password"  required>
+        
+        <input type="submit" class="submitForm" name="submit" value="Create" >
+      </form>
+      <a href="login.page.html" class="link">I have Account</a>
+    </div>
+<!--begin footer -->
+<footer>
+    <p>Copyright ©<span> Zone01 Dakar</span> | 2023 - Tous droits réservés</p>
+    <p>Ce thème a été développé par <span>@osamb</span> - <span>@mouhametadiouf</span> - <span>@dAlassane</span> - <span>@alo</span> - <span>@ssambadi</span> </p>
+</footer>
+<!-- end footer -->
+
+    <script src="/static/js/script.js"></script>
+   <script src="/static/js/script.js"></script>
+</body>
+</html>

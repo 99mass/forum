@@ -1,0 +1,173 @@
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+:root{
+    --color-gray:gray;
+    --color-black:black;
+    --color-white:#fff;
+    --fontSize16:16px;
+    --color-linear-gradient:linear-gradient(to right,#77530a,#ffd277,#77530a,#77530a,#ffd277,#77530a);
+}
+.container{
+    width: 100%;
+    height: auto;
+    margin-top:  150px;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem;
+    padding-right: 1rem;
+    z-index: -1;
+}
+.container *{
+   font-size: var(  --fontSize16);
+
+}
+
+.container .container-2{
+    width: 85%;
+    box-sizing: border-box;
+}
+
+
+
+
+
+.post-displaying{
+    width: 100%;
+    /* display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 150; */
+    display: flex;
+    justify-content: space-between;
+}
+ h3 ,h4{
+    width: 100%;
+    padding: 1rem 0.8rem;
+    background-color: gainsboro;
+    text-transform: capitalize;
+    margin-bottom: 1.5rem;
+    color: var(--header-color);
+}
+h4{
+    text-align: center;
+    background: var(--color-linear-gradient);
+    color: var(--color-white);
+}
+.categorie-specifique {
+    width: 49%;
+    height: fit-content;
+   display: flex;
+   flex-direction: column;
+   padding: 1rem;
+   margin-bottom: 2rem;
+   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.categorie-specifique div,
+.categorie-specifique h6{
+    margin-bottom: 0.5rem;
+}
+.categorie-specifique .comment-btn{
+    text-decoration: none;
+    margin-bottom: 10px;
+    width: fit-content;
+   border: 2px solid transparent;
+   padding: 5px 10px;
+   background: var(--color-linear-gradient);
+   color: var(--color-white);
+   text-transform: capitalize;
+  }
+  .categorie-specifique .comment-btn i {
+    margin-right: 2px;
+    color: var(--color-white);
+  }
+.categorie-specifique  .like-dislik-content
+{
+    display: flex;
+}
+.categorie-specifique  .like-dislik-content form{
+    margin-right: 15px;
+}
+.categorie-specifique  .like-dislik-content form button{
+ border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.categorie-specifique div span i,
+.categorie-specifique div i{
+   font-size: 1.2rem;
+   margin-right: 0.2rem;
+   color: var(--header-color);
+}
+.categorie-specifique div span{
+    margin-right: 0.3rem;
+    font-size: var(--fontSize16);
+    text-transform: capitalize;
+    font-weight: 700;
+    color: var(--color-gray);
+}
+.categorie-specifique div .fa-comments{
+    margin-right: 0.5rem;
+    font-size: 22px;
+}
+.categorie-specifique .content-form-comment div{
+    margin-top: 1rem;
+}
+.categorie-specifique .content-form-comment *{
+    width: 100%;
+    text-transform: capitalize;
+    resize: none;
+    outline: none;
+}
+.categorie-specifique .content-form-comment textarea{
+    padding: 5px;
+    font-size: small;
+}
+.categorie-specifique .content-form-comment button{
+    width: auto;
+    padding: 7px 17px;
+    margin-top: 15px;
+    background: var(--color-linear-gradient);
+    color: var(--color-white);
+    border: none;
+    cursor: pointer;
+}
+.categorie-specifique div a{
+    text-decoration: none;
+    color: var(--color-gray);
+}
+.categorie-specifique h6{
+   text-transform: capitalize;
+   font-style: italic;
+   color: var(--color-gray);
+}
+.title {
+    font-size: 22px;
+    font-weight: 600;
+    padding-bottom: 1rem;
+}
+.author-date,.author-date2{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+.comment{
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.categorie-specifique .author-date span,
+.categorie-specifique .author-date2 span{
+    margin: 0px 3px;
+}
+.categorie-specifique hr{
+    margin: 1rem;
+}
+.categorie-specifique hr:last-of-type{
+    display: none;
+}
