@@ -14,7 +14,12 @@ import (
 // Example function to create and send a login session cookie
 func AddSession(w http.ResponseWriter, userID uuid.UUID, db *sql.DB) {
 
-	
+	existingSessionID, err := controller.GetSessionIDForUser(db, userID) // Implement this function to get the existing session ID
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
 	// Set session expiration time (e.g., 1 day from now)
 	expiration := time.Now().Add(24 * time.Hour)
 	session := models.Session{
