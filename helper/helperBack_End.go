@@ -132,16 +132,16 @@ func GetPostForHome(db *sql.DB) ([]models.HomeData, error) {
 			return nil, err
 		}
 		var commentdetails []models.CommentDetails
-		for _,com := range comments{
+		for _, com := range comments {
 			var commentdetail models.CommentDetails
 			commentdetail.Comment = com
-			commentlike,err := controller.GetCommentLikesByCommentID(db,com.ID)
+			commentlike, err := controller.GetCommentLikesByCommentID(db, com.ID)
 			if err != nil {
-				return nil,err
+				return nil, err
 			}
-			commentdislike,err := controller.GetCommentDislikesByCommentID(db,com.ID)
+			commentdislike, err := controller.GetCommentDislikesByCommentID(db, com.ID)
 			if err != nil {
-				return nil,err
+				return nil, err
 			}
 			commentdetail.CommentLike = len(commentlike)
 			commentdetail.CommentDislike = len(commentdislike)
@@ -170,48 +170,48 @@ func GetPostForHome(db *sql.DB) ([]models.HomeData, error) {
 }
 
 func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeData, error) {
-	post, err := controller.GetPostByID(db,postID)
+	post, err := controller.GetPostByID(db, postID)
 	if err != nil {
 		return models.HomeData{}, err
 	}
-	
-		var HomeData models.HomeData
-		comments, err := controller.GetCommentsByPostID(db, post.ID)
-		if err != nil {
-			return models.HomeData{}, err
-		}
-		var commentdetails []models.CommentDetails
-		for _,com := range comments{
-			var commentdetail models.CommentDetails
-			commentdetail.Comment = com
-			commentlike,err := controller.GetCommentLikesByCommentID(db,com.ID)
-			if err != nil {
-				return models.HomeData{},err
-			}
-			commentdislike,err := controller.GetCommentDislikesByCommentID(db,com.ID)
-			if err != nil {
-				return models.HomeData{},err
-			}
-			commentdetail.CommentLike = len(commentlike)
-			commentdetail.CommentDislike = len(commentdislike)
-			commentdetails = append(commentdetails, commentdetail)
 
-		}
-		likes, err := controller.GetPostLikesByPostID(db, post.ID)
+	var HomeData models.HomeData
+	comments, err := controller.GetCommentsByPostID(db, post.ID)
+	if err != nil {
+		return models.HomeData{}, err
+	}
+	var commentdetails []models.CommentDetails
+	for _, com := range comments {
+		var commentdetail models.CommentDetails
+		commentdetail.Comment = com
+		commentlike, err := controller.GetCommentLikesByCommentID(db, com.ID)
 		if err != nil {
 			return models.HomeData{}, err
 		}
-		nbrlikes := len(likes)
-		dislike, err := controller.GetDislikesByPostID(db, post.ID)
+		commentdislike, err := controller.GetCommentDislikesByCommentID(db, com.ID)
 		if err != nil {
 			return models.HomeData{}, err
 		}
-		nbrdislikes := len(dislike)
-		
-		HomeData.Posts = post
-		HomeData.Comment = commentdetails
-		HomeData.PostLike = nbrlikes
-		HomeData.PostDislike = nbrdislikes
-	
+		commentdetail.CommentLike = len(commentlike)
+		commentdetail.CommentDislike = len(commentdislike)
+		commentdetails = append(commentdetails, commentdetail)
+
+	}
+	likes, err := controller.GetPostLikesByPostID(db, post.ID)
+	if err != nil {
+		return models.HomeData{}, err
+	}
+	nbrlikes := len(likes)
+	dislike, err := controller.GetDislikesByPostID(db, post.ID)
+	if err != nil {
+		return models.HomeData{}, err
+	}
+	nbrdislikes := len(dislike)
+
+	HomeData.Posts = post
+	HomeData.Comment = commentdetails
+	HomeData.PostLike = nbrlikes
+	HomeData.PostDislike = nbrdislikes
+
 	return HomeData, nil
 }

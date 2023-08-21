@@ -65,10 +65,17 @@ type CommentLike struct {
 }
 
 type CommentDislike struct {
-	ID        int64     `db:"id"`
-	UserID    int64     `db:"user_id"`
-	CommentID int64     `db:"comment_id"`
-	CreatedAt time.Time `db:"created_at"`
+	ID        uuid.UUID
+	UserID    uuid.UUID
+	CommentID uuid.UUID
+	CreatedAt time.Time
+}
+
+type HomeData struct{
+	Posts	Post
+	Comment []CommentDetails
+	PostLike int
+	PostDislike int
 }
 
 type CommentDetails struct{
