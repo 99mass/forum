@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS sessions (
 -- Create the categories table
 CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY,
-    name_category TEXT NOT NULL
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    name_category TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create the posts table
