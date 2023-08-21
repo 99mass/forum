@@ -1,10 +1,9 @@
 const faBars=document.querySelector('.fa-bars');
 const contentLink=document.querySelector('.content-link');
-// console.log(contentLink);
 
-window.onload = () => {
+
     contentLink.style.display="none";
-    faBars.addEventListener("click", (event) => {
+    faBars.addEventListener("click", () => {
         
         if (contentLink.style.display === "none") {
             contentLink.style.display = "block";
@@ -12,4 +11,3 @@ window.onload = () => {
             contentLink.style.display = "none";
         }
     });
-};
