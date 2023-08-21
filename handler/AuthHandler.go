@@ -109,7 +109,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			// create a session - TODO
 			helper.AddSession(w, id,db)
 			//Redirect to home page
-			w.WriteHeader(http.StatusOK)
+			//w.WriteHeader(http.StatusOK)
 			http.Redirect(w,r, "/", http.StatusSeeOther )
 			//helper.RenderTemplate(w, "index", "index", "homedata")
 			return
