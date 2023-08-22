@@ -13,36 +13,48 @@ import (
 
 // Example function to create and send a login session cookie
 func AddSession(w http.ResponseWriter, userID uuid.UUID, db *sql.DB) {
-	sessionID, err := uuid.NewV4()
-	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
 
 	expiration := time.Now().Add(24 * time.Hour)
-
-	// Create the session cookie
-	cookie := http.Cookie{
-		Name:     "sessionID",
-		Value:    sessionID.String(),
-		Expires:  expiration,
-		HttpOnly: true,
-		Path:     "/",
+	if userID != uuid.Nil{
+		session := models.Session{
+			UserID:    userID,
+			ExpiresAt: expiration,
+			CreatedAt: time.Now(),
+		}
+		sessionID, err := controller.CreateSession(db, session) // You'll need to implement this function
+		if err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+	
+		// Create the session cookie
+		cookie := http.Cookie{
+			Name:     "sessionID",
+			Value:    sessionID.String(),
+			Expires:  expiration,
+			HttpOnly: true,
+			Path:     "/",
+		}
+	
+		http.SetCookie(w, &cookie)
 	}
+	
 
-	http.SetCookie(w, &cookie)
+}
 
-	session := models.Session{
-		ID:        sessionID,
-		UserID:    userID,
-		ExpiresAt: expiration,
-		CreatedAt: time.Now(),
-	}
-	_, err = controller.CreateSession(db, session) // You'll need to implement this function
+func UpdateSession(db *sql.DB, sessionID uuid.UUID, newExpiration time.Time) error {
+	query := `
+		UPDATE sessions
+		SET expires_at = ?
+		WHERE id = ?;
+	`
+
+	_, err := db.Exec(query, newExpiration, sessionID)
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
+		return err
 	}
+
+	return nil
 }
 
 // Middleware to check session and authenticate user
@@ -82,8 +94,24 @@ func IsEmptySession(s models.Session) bool {
 	return s == models.Session{}
 }
 
-//requireLoginMiddleware := RequireLogin(yourNextHandler, yourDB)
-//router := mux.NewRouter()
+func SessionHandler(w http.ResponseWriter, r *http.Request) (uuid.UUID,error) {
+	// Retrieve the session cookie named "sessionID"
+	cookie, err := r.Cookie("sessionID")
+	if err != nil {
+		// No session cookie found
+		http.Error(w, "Not logged in", http.StatusUnauthorized)
+		return uuid.Nil,err
+	}
 
-// Use the RequireLogin middleware for routes that require authentication
-//router.Handle("/protected", requireLoginMiddleware(yourProtectedHandler)).Methods("GET")
+	// Extract the value of the session cookie
+	sessionid := cookie.Value
+
+	sessionID, err := uuid.FromString(sessionid)
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return uuid.Nil,err
+	}
+
+	return sessionID,nil
+
+}

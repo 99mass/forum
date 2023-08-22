@@ -127,18 +127,18 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeData, error) {
 // 	return true, nil
 // }
 
-func ConnectUser(db *sql.DB, user *models.User) bool {
+func ConnectUser(db *sql.DB, user *models.User) (uuid.UUID,bool) {
 	clientTOconnect := user
-	_, err := controller.GetUserByEmail(db, user.Email)
+	users, err := controller.GetUserByEmail(db, clientTOconnect.Email)
 
 	if err != nil {
-		return false
+		return uuid.Nil,false
 	}
 
-	if user.Password == clientTOconnect.Password {
-		return true
+	if users.Password == clientTOconnect.Password {
+		return user.ID,true
 	}
 
-	return false
+	return uuid.Nil,true
 
 }

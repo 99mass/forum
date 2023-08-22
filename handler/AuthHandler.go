@@ -30,21 +30,21 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 			helper.RenderTemplate(w, "signin", "auth", "")
 			fmt.Println("page rendered")
 		case http.MethodPost:
-			username := r.FormValue("user_name")
 			email := r.FormValue("email")
 			password := r.FormValue("password")
 			//Check if the error has to be handled
 			hashedPassword, _ := helper.HashPassword(password)
 
 			user := models.User{
-				Username:  username,
 				Email:     email,
 				Password:  hashedPassword,
 				CreatedAt: time.Now(),
 			}
-			if helper.ConnectUser(db, &user) {
-				// Create a session
+			userID, toConnect := helper.ConnectUser(db, &user)
 
+			if toConnect {
+				// Create a session
+				helper.AddSession(w, userID, db)
 				// Redirect to home
 				helper.RenderTemplate(w, "index", "index", user)
 			} else {
