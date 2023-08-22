@@ -136,3 +136,23 @@ func DeleteSession(w http.ResponseWriter, r *http.Request) {
 	// Set the cookie in the response, effectively deleting it
 	http.SetCookie(w, &cookie)
 }
+
+
+// Example function to create and send a login session cookie
+func UpdateSessionSession(w http.ResponseWriter, sessionID uuid.UUID, db *sql.DB) {
+
+	expiration := time.Now().Add(24 * time.Hour)
+
+		// Create the session cookie
+		cookie := http.Cookie{
+			Name:     "sessionID",
+			Value:    sessionID.String(),
+			Expires:  expiration,
+			HttpOnly: true,
+			Path:     "/",
+		}
+
+		http.SetCookie(w, &cookie)
+
+
+}
