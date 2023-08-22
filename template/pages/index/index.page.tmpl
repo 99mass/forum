@@ -29,8 +29,12 @@
         <form action="" method="post">
           <select name="categorie" required>
             <!-- a supprimer -->
+            
             <option selected>categories </option>
-            <option value="education">education</option>
+            {{ range .Category }}
+            <option value="{{.NameCategory}}">{{.NameCategory}}</option>
+            {{end}}
+            
             <!-- fin a supprimer -->
           </select>
           <div>
@@ -61,10 +65,12 @@
 
     <div class="container-2">
       <div class="categori-menu">
+        {{ range .Category}}
         <form action="" method="post">
-          <input type="hidden" name="categorie">
-          <input type="submit" value="education">
+          <input type="hidden" name="categorie" value="{{.ID}}">
+          <input type="submit" value="{{.NameCategory}}">
         </form>
+        {{end}}
       </div>
 
       <!-- form add post -->
@@ -73,7 +79,9 @@
         <form class="form-new-post" action="#" method="post">
           <div>
             <select name="categorie" required>
-              <option selected>post categorie </option>
+              {{ range .Category }}
+            <option value="{{.NameCategory}}">{{.NameCategory}}</option>
+            {{end}}
             </select>
           </div>
           <div>

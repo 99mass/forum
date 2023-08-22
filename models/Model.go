@@ -86,6 +86,7 @@ type CommentDetails struct{
 
 type Home struct{
 	Session bool
+	Category []Category
 	Datas []HomeData
 }
 type PostData struct{

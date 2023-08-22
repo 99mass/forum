@@ -29,7 +29,6 @@ func Index(db *sql.DB) http.HandlerFunc {
 
 		sessionID, errsess := helper.SessionHandler(w, r)
 		if errsess != nil {
-
 			sessiondata = false
 		} else {
 
@@ -41,7 +40,12 @@ func Index(db *sql.DB) http.HandlerFunc {
 			}
 		}
 
+		category, err := controller.GetAllCategories(db)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusInternalServerError)
+		}
 		homeData.Session = sessiondata
+		homeData.Category = category
 		homeData.Datas = data
 
 		helper.RenderTemplate(w, "index", "index", homeData)
