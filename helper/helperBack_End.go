@@ -134,8 +134,11 @@ func VerifUser(db *sql.DB, email string, password string) (uuid.UUID, bool) {
 	if err != nil {
 		return uuid.Nil, false
 	}
+	if user == nil {
+		return uuid.Nil, false
+	}
 	if !CheckPasswordHash(password, user.Password) {
-		return uuid.Nil,false
+		return user.ID,false
 	}
 	return user.ID,true
 }

@@ -45,3 +45,13 @@
 
 
 {{end}}
+
+{{ define "Session"}}
+{{ if .Session }}
+          <a href="/myaccout" class="drop-daown">account</a>
+          <a href="/signout" class="drop-daown">sign out</a>
+      {{else}}
+          <a href="/register" class="drop-daown">register</a>
+          <a href="/signin" class="drop-daown">sign in</a>
+      {{end}}
+{{end}}
