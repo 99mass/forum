@@ -15,7 +15,7 @@ import (
 func AddSession(w http.ResponseWriter, userID uuid.UUID, db *sql.DB) {
 
 	expiration := time.Now().Add(24 * time.Hour)
-	if userID != uuid.Nil{
+	if userID != uuid.Nil {
 		session := models.Session{
 			UserID:    userID,
 			ExpiresAt: expiration,
@@ -26,7 +26,7 @@ func AddSession(w http.ResponseWriter, userID uuid.UUID, db *sql.DB) {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
-	
+
 		// Create the session cookie
 		cookie := http.Cookie{
 			Name:     "sessionID",
@@ -35,10 +35,9 @@ func AddSession(w http.ResponseWriter, userID uuid.UUID, db *sql.DB) {
 			HttpOnly: true,
 			Path:     "/",
 		}
-	
+
 		http.SetCookie(w, &cookie)
 	}
-	
 
 }
 
@@ -94,13 +93,12 @@ func IsEmptySession(s models.Session) bool {
 	return s == models.Session{}
 }
 
-func SessionHandler(w http.ResponseWriter, r *http.Request) (uuid.UUID,error) {
+func SessionHandler(w http.ResponseWriter, r *http.Request) (uuid.UUID, error) {
 	// Retrieve the session cookie named "sessionID"
 	cookie, err := r.Cookie("sessionID")
 	if err != nil {
-		// No session cookie found
-		http.Error(w, "Not logged in", http.StatusUnauthorized)
-		return uuid.Nil,err
+		// No session cookie foun
+		return uuid.Nil, err
 	}
 
 	// Extract the value of the session cookie
@@ -108,10 +106,33 @@ func SessionHandler(w http.ResponseWriter, r *http.Request) (uuid.UUID,error) {
 
 	sessionID, err := uuid.FromString(sessionid)
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return uuid.Nil,err
+		return uuid.Nil, err
 	}
 
-	return sessionID,nil
+	return sessionID, nil
 
+}
+
+func VerifySession(db *sql.DB, sessionID uuid.UUID) bool {
+	session, err := controller.GetSessionByID(db, sessionID)
+	if err != nil {
+		return false
+	}
+	if &session == nil {
+		return false
+	}
+	return true
+}
+func DeleteSession(w http.ResponseWriter, r *http.Request) {
+	// Create a new cookie with the same name as the session cookie
+	cookie := http.Cookie{
+		Name:     "sessionID",
+		Value:    "",         // Empty value
+		Expires:  time.Now(), // Set to a time in the past
+		HttpOnly: true,
+		Path:     "/",
+	}
+
+	// Set the cookie in the response, effectively deleting it
+	http.SetCookie(w, &cookie)
 }

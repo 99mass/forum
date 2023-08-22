@@ -1,4 +1,4 @@
-{{ define "header" }}
+{{ define "header"}}
 
   <header>
     <nav class="nav1">
@@ -11,10 +11,7 @@
         <input type="search" class="input" placeholder="search here">
         <input class="button--submit" value="search" type="submit">
       </form>
-      <a href="/register">register</a>
-      <a href="/signin">sign in</a>
-      <a href="/profil">profil</a>
-      <a href="/">sign out</a>
+      {{template "Session" .}}
 
     </nav>
     <nav class="nav3">
@@ -22,10 +19,8 @@
       <div class="content-link">
         <a href="/">Home</a>
         <a href="/mypage">my page</a>
-        <a href="/register" class="drop-daown">register</a>
-        <a href="/signin" class="drop-daown">sign in</a>
-        <a href="/myaccout" class="drop-daown">account</a>
-        <a href="/" class="drop-daown">sign out</a>
+     {{template "Session" .}}
+                
         <form action="" method="post" class="drop-daown">
           <input type="search" class="input" placeholder="search here">
           <input class="button--submit" value="search" type="submit">

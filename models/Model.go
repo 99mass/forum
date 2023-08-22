@@ -83,3 +83,13 @@ type CommentDetails struct{
 	CommentLike int
 	CommentDislike int
 }
+
+type Home struct{
+	Session bool
+	Category []Category
+	Datas []HomeData
+}
+type PostData struct{
+	Session Session
+	Datas HomeData
+}

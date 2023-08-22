@@ -36,12 +36,11 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 			//Check if the error has to be handled
 			userID, toConnect := helper.VerifUser(db, email, password)
 
-			user, _ := controller.GetUserByID(db, userID)
 			if toConnect {
 				// Create a session
 				helper.AddSession(w, userID, db)
 				// Redirect to home
-				helper.RenderTemplate(w, "index", "index", user)
+				http.Redirect(w, r, "/", http.StatusSeeOther)
 			} else {
 				helper.RenderTemplate(w, "signin", "auth", "error")
 			}
@@ -103,10 +102,8 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 
 			// create a session - TODO
 			helper.AddSession(w, id, db)
-			//Redirect to home page
-			//w.WriteHeader(http.StatusOK)
 			http.Redirect(w, r, "/", http.StatusSeeOther)
-			helper.RenderTemplate(w, "index", "index", "homedata")
+			//helper.RenderTemplate(w, "index", "index", "homedata")
 			return
 
 		case http.MethodGet:
