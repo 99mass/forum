@@ -2,7 +2,6 @@ package controller
 
 import (
 	"database/sql"
-	"errors"
 	"time"
 
 	"forum/models"
@@ -25,7 +24,7 @@ func CreateUser(db *sql.DB, user models.User) (uuid.UUID, error) {
 	if err != nil {
 		return uuid.UUID{}, err
 	}
-	
+
 	return newUUID, nil
 }
 
@@ -54,53 +53,76 @@ func GetAllUsers(db *sql.DB) ([]models.User, error) {
 	return users, nil
 }
 
-// GetUserByID retrieves a user from the database by ID.
-func GetUserByID(db *sql.DB, userID int64) (models.User, error) {
-	var user models.User
+// GetUserByID retrieves a user by their UUID ID from the database.
+func GetUserByID(db *sql.DB, userID uuid.UUID) (*models.User, error) {
 	query := `
-        SELECT id, username, email, password, created_at
-        FROM users
-        WHERE id = ?
-		LIMIT 1;
-    `
+		SELECT id, username, email, password, created_at
+		FROM users
+		WHERE id = ?;
+	`
 
-	err := db.QueryRow(query, userID).Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
+	row := db.QueryRow(query, userID)
+	user := &models.User{}
+	err := row.Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return models.User{}, errors.New("utilisateur non trouvé")
+			// No user found for the given ID
+			return nil, nil
 		}
-		return models.User{}, err
+		return nil, err
 	}
 
 	return user, nil
 }
 
-// GetUserByEmail retrieves a user from the database by email.
-func GetUserByEmail(db *sql.DB, email string) (models.User, error) {
-	var user models.User
+// GetUserByEmail retrieves a user by their email address from the database.
+func GetUserByEmail(db *sql.DB, email string) (*models.User, error) {
 	query := `
-        SELECT id, username, email, password, created_at
-        FROM users
-        WHERE email = ?
+		SELECT id, username, email, password, created_at
+		FROM users
+		WHERE email = ?
 		LIMIT 1;
-    `
+	`
 
-	stmt, err := db.Prepare(query)
+	row := db.QueryRow(query, email)
+	user := &models.User{}
+	err := row.Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
 	if err != nil {
-		return user, err
-	}
-	defer stmt.Close()
-
-	row := stmt.QueryRow(user.Email)
-	err = row.Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
-	
-	if err != nil {
-		
-		return user, err
+		if err == sql.ErrNoRows {
+			// No user found for the given email
+			return nil, nil
+		}
+		return nil, err
 	}
 
 	return user, nil
 }
+// GetUserByEmail retrieves a user from the database by email.
+// func GetUserByEmail(db *sql.DB, email string) (models.User, error) {
+// 	var user models.User
+// 	query := `
+//         SELECT id, username, email, password, created_at
+//         FROM users
+//         WHERE email = ?
+// 		LIMIT 1;
+//     `
+
+// 	stmt, err := db.Prepare(query)
+// 	if err != nil {
+// 		return user, err
+// 	}
+// 	defer stmt.Close()
+
+// 	row := stmt.QueryRow(user.Email)
+// 	err = row.Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
+
+// 	if err != nil {
+
+// 		return user, err
+// 	}
+
+// 	return user, nil
+// }
 
 func UpdateUser(db *sql.DB, user models.User) error {
 	// Mettre à jour uniquement les champs non vides

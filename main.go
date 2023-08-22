@@ -22,6 +22,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	// user := new(models.User)
 	// user.Username = "mouhamed"
 	// user.Email = "mouha@gmail.com"

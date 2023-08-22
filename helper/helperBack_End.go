@@ -7,6 +7,7 @@ import (
 	"forum/models"
 
 	"github.com/gofrs/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Debug(str string) {
@@ -127,18 +128,20 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeData, error) {
 // 	return true, nil
 // }
 
-func ConnectUser(db *sql.DB, user *models.User) (uuid.UUID,bool) {
-	clientTOconnect := user
-	users, err := controller.GetUserByEmail(db, clientTOconnect.Email)
 
+func VerifUser(db *sql.DB, email string, password string) (uuid.UUID, bool) {
+	user, err := controller.GetUserByEmail(db, email)
 	if err != nil {
+		return uuid.Nil, false
+	}
+	if !CheckPasswordHash(password, user.Password) {
 		return uuid.Nil,false
 	}
+	return user.ID,true
+}
 
-	if users.Password == clientTOconnect.Password {
-		return user.ID,true
-	}
-
-	return uuid.Nil,true
-
+// CheckPasswordHash compares a password with its hashed version
+func CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }

@@ -31,17 +31,12 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 			fmt.Println("page rendered")
 		case http.MethodPost:
 			email := r.FormValue("email")
-			password := r.FormValue("password")
+			password := r.FormValue("motdepasse")
+
 			//Check if the error has to be handled
-			hashedPassword, _ := helper.HashPassword(password)
+			userID, toConnect := helper.VerifUser(db, email, password)
 
-			user := models.User{
-				Email:     email,
-				Password:  hashedPassword,
-				CreatedAt: time.Now(),
-			}
-			userID, toConnect := helper.ConnectUser(db, &user)
-
+			user, _ := controller.GetUserByID(db, userID)
 			if toConnect {
 				// Create a session
 				helper.AddSession(w, userID, db)
