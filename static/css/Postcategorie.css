@@ -1,3 +1,7 @@
+
+/* google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
+
 *{
     margin: 0;
     padding:0;
@@ -170,4 +174,46 @@ h4{
 }
 .categorie-specifique hr:last-of-type{
     display: none;
+}
+
+/* medias querys */
+@media screen and (max-width:1024px) {
+    .container .container-1 .filter-form{
+        width: 18rem;
+        z-index: 1;
+        
+     }
+}
+@media screen and (max-width:768px) {
+    
+     .container .container-2{
+        width: 100%;
+    }
+    .new-post{
+        width: 13rem;
+    }
+    .post-displaying{
+        
+        display: block;
+    }
+    .categorie-specifique {
+        width: 100%;
+    }
+}
+@media screen and (max-width:500px) {
+
+    .container .container-2 .bloc-add-post form div *{
+        width: 100%;
+    }
+    .author-date *{
+        font-size: small;
+    }
+}
+@media screen and (max-width:320px) {
+    .author-date *{
+        font-size: x-small;
+    }
+    .author-date .fa-at,.fa-calendar-days{
+        font-size: 10px;
+    }
 }

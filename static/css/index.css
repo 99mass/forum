@@ -1,3 +1,6 @@
+/* google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
+
 *{
     margin: 0;
     padding:0;
@@ -20,7 +23,7 @@
     justify-content: space-between;
     padding: 1rem;
     padding-right: 1rem;
-    z-index: -1;
+    z-index: 1;
 }
 .container *{
    font-size: var(  --fontSize16);
@@ -52,6 +55,7 @@
     width: 90%;
     height: auto;
     margin-top: 0rem;
+    background-color: #fff;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 .container .container-1 .filter-form form{
@@ -290,4 +294,47 @@
 .see-post a{
     text-decoration: none;
     color: var(--header-color);
+}
+
+
+/* medias querys */
+@media screen and (max-width:1024px) {
+    .container .container-1 .filter-form{
+        width: 18rem;
+        z-index: 1;
+        
+     }
+}
+@media screen and (max-width:768px) {
+    .container{
+        display: block;
+        padding-top: 0rem;
+    }
+    .container .container-1{
+        width: 15rem;
+        border: none;
+        height: fit-content;
+        margin-bottom: 2rem;
+     }
+     .container .container-1 .filter-form{
+        width: 18rem;
+     }
+     .container .container-2{
+        width: 100%;
+    }
+    .new-post{
+        width: 13rem;
+    }
+    .post-displaying{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        gap: 150;
+    }
+}
+@media screen and (max-width:500px) {
+
+    .container .container-2 .bloc-add-post form div *{
+        width: 100%;
+    }
 }

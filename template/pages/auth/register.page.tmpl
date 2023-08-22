@@ -22,26 +22,26 @@
     <div class="SignIn-Registre">
         <h1>Registre</h1>
         <form class="monform" action="" method="post">
-            <!-- <label for="nom">Nom :</label> -->
+          <div><span class="start">*</span><span ></span></div> 
             <input type="text" id="username" name="username" class="inputForm" placeholder="Nom" required>
 
-            <!-- <label for="email">Email :</label> -->
+            <div><span  class="start">*</span><span></span></div> 
             <input type="email" id="email" name="email" class="inputForm" placeholder="Email" required>
 
-            <!-- <label for="motdepasse">Mot de passe :</label> -->
+          
             <input type="password" id="password" name="password" class="inputForm" placeholder="Password" required>
+            <div><span  class="start">*</span><span></span></div> 
             <input type="password" id="password_validation" name="password_validation" class="inputForm"
                 placeholder=" Confirm Password" required>
 
             <input type="submit" class="submitForm" name="submit" value="Create">
         </form>
-        <a href="/signin" class="link">I have Account</a>
+        <a href="/signin" class="link">I have an Account</a>
     </div>
     <!--begin footer -->
         {{template "footer"}}
     <!-- end footer -->
 
-    <script src="/static/js/script.js"></script>
     <script src="/static/js/script.js"></script>
 </body>
 
