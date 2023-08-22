@@ -175,7 +175,30 @@ h4{
 .categorie-specifique hr:last-of-type{
     display: none;
 }
-
+.content-comments{
+    overflow-y: scroll;
+    height: 13rem;
+    padding-right: 0.5rem;
+}
+ /* width */
+ .content-comments::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  .content-comments::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  .content-comments::-webkit-scrollbar-thumb {
+    background: var(--header-color);
+  }
+  
+  /* Handle on hover */
+  .content-comments::-webkit-scrollbar-thumb:hover {
+    background: var(--header-color);
+  } 
 /* medias querys */
 @media screen and (max-width:1024px) {
     .container .container-1 .filter-form{

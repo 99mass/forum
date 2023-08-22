@@ -236,6 +236,30 @@
     margin-bottom: 0.5rem;
 }
 
+.categorie-specifique .content-comments{
+    overflow-y: scroll;
+    height: 13rem;
+    padding-right: 0.5rem;
+}
+ /* width */
+ .content-comments::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  .content-comments::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  .content-comments::-webkit-scrollbar-thumb {
+    background: var(--header-color);
+  }
+  
+  /* Handle on hover */
+  .content-comments::-webkit-scrollbar-thumb:hover {
+    background: var(--header-color);
+  } 
 .categorie-specifique div span i,
 .categorie-specifique div i{
    font-size: 1.2rem;
