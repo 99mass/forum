@@ -16,40 +16,9 @@
 
 <body>
     <!-- begin header -->
-    <header>
-        <nav class="nav1">
-            <a href="/template/pages/index.page.html">Home</a>
-            <a href="/template/pages/myPage.page.html">my page</a>
-
-        </nav>
-        <nav class="nav2">
-            <form action="#" method="post">
-                <input type="search" class="input" placeholder="search here">
-                <input class="button--submit" value="search" type="submit">
-            </form>
-            <a href="registre.page.html">register</a>
-            <a href="login.page.html">sign in</a>
-            <a href="account.html">account</a>
-            <a href="#">sign out</a>
-
-        </nav>
-        <nav class="nav3">
-            <div class="btn-fabars drop-daown"><span>forum</span><i class="fa-solid fa-bars"></i></div>
-            <div class="content-link">
-                <a href="/template/pages/index.page.html">Home</a>
-                <a href="/template/pages/myPage.page.html">my page</a>
-                <a href="registre.page.html" class="drop-daown">register</a>
-                <a href="login.page.html" class="drop-daown">sign in</a>
-                <a href="account.html" class="drop-daown">account</a>
-                <a href="#" class="drop-daown">sign out</a>
-                <form action="#" method="post" class="drop-daown">
-                    <input type="search" class="input" placeholder="search here">
-                    <input class="button--submit" value="search" type="submit">
-                </form>
-            </div>
-        </nav>
-    </header>
+      {{template "header"}}
     <!-- end header -->
+
     <div class="SignIn-Registre">
         <h1>Registre</h1>
         <form class="monform" action="" method="post">
@@ -69,11 +38,7 @@
         <a href="/signin" class="link">I have Account</a>
     </div>
     <!--begin footer -->
-    <footer>
-        <p>Copyright ©<span> Zone01 Dakar</span> | 2023 - Tous droits réservés</p>
-        <p>Ce thème a été développé par <span>@osamb</span> - <span>@mouhametadiouf</span> - <span>@dAlassane</span> -
-            <span>@alo</span> - <span>@ssambadi</span> </p>
-    </footer>
+        {{template "footer"}}
     <!-- end footer -->
 
     <script src="/static/js/script.js"></script>
