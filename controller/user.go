@@ -2,6 +2,7 @@ package controller
 
 import (
 	"database/sql"
+	"fmt"
 	"time"
 
 	"forum/models"
@@ -97,6 +98,17 @@ func GetUserByEmail(db *sql.DB, email string) (*models.User, error) {
 
 	return user, nil
 }
+
+func GetUserBySessionId(sessionId uuid.UUID, db *sql.DB) models.User {
+
+	session, _ := GetSessionByID(db, sessionId)
+	fmt.Print(session)
+	user, _ := GetUserByID(db, session.UserID)
+	fmt.Println(user)
+	return *user
+
+}
+
 // GetUserByEmail retrieves a user from the database by email.
 // func GetUserByEmail(db *sql.DB, email string) (models.User, error) {
 // 	var user models.User

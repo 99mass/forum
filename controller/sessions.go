@@ -46,6 +46,7 @@ func GetSessionByID(db *sql.DB, sessionID uuid.UUID) (models.Session, error) {
 	return session, nil
 }
 
+
 // GetSessionUserID retrieves the user ID associated with a session from the database.
 func GetSessionUserID(db *sql.DB, sessionID uuid.UUID) (uuid.UUID, error) {
 	query := `

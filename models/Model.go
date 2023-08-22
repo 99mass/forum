@@ -71,25 +71,22 @@ type CommentDislike struct {
 	CreatedAt time.Time
 }
 
-type HomeData struct{
-	Posts	Post
-	Comment []CommentDetails
-	PostLike int
+type HomeDataPost struct {
+	Posts       Post
+	Comment     []CommentDetails
+	PostLike    int
 	PostDislike int
 }
 
-type CommentDetails struct{
-	Comment Comment
-	CommentLike int
+type CommentDetails struct {
+	Comment        Comment
+	CommentLike    int
 	CommentDislike int
 }
 
-type Home struct{
-	Session bool
-	Category []Category
-	Datas []HomeData
-}
-type PostData struct{
-	Session Session
-	Datas HomeData
+type Home struct {
+	Session      bool
+	Category     []Category
+	Datas        []HomeDataPost
+	User User
 }

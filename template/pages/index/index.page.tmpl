@@ -16,7 +16,7 @@
 <body>
 
   <!-- begin header -->
-    {{template "header" . }}
+  {{template "header" . }}
   <!-- end header -->
 
   <!-- begin body -->
@@ -29,12 +29,14 @@
         <form action="" method="post">
           <select name="categorie" required>
             <!-- a supprimer -->
-            
+
             <option selected>categories </option>
             {{ range .Category }}
             <option value="{{.NameCategory}}">{{.NameCategory}}</option>
             {{end}}
-            
+            {{template "Category"}}
+
+
             <!-- fin a supprimer -->
           </select>
           <div>
@@ -80,8 +82,9 @@
           <div>
             <select name="categorie" required>
               {{ range .Category }}
-            <option value="{{.NameCategory}}">{{.NameCategory}}</option>
-            {{end}}
+              <option value="{{.NameCategory}}">{{.NameCategory}}</option>
+              {{end}}
+              {{template "Category"}}
             </select>
           </div>
           <div>
@@ -167,10 +170,10 @@
 
 
   <!-- begin header -->
-    {{template "footer"}}
+  {{template "footer"}}
   <!-- end header -->
-  
- 
+
+
   <script src="/static/js/index.js"></script>
   <script src="/static/js/script.js"></script>
 

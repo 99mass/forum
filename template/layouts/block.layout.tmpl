@@ -26,7 +26,7 @@
     <button class="auth_btn">Register</button>
     <a href="/signin">I have an account</a>
     {{if gt (len .MsgError) 0}}
-        <p class="msg_error"> Error: {{.MsgError}} </p>
+    <p class="msg_error"> Error: {{.MsgError}} </p>
     {{end}}
 </form>
 
@@ -48,10 +48,18 @@
 
 {{ define "Session"}}
 {{ if .Session }}
-          <a href="/myaccout" class="drop-daown">account</a>
-          <a href="/signout" class="drop-daown">sign out</a>
-      {{else}}
-          <a href="/register" class="drop-daown">register</a>
-          <a href="/signin" class="drop-daown">sign in</a>
-      {{end}}
+<a href="/myaccout" class="drop-daown">{{.User.Username}} </a>
+<a href="/signout" class="drop-daown">sign out</a>
+{{else}}
+<a href="/register" class="drop-daown">register</a>
+<a href="/signin" class="drop-daown">sign in</a>
+{{end}}
+{{end}}
+
+{{define "Category"}}
+    <option value="Education">Education</option>
+    <option value="Art">Art</option>
+    <option value="Science">Science</option>
+    <option value="Cuture">Cuture</option>
+    <option value="Religion">Religion</option>
 {{end}}

@@ -14,14 +14,14 @@ func Debug(str string) {
 	fmt.Println(str)
 }
 
-func GetPostForHome(db *sql.DB) ([]models.HomeData, error) {
+func GetPostForHome(db *sql.DB) ([]models.HomeDataPost, error) {
 	post, err := controller.GetAllPosts(db)
 	if err != nil {
 		return nil, err
 	}
-	var HomeDatas []models.HomeData
+	var HomeDatas []models.HomeDataPost
 	for _, post := range post {
-		var HomeData models.HomeData
+		var HomeData models.HomeDataPost
 		comments, err := controller.GetCommentsByPostID(db, post.ID)
 		if err != nil {
 			return nil, err
@@ -64,16 +64,16 @@ func GetPostForHome(db *sql.DB) ([]models.HomeData, error) {
 	return HomeDatas, nil
 }
 
-func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeData, error) {
+func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeDataPost, error) {
 	post, err := controller.GetPostByID(db, postID)
 	if err != nil {
-		return models.HomeData{}, err
+		return models.HomeDataPost{}, err
 	}
 
-	var HomeData models.HomeData
+	var HomeData models.HomeDataPost
 	comments, err := controller.GetCommentsByPostID(db, post.ID)
 	if err != nil {
-		return models.HomeData{}, err
+		return models.HomeDataPost{}, err
 	}
 	var commentdetails []models.CommentDetails
 	for _, com := range comments {
@@ -81,11 +81,11 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeData, error) {
 		commentdetail.Comment = com
 		commentlike, err := controller.GetCommentLikesByCommentID(db, com.ID)
 		if err != nil {
-			return models.HomeData{}, err
+			return models.HomeDataPost{}, err
 		}
 		commentdislike, err := controller.GetCommentDislikesByCommentID(db, com.ID)
 		if err != nil {
-			return models.HomeData{}, err
+			return models.HomeDataPost{}, err
 		}
 		commentdetail.CommentLike = len(commentlike)
 		commentdetail.CommentDislike = len(commentdislike)
@@ -94,12 +94,12 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeData, error) {
 	}
 	likes, err := controller.GetPostLikesByPostID(db, post.ID)
 	if err != nil {
-		return models.HomeData{}, err
+		return models.HomeDataPost{}, err
 	}
 	nbrlikes := len(likes)
 	dislike, err := controller.GetDislikesByPostID(db, post.ID)
 	if err != nil {
-		return models.HomeData{}, err
+		return models.HomeDataPost{}, err
 	}
 	nbrdislikes := len(dislike)
 
