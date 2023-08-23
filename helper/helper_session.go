@@ -56,44 +56,13 @@ func UpdateSession(db *sql.DB, sessionID uuid.UUID, newExpiration time.Time) err
 	return nil
 }
 
-// Middleware to check session and authenticate user
-func RequireLogin(next http.Handler, db *sql.DB) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Retrieve the session cookie from the request
-		cookie, err := r.Cookie("sessionID")
-		if err != nil || cookie == nil {
-			// Handle unauthenticated user
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
-			return
-		}
 
-		// Retrieve the session data from your server-side data store
-		sessionIDStr := cookie.Value
-		sessionID, err := uuid.FromString(sessionIDStr)
-		if err != nil {
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-			return
-		}
-		session, err := controller.GetSessionByID(db, sessionID) // You'll need to implement this function
-		if err != nil || IsEmptySession(session) {
-			// Handle invalid or expired session
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
-			return
-		}
-
-		// Attach user ID to the request context for later use
-		ctx := context.WithValue(r.Context(), "userID", session.UserID)
-		r = r.WithContext(ctx)
-
-		next.ServeHTTP(w, r)
-	})
-}
 
 func IsEmptySession(s models.Session) bool {
 	return s == models.Session{}
 }
 
-func SessionHandler(w http.ResponseWriter, r *http.Request) (uuid.UUID, error) {
+func GetSessionRequest(r *http.Request) (uuid.UUID, error) {
 	// Retrieve the session cookie named "sessionID"
 	cookie, err := r.Cookie("sessionID")
 	if err != nil {
@@ -137,22 +106,53 @@ func DeleteSession(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &cookie)
 }
 
-
 // Example function to create and send a login session cookie
 func UpdateSessionSession(w http.ResponseWriter, sessionID uuid.UUID, db *sql.DB) {
 
 	expiration := time.Now().Add(24 * time.Hour)
 
-		// Create the session cookie
-		cookie := http.Cookie{
-			Name:     "sessionID",
-			Value:    sessionID.String(),
-			Expires:  expiration,
-			HttpOnly: true,
-			Path:     "/",
-		}
+	// Create the session cookie
+	cookie := http.Cookie{
+		Name:     "sessionID",
+		Value:    sessionID.String(),
+		Expires:  expiration,
+		HttpOnly: true,
+		Path:     "/",
+	}
 
-		http.SetCookie(w, &cookie)
-
-
+	http.SetCookie(w, &cookie)
 }
+
+
+// // Middleware to check session and authenticate user
+// func RequireLogin(next http.Handler, db *sql.DB) http.Handler {
+// 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+// 		// Retrieve the session cookie from the request
+// 		cookie, err := r.Cookie("sessionID")
+// 		if err != nil || cookie == nil {
+// 			// Handle unauthenticated user
+// 			http.Redirect(w, r, "/login", http.StatusSeeOther)
+// 			return
+// 		}
+
+// 		// Retrieve the session data from your server-side data store
+// 		sessionIDStr := cookie.Value
+// 		sessionID, err := uuid.FromString(sessionIDStr)
+// 		if err != nil {
+// 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+// 			return
+// 		}
+// 		session, err := controller.GetSessionByID(db, sessionID) // You'll need to implement this function
+// 		if err != nil || IsEmptySession(session) {
+// 			// Handle invalid or expired session
+// 			http.Redirect(w, r, "/login", http.StatusSeeOther)
+// 			return
+// 		}
+
+// 		// Attach user ID to the request context for later use
+// 		ctx := context.WithValue(r.Context(), "userID", session.UserID)
+// 		r = r.WithContext(ctx)
+
+// 		next.ServeHTTP(w, r)
+// 	})
+// }

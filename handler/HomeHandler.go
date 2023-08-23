@@ -27,7 +27,7 @@ func Index(db *sql.DB) http.HandlerFunc {
 		var homeData models.Home
 		var sessiondata bool
 
-		sessionID, errsess := helper.SessionHandler(w, r)
+		sessionID, errsess := helper.GetSessionRequest(r)
 		if errsess != nil {
 			sessiondata = false
 		} else {
