@@ -2,7 +2,6 @@ package helper
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -36,7 +35,7 @@ func createTemplateCache(tmplDir string) (map[string]*template.Template, error) 
 	if err != nil {
 		return cache, err
 	}
-	fmt.Println("not error cache")
+	
 	for _, page := range pages {
 		//fmt.Println("for pages :", page)
 		name := filepath.Base(page)
@@ -62,11 +61,11 @@ func RenderError(w http.ResponseWriter, tmplName string, tmplDir string) {
 	templateCache, err := createTemplateCache(tmplDir)
 
 	if err != nil {
-		fmt.Println("error detected")
+		
 		return
 	}
 	// templateCache["home.page.tmpl"]
-	fmt.Println("RenderErro templateCach")
+	
 	tmpl, ok := templateCache[tmplName+".page.tmpl"]
 
 	if !ok {

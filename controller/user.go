@@ -104,7 +104,6 @@ func GetUserBySessionId(sessionId uuid.UUID, db *sql.DB) models.User {
 	session, _ := GetSessionByID(db, sessionId)
 	fmt.Print(session)
 	user, _ := GetUserByID(db, session.UserID)
-	fmt.Println(user)
 	return *user
 
 }
