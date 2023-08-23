@@ -104,7 +104,7 @@ func DeleteSession(w http.ResponseWriter, r *http.Request) {
 }
 
 // Example function to create and send a login session cookie
-func UpdateSessionSession(w http.ResponseWriter, sessionID uuid.UUID, db *sql.DB) {
+func UpdateCookieSession(w http.ResponseWriter, sessionID uuid.UUID, db *sql.DB) {
 
 	expiration := time.Now().Add(24 * time.Hour)
 
@@ -118,6 +118,7 @@ func UpdateSessionSession(w http.ResponseWriter, sessionID uuid.UUID, db *sql.DB
 	}
 
 	http.SetCookie(w, &cookie)
+	UpdateSession(db,sessionID,expiration)
 }
 
 // // Middleware to check session and authenticate user
