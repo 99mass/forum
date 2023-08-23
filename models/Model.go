@@ -90,3 +90,10 @@ type Home struct {
 	Datas        []HomeDataPost
 	User User
 }
+
+type PostCategory struct {
+	CategoryID uuid.UUID
+	PostID uuid.UUID
+}
+
+

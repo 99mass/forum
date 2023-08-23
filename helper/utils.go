@@ -2,7 +2,6 @@ package helper
 
 import (
 	"errors"
-	"fmt"
 	"regexp"
 
 	"golang.org/x/crypto/bcrypt"
@@ -14,7 +13,7 @@ func CheckRegisterFormat(username, email, password string) error {
 	okPassWord, errP := CheckPassword(password)
 	if !okUserName {
 		//Debug(errUN.Error())
-		fmt.Println(errUN)
+		
 		return errUN
 	}
 	if !okEmail {
@@ -46,7 +45,7 @@ func CheckPassword(password string) (bool, error) {
 	// Vérification de la longueur
 
 	if len(password) < 8 || len(password) > 25 {
-		fmt.Println("Mot de passe invalide en termes de longueur")
+		
 		return false, errors.New("Longueur mot de passe non valide: minimum 8, maximum 25")
 	}
 
@@ -57,19 +56,19 @@ func CheckPassword(password string) (bool, error) {
 	specialCharRegex := regexp.MustCompile(`[@$!%*?&_\-]`)
 
 	if !lowercaseRegex.MatchString(password) {
-		fmt.Println("Le mot de passe doit contenir au moins une lettre minuscule")
+		
 		return false, errors.New("Le mot de passe doit contenir au moins une lettre minuscule")
 	}
 	if !uppercaseRegex.MatchString(password) {
-		fmt.Println("Le mot de passe doit contenir au moins une lettre majuscule")
+		
 		return false, errors.New("Le mot de passe doit contenir au moins une lettre majuscule")
 	}
 	if !digitRegex.MatchString(password) {
-		fmt.Println("Le mot de passe doit contenir au moins un chiffre")
+		
 		return false, errors.New("Le mot de passe doit contenir au moins un chiffre")
 	}
 	if !specialCharRegex.MatchString(password) {
-		fmt.Println("Le mot de passe doit contenir au moins un caractère spécial")
+		
 		return false, errors.New("Le mot de passe doit contenir au moins un caractère spécial")
 	}
 

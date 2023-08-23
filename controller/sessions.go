@@ -1,13 +1,12 @@
-
 package controller
 
 import (
 	"database/sql"
 	"time"
 
-	"forum/models"
-
 	"github.com/gofrs/uuid"
+
+	"forum/models"
 )
 
 func CreateSession(db *sql.DB, session models.Session) (uuid.UUID, error) {
@@ -46,7 +45,6 @@ func GetSessionByID(db *sql.DB, sessionID uuid.UUID) (models.Session, error) {
 	return session, nil
 }
 
-
 // GetSessionUserID retrieves the user ID associated with a session from the database.
 func GetSessionUserID(db *sql.DB, sessionID uuid.UUID) (uuid.UUID, error) {
 	query := `
@@ -70,7 +68,7 @@ func DeleteSession(db *sql.DB, sessionID uuid.UUID) error {
         DELETE FROM sessions
         WHERE id = ?;
     `
-
+	
 	_, err := db.Exec(query, sessionID)
 	return err
 }

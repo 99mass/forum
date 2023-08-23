@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"fmt"
 	"forum/controller"
 	"forum/helper"
 	"forum/middlewares"
@@ -19,16 +18,18 @@ type ErrRegister struct {
 func SinginHandler(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
+
 		switch r.Method {
 		case http.MethodGet:
-			fmt.Println("auth signin handler started")
+			helper.DeleteSession(w,r)
+			
 			ok, pageError := middlewares.CheckRequest(r, "/signin", "get")
 			if !ok {
 				helper.ErrorPage(w, pageError)
 				return
 			}
 			helper.RenderTemplate(w, "signin", "auth", "")
-			fmt.Println("page rendered")
+			
 		case http.MethodPost:
 			email := r.FormValue("email")
 			password := r.FormValue("motdepasse")
@@ -51,7 +52,7 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 }
 
 func RegisterHandler(db *sql.DB) http.HandlerFunc {
-	fmt.Println("Register handler")
+	
 	return func(w http.ResponseWriter, r *http.Request) {
 		msgError := new(ErrRegister)
 
@@ -84,7 +85,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 				return
 			}
 			errFormat := helper.CheckRegisterFormat(username, email, password)
-			fmt.Println(errFormat)
+			
 			if errFormat != nil {
 				msgError.MsgError = errFormat.Error()
 				helper.RenderTemplate(w, "register", "auth", msgError)
@@ -107,7 +108,8 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			return
 
 		case http.MethodGet:
-			fmt.Println("affichage du formulaire d'enregistrement")
+			helper.DeleteSession(w,r)
+			//fmt.Println("affichage du formulaire d'enregistrement")
 			ok, pageError := middlewares.CheckRequest(r, "/register", "get")
 			if !ok {
 				helper.ErrorPage(w, pageError)

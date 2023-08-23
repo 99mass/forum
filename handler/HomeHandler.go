@@ -48,7 +48,9 @@ func Index(db *sql.DB) http.HandlerFunc {
 		homeData.Session = sessiondata
 		homeData.Category = category
 		homeData.Datas = data
-		
+		if sessiondata {
+			helper.UpdateCookieSession(w, sessionID, db)
+		}
 
 		helper.RenderTemplate(w, "index", "index", homeData)
 
