@@ -28,9 +28,16 @@ CREATE TABLE IF NOT EXISTS posts (
     user_id TEXT NOT NULL,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
-    category_id TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Create the posts_categories junction table
+CREATE TABLE IF NOT EXISTS posts_categories (
+    post_id TEXT NOT NULL,
+    category_id TEXT NOT NULL,
+    PRIMARY KEY (post_id, category_id),
+    FOREIGN KEY (post_id) REFERENCES posts(id),
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
