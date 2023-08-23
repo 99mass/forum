@@ -159,6 +159,38 @@
     resize: none;
     outline: none;
 }
+/* the checkbox */
+.container .container-2 .bloc-add-post form .select-opt,
+.container .container-2 .bloc-add-post form .select-opt details,
+.container .container-2 .bloc-add-post form .select-opt details  input,
+.container .container-2 .bloc-add-post form .select-opt details  label{
+    border: none;
+    
+}
+.container .container-2 .bloc-add-post form .select-opt details,
+.container .container-2 .bloc-add-post form .select-opt details  input,
+.container .container-2 .bloc-add-post form .select-opt details  label{
+    width: fit-content;
+    cursor: pointer;
+}
+
+.container .container-2 .bloc-add-post form .select-opt details input {
+    margin-left: 1rem;
+}
+.container .container-2 .bloc-add-post form .select-opt details summary {
+    width: 67%;
+}
+.container .container-2 .bloc-add-post form .select-opt{
+    padding-left: 24%;
+    margin-bottom: 0px;
+}
+.container .container-2 .bloc-add-post form .select-opt details{
+   width: 100%;
+   text-align: left;
+   cursor: pointer;
+   padding-bottom: 0px;
+   margin-bottom:0px ;
+}
 .container .container-2 .bloc-add-post form button{
     padding:1rem 6rem;
     background: var(--color-linear-gradient);
@@ -353,6 +385,13 @@
 @media screen and (max-width:500px) {
 
     .container .container-2 .bloc-add-post form div *{
+        width: 94%;
+    }
+    .container .container-2 .bloc-add-post form .select-opt details summary {
         width: 100%;
+    }
+    .container .container-2 .bloc-add-post form .select-opt{
+        padding-left: 0%;
+        margin-bottom: 0px;
     }
 }

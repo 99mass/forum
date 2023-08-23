@@ -23,10 +23,21 @@
         
           <div class="filter-form">
             <form action="" method="post">
-              <select name="categorie" required >
-               
-                <option selected>categories </option>
-              </select>
+              <!-- checbox -->
+              <div class="select-opt">               
+                    <details>
+                        <summary>Choose the categories</summary>
+                         <div><input type="checkbox" name="education" value="education"  /><label>education</label></div> 
+                        
+                         <div><input type="checkbox" name="sport" value="sport" /><label>sport</label></div> 
+                        
+                         <div><input type="checkbox" name="art" value="art" /><label>art</label></div> 
+                      
+                         <div><input type="checkbox" name="culture" value="culture" /><label>culture</label></div> 
+                        
+                         <div><input type="checkbox" name="religion" value="religion"  /><label>religion</label></div>  
+                    </details>
+              </div>
             <div> 
                 <label for="creation-date">created posts</label>
                 <input type="date">
@@ -64,20 +75,30 @@
         <!-- form add post -->
         <div class="bloc-add-post">
           <div class="new-post"><i class="fa-solid fa-plus"></i> New Post</div>
-           <form class="form-new-post" action="#" method="post">
-              <div>              
-                <select name="categorie" required >                    
-                  <option selected>post categorie </option>
-                </select>
-              </div>
-              <div>
-                <input type="text" placeholder="title post" required>
-              </div>
-              <div>
-                <textarea name="" id="" cols="30" rows="5" required>content here</textarea>
-              </div>
-               <button type="submit">add post</button>
-            </form> 
+          <form class="form-new-post" action="/addpost" method="post">
+            <!-- checbox -->
+            <div class="select-opt">               
+                  <details>
+                      <summary>Choose the categories</summary>
+                        <input type="checkbox" name="education" value="education"  /><label>education</label><br> 
+                      
+                        <input type="checkbox" name="sport" value="sport" /><label>sport</label><br> 
+                      
+                        <input type="checkbox" name="art" value="art" /><label>art</label><br> 
+                    
+                        <input type="checkbox" name="culture" value="culture" /><label>culture</label><br> 
+                      
+                        <input type="checkbox" name="religion" value="religion"  /><label>religion</label><br>  
+                  </details>
+            </div>
+            <div>
+              <input type="text" placeholder="title post" required>
+            </div>
+            <div>
+              <textarea name="" id="" cols="30" rows="5" required>content here</textarea>
+            </div>
+            <button type="submit">add post</button>
+          </form>
            
         </div>
         
