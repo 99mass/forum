@@ -26,7 +26,7 @@ func GetCategorie(w http.ResponseWriter, r *http.Request) {
 func AddPostHandler(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		session,err := helper.GetSessionRequest(r)
+		session, err := helper.GetSessionRequest(r)
 		if err != nil {
 			return
 		}
@@ -35,19 +35,20 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 			postTitle := r.FormValue("")
 			postContent := r.FormValue("")
 			postCategorystring := r.FormValue("")
-			postCategoryuuid,_ := uuid.FromString(postCategorystring)
-			user:=controller.GetUserBySessionId(session,db)
-			
+			postCategoryuuid, _ := uuid.FromString(postCategorystring)
+			user := controller.GetUserBySessionId(session, db)
+
 			post := models.Post{
-				UserID: user.ID,
-				Title: postTitle,
-				Content: postContent,
+				UserID:     user.ID,
+				Title:      postTitle,
+				Content:    postContent,
 				CategoryID: postCategoryuuid,
 			}
-			_,err := controller.CreatePost(db,post)
+			_, err := controller.CreatePost(db, post)
 			if err != nil {
 				return
 			}
 		}
+		http.Redirect(w, r, "/", http.StatusOK)
 	}
 }
