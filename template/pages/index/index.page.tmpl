@@ -82,22 +82,22 @@
           <div class="select-opt">               
                 <details>
                     <summary>Choose the categories</summary>
-                      <input type="checkbox" name="education" value="education"  /><label>education</label><br> 
+                      <input type="checkbox" name="category" value="education"  /><label>education</label><br> 
                     
-                      <input type="checkbox" name="sport" value="sport" /><label>sport</label><br> 
+                      <input type="checkbox" name="category" value="sport" /><label>sport</label><br> 
                     
-                      <input type="checkbox" name="art" value="art" /><label>art</label><br> 
+                      <input type="checkbox" name="category" value="art" /><label>art</label><br> 
                   
-                      <input type="checkbox" name="culture" value="culture" /><label>culture</label><br> 
+                      <input type="checkbox" name="category" value="culture" /><label>culture</label><br> 
                     
-                      <input type="checkbox" name="religion" value="religion"  /><label>religion</label><br>  
+                      <input type="checkbox" name="category" value="religion"  /><label>religion</label><br>  
                 </details>
           </div>
           <div>
-            <input type="text" placeholder="title post" required>
+            <input type="text" name="title" id="title" placeholder="title post" required>
           </div>
           <div>
-            <textarea name="" id="" cols="30" rows="5" required>content here</textarea>
+            <textarea name="content" id="content" cols="30" rows="5" required placeholder="Put the content here"></textarea>
           </div>
           <button type="submit">add post</button>
         </form>

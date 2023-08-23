@@ -2,8 +2,10 @@ package handler
 
 import (
 	"database/sql"
+	"fmt"
 	"forum/controller"
 	"forum/helper"
+	"forum/middlewares"
 	"forum/models"
 	"net/http"
 
@@ -26,26 +28,46 @@ func GetCategorie(w http.ResponseWriter, r *http.Request) {
 func AddPostHandler(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
+		ok, errorPage := middlewares.CheckRequest(r, "/addpost", "post")
+		if !ok {
+			helper.Debug("Checkrequest addpost failled")
+			helper.ErrorPage(w, errorPage)
+			return
+		}
 		session, err := helper.GetSessionRequest(r)
 		if err != nil {
 			return
 		}
 
 		if helper.VerifySession(db, session) {
-			postTitle := r.FormValue("")
-			postContent := r.FormValue("")
-			postCategorystring := r.FormValue("")
-			postCategoryuuid, _ := uuid.FromString(postCategorystring)
+
+			errForm := helper.CheckFormAddPost(r, db)
+			if errForm != nil {
+				helper.Debug(errForm.Error())
+				helper.ErrorPage(w, http.StatusBadRequest)
+				http.Redirect(w, r, "/",http.StatusOK)
+				return
+			}
+			postTitle := r.FormValue("title")
+			postContent := r.FormValue("content")
+			_postCategorystring := r.Form["category"]
+			var _postCategoryuuid []uuid.UUID
+			for _, v := range _postCategorystring {
+				catuuid, _ := uuid.FromString(v)
+				_postCategoryuuid = append(_postCategoryuuid, catuuid)
+			}
+
 			user := controller.GetUserBySessionId(session, db)
 
 			post := models.Post{
 				UserID:     user.ID,
 				Title:      postTitle,
 				Content:    postContent,
-				CategoryID: postCategoryuuid,
+				CategoryID: _postCategoryuuid,
 			}
-			_, err := controller.CreatePost(db, post)
+			_,err := controller.CreatePost(db, post)
 			if err != nil {
+				fmt.Println(err)
 				return
 			}
 		}

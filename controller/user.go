@@ -25,7 +25,7 @@ func CreateUser(db *sql.DB, user models.User) (uuid.UUID, error) {
 	if err != nil {
 		return uuid.UUID{}, err
 	}
-
+	
 	return newUUID, nil
 }
 

@@ -4,10 +4,12 @@ import (
 	"database/sql"
 
 	"forum/models"
+
+	"github.com/gofrs/uuid"
 )
 
-//Créer un PostCategory en utlisant les deux clés étrangers comme clé primaire
-func CreatePostCategory(db *sql.DB, postID, categoryID string) error {
+// Créer un PostCategory en utlisant les deux clés étrangers comme clé primaire
+func CreatePostCategory(db *sql.DB, postID, categoryID uuid.UUID) error {
 	query := `
         INSERT INTO posts_categories (post_id, category_id)
         VALUES (?, ?);
@@ -21,8 +23,8 @@ func CreatePostCategory(db *sql.DB, postID, categoryID string) error {
 	return nil
 }
 
-//supprimer un postCategory en utilisant les IDs de post et de category
-func DeletePostCategory(db *sql.DB, postID, categoryID string) error {
+// supprimer un postCategory en utilisant les IDs de post et de category
+func DeletePostCategory(db *sql.DB, postID, categoryID uuid.UUID) error {
 	query := `
         DELETE FROM posts_categories
         WHERE post_id = ? AND category_id = ?;
@@ -36,8 +38,8 @@ func DeletePostCategory(db *sql.DB, postID, categoryID string) error {
 	return nil
 }
 
-//mettre à jour un postCategory en utilisant les IDs de post et de category
-func UpdatePostCategory(db *sql.DB, postID, categoryID string) error {
+// mettre à jour un postCategory en utilisant les IDs de post et de category
+func UpdatePostCategory(db *sql.DB, postID, categoryID uuid.UUID) error {
 	query := `
         UPDATE posts_categories
         SET category_id = ?
@@ -53,7 +55,7 @@ func UpdatePostCategory(db *sql.DB, postID, categoryID string) error {
 }
 
 // GetPostsByCategory récupère les posts associés à une catégorie donnée
-func GetPostsByCategory(db *sql.DB, categoryID string) ([]models.Post, error) {
+func GetPostsByCategory(db *sql.DB, categoryID uuid.UUID) ([]models.Post, error) {
 	query := `
         SELECT p.id, p.user_id, p.title, p.content, p.category_id, p.created_at
         FROM posts p
@@ -81,7 +83,7 @@ func GetPostsByCategory(db *sql.DB, categoryID string) ([]models.Post, error) {
 }
 
 // GetCategoriesByPost récupère les catégories associées à un post donné
-func GetCategoriesByPost(db *sql.DB, postID string) ([]models.Category, error) {
+func GetCategoriesByPost(db *sql.DB, postID uuid.UUID) ([]models.Category, error) {
 	query := `
         SELECT c.id, c.name_category
         FROM categories c

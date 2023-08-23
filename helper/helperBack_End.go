@@ -2,9 +2,11 @@ package helper
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"forum/controller"
 	"forum/models"
+	"net/http"
 
 	"github.com/gofrs/uuid"
 	"golang.org/x/crypto/bcrypt"
@@ -128,7 +130,6 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeDataPost, error) {
 // 	return true, nil
 // }
 
-
 func VerifUser(db *sql.DB, email string, password string) (uuid.UUID, bool) {
 	user, err := controller.GetUserByEmail(db, email)
 	if err != nil {
@@ -138,9 +139,9 @@ func VerifUser(db *sql.DB, email string, password string) (uuid.UUID, bool) {
 		return uuid.Nil, false
 	}
 	if !CheckPasswordHash(password, user.Password) {
-		return user.ID,false
+		return user.ID, false
 	}
-	return user.ID,true
+	return user.ID, true
 }
 
 // CheckPasswordHash compares a password with its hashed version
@@ -148,3 +149,32 @@ func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
 }
+
+func CheckFormAddPost(r *http.Request, db *sql.DB) error {
+	postTitle := r.FormValue("title")
+	postContent := r.FormValue("content")
+	// content and title empty
+	if postTitle == "" || postContent == "" {
+		return errors.New("tous les champs doivent être remplis")
+	}
+	_postCategorystring := r.Form["category"]
+	// No category received
+	if len(_postCategorystring) == 0 {
+		return errors.New("aucune catégorie n'a été choisie")
+	}
+	// Category not matched
+	for _, v := range _postCategorystring {
+		catuuid, _ := uuid.FromString(v)
+
+		if !verifCategory(db, catuuid) {
+			return errors.New("une des categories n'est pas conforme")
+		}
+	}
+
+	return nil
+}
+
+func verifCategory(db *sql.DB, v uuid.UUID) bool {
+
+	return true
+} // no valide

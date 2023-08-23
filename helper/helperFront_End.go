@@ -10,7 +10,8 @@ import (
 )
 
 func RenderTemplate(w http.ResponseWriter, tmplName string, tmplDir string, data interface{}) {
-
+	Debug("dir : "+tmplDir )
+	Debug("name : "+tmplName )
 	templateCache, err := createTemplateCache(tmplDir)
 
 	if err != nil {
@@ -35,7 +36,7 @@ func createTemplateCache(tmplDir string) (map[string]*template.Template, error) 
 	if err != nil {
 		return cache, err
 	}
-	
+
 	for _, page := range pages {
 		//fmt.Println("for pages :", page)
 		name := filepath.Base(page)
@@ -61,11 +62,11 @@ func RenderError(w http.ResponseWriter, tmplName string, tmplDir string) {
 	templateCache, err := createTemplateCache(tmplDir)
 
 	if err != nil {
-		
+
 		return
 	}
 	// templateCache["home.page.tmpl"]
-	
+
 	tmpl, ok := templateCache[tmplName+".page.tmpl"]
 
 	if !ok {
@@ -80,7 +81,7 @@ func RenderError(w http.ResponseWriter, tmplName string, tmplDir string) {
 	log.Println("RenderError end")
 }
 
-func ErrorPage(w http.ResponseWriter, i int) error {
+func ErrorPage(w http.ResponseWriter, i int) {
 	DataError := struct {
 		Code    string
 		Message string
@@ -88,10 +89,7 @@ func ErrorPage(w http.ResponseWriter, i int) error {
 		Code:    strconv.Itoa(i),
 		Message: http.StatusText(i),
 	}
-	page, err := template.ParseFiles("template/Error/Errorpage.html")
-	if err != nil {
-		return err
-	}
-	w.WriteHeader(i)
-	return page.Execute(w, DataError)
+	
+	RenderTemplate(w, DataError.Code, "error", DataError.Message)
+
 }

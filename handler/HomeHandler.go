@@ -44,6 +44,7 @@ func Index(db *sql.DB) http.HandlerFunc {
 		category, err := controller.GetAllCategories(db)
 		if err != nil {
 			helper.ErrorPage(w, http.StatusInternalServerError)
+			
 		}
 		homeData.Session = sessiondata
 		homeData.Category = category

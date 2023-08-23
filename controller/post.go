@@ -3,6 +3,7 @@ package controller
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"time"
 
 	"forum/models"
@@ -11,18 +12,29 @@ import (
 )
 
 func CreatePost(db *sql.DB, post models.Post) (uuid.UUID, error) {
+	fmt.Println("Creating post")
+	for _, v := range post.CategoryID {
+		fmt.Println("Creating postCategory",v)
+		err := CreatePostCategory(db, post.ID, v)
+		if err!= nil {
+			fmt.Println(err)
+			return v, errors.New("")
+		}
+	}
+
 	query := `
         INSERT INTO posts (id, user_id, title, content, category_id, created_at)
-        VALUES (?, ?, ?, ?, ?, ?);
-    `
+        VALUES (?, ?, ?, ?, ?);
+    	`
 
 	newUUID, err := uuid.NewV4()
 	if err != nil {
 		return uuid.UUID{}, err
 	}
 
-	_, err = db.Exec(query, newUUID.String(), post.UserID, post.Title, post.Content, post.CategoryID, time.Now())
+	_, err = db.Exec(query, newUUID.String(), post.UserID, post.Title, post.Content, time.Now())
 	if err != nil {
+		fmt.Println(err, "error creating post")
 		return uuid.UUID{}, err
 	}
 

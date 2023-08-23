@@ -45,7 +45,7 @@
    color: var(--color-white);
    border: none;
    box-shadow: 4px 4px 2px var(--color-gray);
-   text-transform: capitalize;
+   text-transform: none;
    box-sizing: border-box;
 }
 .container .container-1 .btn-filter i{
@@ -78,7 +78,7 @@
 
 .container .container-1 .filter-form form div  label,
 .container .container-1 .filter-form form div div label{
-    text-transform: capitalize;
+    text-transform: none;
    color: var(--color-gray);
 
 }
@@ -87,7 +87,7 @@
     background: var(--color-linear-gradient);
     border: none;
     color: var(--color-white);
-    text-transform: capitalize;
+    text-transform: none;
     cursor: pointer;
 }
 .container .container-2{
@@ -130,7 +130,7 @@
     text-align: center;
     background-color: transparent;
     border: 1px solid var( --header-color);
-    text-transform: capitalize;
+    text-transform: none;
 }
 .container .container-2 .categori-menu input:hover {
     background: var(--color-linear-gradient);
@@ -152,7 +152,7 @@
     padding: 1rem;
     background-color: transparent;
     border: 1px solid var(--header-color);
-    text-transform: capitalize;
+    text-transform: none;
     resize: none;
     outline: none;
 }
@@ -193,7 +193,7 @@
     padding:1rem 6rem;
     background: var(--color-linear-gradient);
     color: var(--color-white);
-    text-transform: capitalize;
+    text-transform: none;
     box-shadow: 3px 3px 1px var(--color-gray);
     border: none;
     cursor: pointer;
@@ -223,7 +223,7 @@
     width: 100%;
     padding: 1rem 0.8rem;
     background-color: gainsboro;
-    text-transform: capitalize;
+    text-transform: none;
     margin-bottom: 1.5rem;
     color: var(--header-color);
 }
@@ -254,7 +254,7 @@
  padding: 5px 10px;
  background: var(--color-linear-gradient);
  color: var(--color-white);
- text-transform: capitalize;
+ text-transform: none;
 }
 .categorie-specifique .comment-btn i {
   margin-right: 2px;
@@ -287,7 +287,7 @@
 .categorie-specifique div span{
     margin-right: 0.3rem;
     font-size: var(--fontSize18);
-    text-transform: capitalize;
+    text-transform: none;
     font-weight: bold;
     color: var(--color-gray);
 }
@@ -304,7 +304,7 @@
     color: var(--color-gray);
 }
 .categorie-specifique h6{
-   text-transform: capitalize;
+   text-transform: none;
    font-style: italic;
    color: var(--color-gray);
 }

@@ -31,7 +31,7 @@ type Post struct {
 	UserID     uuid.UUID
 	Title      string
 	Content    string
-	CategoryID uuid.UUID
+	CategoryID []uuid.UUID
 	CreatedAt  time.Time
 }
 
@@ -85,15 +85,13 @@ type CommentDetails struct {
 }
 
 type Home struct {
-	Session      bool
-	Category     []Category
-	Datas        []HomeDataPost
-	User User
+	Session  bool
+	Category []Category
+	Datas    []HomeDataPost
+	User     User
 }
 
 type PostCategory struct {
 	CategoryID uuid.UUID
-	PostID uuid.UUID
+	PostID     uuid.UUID
 }
-
-
