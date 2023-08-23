@@ -69,7 +69,6 @@
       <div class="categori-menu">
         {{ range .Category}}
         <form action="" method="post">
-          <input type="hidden" name="categorie" value="{{.ID}}">
           <input type="submit" value="{{.NameCategory}}">
         </form>
         {{end}}
@@ -84,7 +83,7 @@
               {{ range .Category }}
               <option value="{{.NameCategory}}">{{.NameCategory}}</option>
               {{end}}
-              {{template "Category"}}
+              
             </select>
           </div>
           <div>

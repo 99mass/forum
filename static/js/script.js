@@ -2,6 +2,7 @@ const faBars=document.querySelector('.fa-bars');
 const contentLink=document.querySelector('.content-link');
 const  btnUpdate=document.querySelector('.btn-update');
 const formUpdate=document.querySelector('.form-update');
+const faxmark=document.querySelector('.faxmark');
     contentLink.style.display="none";
     faBars.addEventListener("click", () => {
         
@@ -19,4 +20,9 @@ const formUpdate=document.querySelector('.form-update');
         } else {
             formUpdate.style.display = "none";
         }
+    });
+    faxmark.addEventListener("click", () => {
+  
+            formUpdate.style.display = "none";
+  
     });

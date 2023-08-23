@@ -15,8 +15,6 @@ func Route(db *sql.DB) {
 	http.HandleFunc("/post/", handler.GetOnePost)
 	http.HandleFunc("/categorie/", handler.GetCategorie)
 	http.HandleFunc("/profil", handler.GetProfil)
-
-	http.HandleFunc("/profil/", handler.GetProfil)
 	http.HandleFunc("/signout", handler.SignOutHandler)
-	
+
 }
