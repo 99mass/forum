@@ -16,9 +16,49 @@ func GetPosts(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetOnePost(w http.ResponseWriter, r *http.Request) {
+func GetOnePost(db *sql.DB) http.HandlerFunc {
 
-	helper.RenderTemplate(w, "post", "posts", nil)
+	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("GetOnePost")
+		homeData := models.Home{}
+		Datas, err := helper.GetPostForHome(db)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusInternalServerError)
+			return
+		}
+		ID, err := helper.StringToUuid(r, "post_id")
+		
+		if err != nil {
+			helper.ErrorPage(w, http.StatusInternalServerError)
+		}
+		postData, errPD := helper.GetPostDetails(db, ID)
+		if errPD != nil {
+			helper.ErrorPage(w, http.StatusInternalServerError)
+			return
+		}
+		
+		if postData.Posts.ID.String() == "" {
+			helper.ErrorPage(w, http.StatusNotFound)
+			return
+		}
+		fmt.Println(postData.User.Username,":session")
+		session, err := helper.GetSessionRequest(r)
+		if err != nil {
+			homeData.Session = false
+		}
+		fmt.Println(session,":session")
+		fmt.Println("verif session")
+		if helper.VerifySession(db, session) {
+			homeData.Session = true
+			homeData.User = controller.GetUserBySessionId(session, db)
+		} else {
+			homeData.Session = false
+		}
+		homeData.Datas = Datas
+		homeData.PostData = postData
+		fmt.Println("renderin", homeData)
+		helper.RenderTemplate(w, "post", "posts", homeData)
+	}
 }
 func GetCategorie(w http.ResponseWriter, r *http.Request) {
 
@@ -28,6 +68,7 @@ func GetCategorie(w http.ResponseWriter, r *http.Request) {
 func AddPostHandler(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
+
 		ok, errorPage := middlewares.CheckRequest(r, "/addpost", "post")
 		if !ok {
 			helper.Debug("Checkrequest addpost failled")
@@ -45,13 +86,13 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 			if errForm != nil {
 				helper.Debug(errForm.Error())
 				helper.ErrorPage(w, http.StatusBadRequest)
-				http.Redirect(w, r, "/",http.StatusSeeOther)
+				http.Redirect(w, r, "/", http.StatusSeeOther)
 				return
 			}
 			postTitle := r.FormValue("title")
 			postContent := r.FormValue("content")
 			_postCategorystring := r.Form["category"]
-			fmt.Println("hello:",_postCategorystring)
+			fmt.Println("hello:", _postCategorystring)
 			var _postCategoryuuid []uuid.UUID
 			for _, v := range _postCategorystring {
 				catuuid, _ := uuid.FromString(v)
@@ -66,14 +107,14 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 				Content:    postContent,
 				CategoryID: _postCategoryuuid,
 			}
-			_,err := controller.CreatePost(db, post)
+			_, err := controller.CreatePost(db, post)
 			if err != nil {
-				fmt.Println(err," pos no cre")
+				fmt.Println(err, " pos no cre")
 				return
 			}
 			fmt.Println("hello")
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
-		
+
 	}
 }

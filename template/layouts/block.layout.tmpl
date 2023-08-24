@@ -125,3 +125,65 @@
 {{end}}
 
 
+{{define "post"}}
+<div class="categorie-specifique">
+    <!-- posts -->
+    <div class="title"><span> <i class="fa-solid fa-heading"></i>title:</span>{{.Posts.Title}}</div>
+
+    <div><i class="fa-regular fa-comments"></i>{{.Posts.Content}}</div>
+
+    <div class="author-date">
+      <div><span><i class="fa-solid fa-at"></i>author:</span>{{.User.Username}} </div>
+      <span>|</span>
+      <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>{{.Posts.CreatedAt}}</div>
+    </div>
+
+    <div class="like-dislik-content">
+      <form action="" method="post">
+        <input type="hidden" name="liked" value="">
+        <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}} </button>
+      </form>
+      <form action="" method="post">
+        <input type="hidden" name="disliked" value="">
+        <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}} </button>
+      </form>
+    </div>
+
+    <!-- <a href="/post/" class="comment">
+      <div class="comment-btn"><i class="fa-solid fa-up-right-from-square"></i>comment here</div>
+    </a> -->
+    <form action="/post" method="post">
+        <input type="hidden" name="post_id" id="post_id" value="{{.Posts.ID}} ">
+        <button type="submit">comment here</button>
+    </form>
+
+    <!-- comment -->
+    
+    <h6>commented by:</h6>
+
+    <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic
+      ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias
+      placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
+    <div class="author-date2">
+      <div><span><i class="fa-solid fa-at"></i>author:</span>alo</div>
+      <span>|</span>
+      <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 at 2am </div>
+    </div>
+    <div class="like-dislik-content">
+      <form action="" method="post">
+        <input type="hidden" name="liked" value="">
+        <button type="submit"><i class="fa-regular fa-thumbs-up"></i>9</button>
+      </form>
+      <form action="" method="post">
+        <input type="hidden" name="disliked" value="">
+        <button type="submit"><i class="fa-regular fa-thumbs-down"></i>2</button>
+      </form>
+    </div>
+
+    <div><a href="/post/"><i class="fa-solid fa-circle-right"></i>see more
+        comments...</a> </div>
+        {{range .Comment}}
+        {{end}}
+  </div>
+
+{{end}}

@@ -47,63 +47,11 @@
       </div>
 
       <!-- block post and comment -->
-      <h3>education</h3>
+      <!-- <h3>education</h3> -->
       <div class="post-displaying">
-        <div class="categorie-specifique">
-          <!-- posts -->
-          <div class="title"><span> <i class="fa-solid fa-heading"></i>title:</span>sit amet consectetur</div>
-
-          <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum
-            neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate,
-            necessitatibus odit odio exercitationem itaque beatae.</div>
-
-          <div class="author-date">
-            <div><span><i class="fa-solid fa-at"></i>author:</span>ssambadi</div>
-            <span>|</span>
-            <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 at 1am </div>
-          </div>
-
-          <div class="like-dislik-content">
-            <form action="" method="post">
-              <input type="hidden" name="liked" value="">
-              <button type="submit"><i class="fa-regular fa-thumbs-up"></i>12</button>
-            </form>
-            <form action="" method="post">
-              <input type="hidden" name="disliked" value="">
-              <button type="submit"><i class="fa-regular fa-thumbs-down"></i>5</button>
-            </form>
-          </div>
-
-          <a href="/post/" class="comment">
-            <div class="comment-btn"><i class="fa-solid fa-up-right-from-square"></i>comment here</div>
-          </a>
-
-          <!-- comment -->
-          <h6>commented by:</h6>
-
-          <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic
-            ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias
-            placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
-          <div class="author-date2">
-            <div><span><i class="fa-solid fa-at"></i>author:</span>alo</div>
-            <span>|</span>
-            <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 at 2am </div>
-          </div>
-          <div class="like-dislik-content">
-            <form action="" method="post">
-              <input type="hidden" name="liked" value="">
-              <button type="submit"><i class="fa-regular fa-thumbs-up"></i>9</button>
-            </form>
-            <form action="" method="post">
-              <input type="hidden" name="disliked" value="">
-              <button type="submit"><i class="fa-regular fa-thumbs-down"></i>2</button>
-            </form>
-          </div>
-
-          <div><a href="/post/"><i class="fa-solid fa-circle-right"></i>see more
-              comments...</a> </div>
-
-        </div>
+        {{range .Datas}}
+          {{template "post" .}}
+        {{end}}
 
       </div>
 

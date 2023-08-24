@@ -76,14 +76,14 @@ type HomeDataPost struct {
 	Comment     []CommentDetails
 	PostLike    int
 	PostDislike int
-	User	User
+	User        User
 }
 
 type CommentDetails struct {
 	Comment        Comment
 	CommentLike    int
 	CommentDislike int
-	User		User
+	User           User
 }
 
 type Home struct {
@@ -92,6 +92,7 @@ type Home struct {
 	Datas     []HomeDataPost
 	User      User
 	ErrorAuth ErrorAuth
+	PostData  HomeDataPost
 }
 
 type PostCategory struct {
@@ -103,5 +104,5 @@ type ErrorAuth struct {
 	EmailError    string
 	UserNameError string
 	PasswordError string
-	GeneralError string
+	GeneralError  string
 }

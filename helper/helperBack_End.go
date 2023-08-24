@@ -7,6 +7,7 @@ import (
 	"forum/controller"
 	"forum/models"
 	"net/http"
+	"strings"
 
 	"github.com/gofrs/uuid"
 	"golang.org/x/crypto/bcrypt"
@@ -193,11 +194,11 @@ func verifCategory(db *sql.DB, v uuid.UUID) bool {
 	return true
 } // no valide
 
-func StringToUuid(r *http.Request,s string)(uuid.UUID,error){
-	chaine := r.FormValue(s)
-	result,err:= uuid.FromString(chaine)
+func StringToUuid(r *http.Request, s string) (uuid.UUID, error) {
+	chaine := strings.TrimSpace(r.FormValue(s))
+	result, err := uuid.FromString(chaine)
 	if err != nil {
-		return uuid.Nil,err
+		return uuid.Nil, err
 	}
-	return result,nil
+	return result, nil
 }
