@@ -101,4 +101,5 @@ type ErrorAuth struct {
 	EmailError    string
 	UserNameError string
 	PasswordError string
+	GeneralError string
 }

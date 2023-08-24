@@ -178,7 +178,7 @@ func IsDuplicateUsernameOrEmail(db *sql.DB, username, email string) (bool, error
 
 	var count int
 	err := db.QueryRow(query, username, email).Scan(&count)
-	fmt.Println(err, ":duplicate",count)
+	//fmt.Println(err, ":duplicate",count)
 	if err != nil {
 		fmt.Println("Error Base de donné")
 		return false, errors.New("")

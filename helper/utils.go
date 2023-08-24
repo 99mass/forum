@@ -3,7 +3,6 @@ package helper
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"forum/controller"
 	"forum/models"
 	"regexp"
@@ -35,23 +34,26 @@ func CheckRegisterFormat(username, email, password, confirmPassword string, db *
 	}
 
 	okEmail, errE := CheckEmail(email)
-	fmt.Println("checkemail:",okEmail)
+	//fmt.Println("checkemail:",okEmail)
 	if !okEmail {
 		ok = false
 		ErrAuth.EmailError = errE.Error()
 	} else {
-		fmt.Println("checking dupli")
-		dup,errdup  := controller.IsDuplicateUsernameOrEmail(db, username, email)
-		
+		//fmt.Println("checking dupli")
+		dup, errdup := controller.IsDuplicateUsernameOrEmail(db, username, email)
+
 		if dup {
 			ok = false
 			ErrAuth.EmailError = errdup.Error()
 			//return false,models.ErrorAuth{}
 		}
 	}
-	fmt.Println(ErrAuth.EmailError,)
+	//fmt.Println(ErrAuth.EmailError,)
 	return ok, *ErrAuth
 }
+
+// Check if the form it valid and try to connect the user
+
 
 // Vérification du format de l'email "name@name.ext"
 func CheckEmail(email string) (bool, error) {
