@@ -192,3 +192,12 @@ func verifCategory(db *sql.DB, v uuid.UUID) bool {
 
 	return true
 } // no valide
+
+func StringToUuid(r *http.Request,s string)(uuid.UUID,error){
+	chaine := r.FormValue(s)
+	result,err:= uuid.FromString(chaine)
+	if err != nil {
+		return uuid.Nil,err
+	}
+	return result,nil
+}
