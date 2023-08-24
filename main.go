@@ -6,7 +6,6 @@ import (
 
 	// "forum/handler"
 
-	"forum/controller"
 	"forum/helper"
 	"forum/models"
 	"forum/routes"
@@ -61,12 +60,12 @@ func main() {
 	routes.Route(db)
 
 	fmt.Println("Listening in http://localhost" + PORT)
-	for _, v := range CategoryName {
-		cat := models.Category{
-			NameCategory: v,
-		}
-		controller.CreateCategory(db, cat)
-	}
+	// for _, v := range CategoryName {
+	// 	cat := models.Category{
+	// 		NameCategory: v,
+	// 	}
+	// 	controller.CreateCategory(db, cat)
+	// }
 
 	http.ListenAndServe(PORT, nil)
 }
