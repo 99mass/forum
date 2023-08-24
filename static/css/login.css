@@ -89,6 +89,9 @@ form{
    width: 100%;
    color: red;
 }
+.monform div .messageErro {
+   font-size: smaller;
+}
 .start{
    bottom: 0;
    font-size: 22px;

@@ -16,24 +16,23 @@
 
 <body>
     <!-- begin header -->
-      {{template "header"}}
+      {{template "header" . }}
     <!-- end header -->
 
     <div class="SignIn-Registre">
         <h1>Registre</h1>
         <form class="monform" action="" method="post">
-          <div><span class="start">*</span><span ></span></div> 
-            <input type="text" id="username" name="username" class="inputForm" placeholder="username" required>
+          <div><span class="start">*</span><span  class="messageErro">{{.ErrorAuth.UserNameError}}</span></div> 
+            <input type="text" id="username" name="username" class="inputForm" placeholder="Nom" required>
 
-            <div><span  class="start">*</span><span></span></div> 
-            <input type="email" id="email" name="email" class="inputForm" placeholder="E-mail" required>
+            <div><span  class="start">* </span><span  class="messageErro">{{.ErrorAuth.EmailError}}</span></div> 
+            <input type="email" id="email" name="email" class="inputForm" placeholder="Email" required>
 
           
             <input type="password" id="password" name="password" class="inputForm" placeholder="Password" required>
-            <div><span  class="start">*</span><span></span></div> 
+            <div><span  class="start">* </span><span  class="messageErro">{{.ErrorAuth.PasswordError}}</span></div> 
             <input type="password" id="password_validation" name="password_validation" class="inputForm"
                 placeholder=" Confirm Password" required>
-
             <input type="submit" class="submitForm" name="submit" value="Create">
         </form>
         <a href="/signin" class="link">I have an Account</a>

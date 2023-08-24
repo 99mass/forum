@@ -3,6 +3,10 @@ const contentLink=document.querySelector('.content-link');
 const  btnUpdate=document.querySelector('.btn-update');
 const formUpdate=document.querySelector('.form-update');
 const faxmark=document.querySelector('.faxmark');
+const  messageErro=document.querySelectorAll('.messageErro');
+// const monform=document.querySelector('.monform');
+
+
     contentLink.style.display="none";
     faBars.addEventListener("click", () => {
         
@@ -26,3 +30,19 @@ if (formUpdate && btnUpdate) {
         formUpdate.style.display = "none";
     });
 };
+
+if (messageErro.length>0) {
+    window.addEventListener("load", () => {
+        for (let index = 0; index < messageErro.length; index++) {
+            const element = messageErro[index];
+             if (element.textContent!="") {
+                setTimeout(() => {
+                    element.innerHTML=""
+                }, 1500);
+                
+             }
+                
+            
+        }
+    });
+}

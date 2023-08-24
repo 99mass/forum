@@ -85,13 +85,21 @@ type CommentDetails struct {
 }
 
 type Home struct {
-	Session  bool
-	Category []Category
-	Datas    []HomeDataPost
-	User     User
+	Session   bool
+	Category  []Category
+	Datas     []HomeDataPost
+	User      User
+	ErrorAuth ErrorAuth
 }
 
 type PostCategory struct {
 	CategoryID uuid.UUID
 	PostID     uuid.UUID
+}
+
+type ErrorAuth struct {
+	EmailError    string
+	UserNameError string
+	PasswordError string
+	GeneralError string
 }

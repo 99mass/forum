@@ -2,6 +2,7 @@ package controller
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"time"
 
@@ -25,7 +26,7 @@ func CreateUser(db *sql.DB, user models.User) (uuid.UUID, error) {
 	if err != nil {
 		return uuid.UUID{}, err
 	}
-	
+
 	return newUUID, nil
 }
 
@@ -167,6 +168,7 @@ func DeleteUser(db *sql.DB, userID uuid.UUID) error {
 }
 
 // Verification duplicatat pseudo ou email.
+
 func IsDuplicateUsernameOrEmail(db *sql.DB, username, email string) (bool, error) {
 	query := `
         SELECT COUNT(*)
@@ -176,9 +178,14 @@ func IsDuplicateUsernameOrEmail(db *sql.DB, username, email string) (bool, error
 
 	var count int
 	err := db.QueryRow(query, username, email).Scan(&count)
+	//fmt.Println(err, ":duplicate",count)
 	if err != nil {
-		return false, err
+		fmt.Println("Error Base de donné")
+		return false, errors.New("")
+	}
+	if count > 0 {
+		return true, errors.New("L'utilisateur existe déjà.")
 	}
 
-	return count > 0, nil
+	return false, errors.New("")
 }
