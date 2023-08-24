@@ -46,7 +46,7 @@ func CheckRegisterFormat(username, email, password, confirmPassword string, db *
 		if dup {
 			ok = false
 			ErrAuth.EmailError = errdup.Error()
-
+			//return false,models.ErrorAuth{}
 		}
 	}
 	fmt.Println(ErrAuth.EmailError,)
