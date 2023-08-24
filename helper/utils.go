@@ -1,32 +1,59 @@
 package helper
 
 import (
+	"database/sql"
 	"errors"
+	"fmt"
+	"forum/controller"
+	"forum/models"
 	"regexp"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
-func CheckRegisterFormat(username, email, password string) error {
+func CheckRegisterFormat(username, email, password, confirmPassword string, db *sql.DB) (bool, models.ErrorAuth) {
+	ErrAuth := new(models.ErrorAuth)
+	ok := true
+
+	if !ConfirmPasswordsMatch(password, confirmPassword) {
+		//fmt.Println("Les mots de passe ne sont pas conformes")
+		ok = false
+		ErrAuth.PasswordError = "Les mots de passe ne sont pas conformes"
+	} else {
+		okPassWord, errP := CheckPassword(password)
+		if !okPassWord {
+			//Debug(errP.Error())
+			ok = false
+			ErrAuth.PasswordError = errP.Error()
+		}
+	}
+
 	okUserName, errUN := CheckUserName(username)
-	okEmail, errE := CheckEmail(email)
-	okPassWord, errP := CheckPassword(password)
 	if !okUserName {
-		//Debug(errUN.Error())
-		
-		return errUN
+		ok = false
+		ErrAuth.UserNameError = errUN.Error()
 	}
+
+	okEmail, errE := CheckEmail(email)
+	fmt.Println("checkemail:",okEmail)
 	if !okEmail {
-		Debug(errE.Error())
-		return errE
+		ok = false
+		ErrAuth.EmailError = errE.Error()
+	} else {
+		fmt.Println("checking dupli")
+		dup,errdup  := controller.IsDuplicateUsernameOrEmail(db, username, email)
+		
+		if dup {
+			ok = false
+			ErrAuth.EmailError = errdup.Error()
+
+		}
 	}
-	if !okPassWord {
-		Debug(errP.Error())
-		return errP
-	}
-	return nil
+	fmt.Println(ErrAuth.EmailError,)
+	return ok, *ErrAuth
 }
 
+// Vérification du format de l'email "name@name.ext"
 func CheckEmail(email string) (bool, error) {
 
 	emailRegex := `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`
@@ -39,13 +66,16 @@ func CheckEmail(email string) (bool, error) {
 	return match, nil
 }
 
+// Vérification du format du mot de passe.
+// Il doit avoir 8 à 25 caractère.
+// Il doit contenir au moins un chiffre, une lettre majuscule, une lettre minuscule et un caractère spécial
 func CheckPassword(password string) (bool, error) {
 	// Cette expression exige au moins 8 caractères avec au moins une lettre majuscule,
 	// une lettre minuscule, un chiffre et un caractère spécial.
 	// Vérification de la longueur
 
 	if len(password) < 8 || len(password) > 25 {
-		
+
 		return false, errors.New("Longueur mot de passe non valide: minimum 8, maximum 25")
 	}
 
@@ -56,19 +86,19 @@ func CheckPassword(password string) (bool, error) {
 	specialCharRegex := regexp.MustCompile(`[@$!%*?&_\-]`)
 
 	if !lowercaseRegex.MatchString(password) {
-		
+
 		return false, errors.New("Le mot de passe doit contenir au moins une lettre minuscule")
 	}
 	if !uppercaseRegex.MatchString(password) {
-		
+
 		return false, errors.New("Le mot de passe doit contenir au moins une lettre majuscule")
 	}
 	if !digitRegex.MatchString(password) {
-		
+
 		return false, errors.New("Le mot de passe doit contenir au moins un chiffre")
 	}
 	if !specialCharRegex.MatchString(password) {
-		
+
 		return false, errors.New("Le mot de passe doit contenir au moins un caractère spécial")
 	}
 
@@ -80,6 +110,8 @@ func CheckPassword(password string) (bool, error) {
 
 }
 
+// Vérification du format du UserName
+// Il doit avoir 5 à 20 Caractères alpha_numérique
 func CheckUserName(username string) (bool, error) {
 	Debug("checkusername:" + username)
 	// Cette expression exige que le pseudo ait entre 5 et 20 caractères alphanumériques.

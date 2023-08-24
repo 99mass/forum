@@ -16,21 +16,21 @@
 
 <body>
     <!-- begin header -->
-      {{template "header"}}
+      {{template "header" . }}
     <!-- end header -->
 
     <div class="SignIn-Registre">
         <h1>Registre</h1>
         <form class="monform" action="" method="post">
-          <div><span class="start">*</span><span ></span></div> 
+          <div><span class="start">*{{.ErrorAuth.UserNameError}}</span><span ></span></div> 
             <input type="text" id="username" name="username" class="inputForm" placeholder="Nom" required>
 
-            <div><span  class="start">*</span><span></span></div> 
+            <div><span  class="start">* {{.ErrorAuth.EmailError}}</span><span></span></div> 
             <input type="email" id="email" name="email" class="inputForm" placeholder="Email" required>
 
           
             <input type="password" id="password" name="password" class="inputForm" placeholder="Password" required>
-            <div><span  class="start">*</span><span></span></div> 
+            <div><span  class="start">* {{.ErrorAuth.PasswordError}}</span><span></span></div> 
             <input type="password" id="password_validation" name="password_validation" class="inputForm"
                 placeholder=" Confirm Password" required>
 

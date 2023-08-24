@@ -10,11 +10,11 @@ import (
 	"time"
 )
 
-type ErrRegister struct {
-	MsgError string
-}
+
 
 func SinginHandler(db *sql.DB) http.HandlerFunc {
+	var homeData models.Home
+	homeData.Session = false
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
@@ -28,7 +28,7 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, pageError)
 				return
 			}
-			helper.RenderTemplate(w, "signin", "auth", "")
+			helper.RenderTemplate(w, "signin", "auth", homeData)
 
 		case http.MethodPost:
 			email := r.FormValue("email")
@@ -43,7 +43,7 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 				// Redirect to home
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 			} else {
-				helper.RenderTemplate(w, "signin", "auth", "error")
+				helper.RenderTemplate(w, "signin", "auth", homeData)
 			}
 
 		}
@@ -52,9 +52,10 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 }
 
 func RegisterHandler(db *sql.DB) http.HandlerFunc {
+	var homeData models.Home
+	homeData.Session = false
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		msgError := new(ErrRegister)
 
 		// Handle according to the method
 		switch r.Method {
@@ -72,23 +73,11 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			// Hasher le mot de passe
 			hashedPassword, _ := helper.HashPassword(password)
 
-			if !helper.ConfirmPasswordsMatch(password, confirmPassword) {
-				//fmt.Println("Les mots de passe ne sont pas conformes")
-				msgError.MsgError = "Les mots de passe ne sont pas conformes"
-				helper.RenderTemplate(w, "register", "auth", msgError)
-				return
-			}
-			_, err := controller.IsDuplicateUsernameOrEmail(db, username, email)
-			if err != nil {
-				msgError.MsgError = "L'utilisateur existe déjà"
-				helper.RenderTemplate(w, "register", "auth", msgError)
-				return
-			}
-			errFormat := helper.CheckRegisterFormat(username, email, password)
+			ok, ErrAuth := helper.CheckRegisterFormat(username, email, password, confirmPassword, db)
 
-			if errFormat != nil {
-				msgError.MsgError = errFormat.Error()
-				helper.RenderTemplate(w, "register", "auth", msgError)
+			if !ok {
+				homeData.ErrorAuth = ErrAuth
+				helper.RenderTemplate(w, "register", "auth", homeData)
 				return
 			}
 
@@ -115,7 +104,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, pageError)
 				return
 			}
-			helper.RenderTemplate(w, "register", "auth", "")
+			helper.RenderTemplate(w, "register", "auth", homeData)
 		default:
 			helper.ErrorPage(w, 404)
 			return
