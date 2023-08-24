@@ -10,12 +10,11 @@ import (
 	"time"
 )
 
-
-
 func SinginHandler(db *sql.DB) http.HandlerFunc {
 	var homeData models.Home
 	homeData.Session = false
-
+	homeData.ErrorAuth.EmailError = ""
+	homeData.ErrorAuth.GeneralError = ""
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		switch r.Method {
@@ -34,6 +33,14 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 			email := r.FormValue("email")
 			password := r.FormValue("motdepasse")
 
+			okEmail, errE := helper.CheckEmail(email)
+			if !okEmail {
+				homeData.ErrorAuth.EmailError = errE.Error()
+				helper.RenderTemplate(w, "signin", "auth", homeData)
+				return
+			} else {
+				homeData.ErrorAuth.EmailError = ""
+			}
 			//Check if the error has to be handled
 			userID, toConnect := helper.VerifUser(db, email, password)
 
@@ -43,6 +50,7 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 				// Redirect to home
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 			} else {
+				homeData.ErrorAuth.GeneralError = "L'email ou le mot de passe n'est pas correcte"
 				helper.RenderTemplate(w, "signin", "auth", homeData)
 			}
 
