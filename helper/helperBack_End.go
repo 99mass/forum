@@ -28,15 +28,15 @@ func GetPostForHome(db *sql.DB) ([]models.HomeDataPost, error) {
 		if err != nil {
 			return nil, err
 		}
-		user,err := controller.GetUserByPostID(db,post.ID)
-		if err != nil{
-			return nil,err
+		user, err := controller.GetUserByPostID(db, post.ID)
+		if err != nil {
+			return nil, err
 		}
 		var commentdetails []models.CommentDetails
 		for _, com := range comments {
-			user,err := controller.GetUserByCommentID(db,com.ID)
-			if err != nil{
-				return nil,err
+			user, err := controller.GetUserByCommentID(db, com.ID)
+			if err != nil {
+				return nil, err
 			}
 			var commentdetail models.CommentDetails
 			commentdetail.Comment = com
@@ -89,6 +89,10 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeDataPost, error) {
 	}
 	var commentdetails []models.CommentDetails
 	for _, com := range comments {
+		user, err := controller.GetUserByCommentID(db, com.ID)
+		if err != nil {
+			return models.HomeDataPost{}, err
+		}
 		var commentdetail models.CommentDetails
 		commentdetail.Comment = com
 		commentlike, err := controller.GetCommentLikesByCommentID(db, com.ID)
@@ -101,8 +105,8 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeDataPost, error) {
 		}
 		commentdetail.CommentLike = len(commentlike)
 		commentdetail.CommentDislike = len(commentdislike)
+		commentdetail.User = *user
 		commentdetails = append(commentdetails, commentdetail)
-
 	}
 	likes, err := controller.GetPostLikesByPostID(db, post.ID)
 	if err != nil {
