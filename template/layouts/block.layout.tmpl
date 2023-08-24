@@ -12,9 +12,11 @@
 
     </div>
 </div>
-
-
 {{end}}
+
+
+
+
 
 {{ define "register"}}
 <form class="auth_form" action="" method="post">
@@ -34,26 +36,29 @@
 {{end}}
 
 {{ define "signin"}}
-<form class="auth_form" action="" method="post">
-    <input class="auth_input" type="text" name="user_name" id="user_name" placeholder="Enter your user name">
-    <input class="auth_input" type="email" name="email" id="email" placeholder="Enter your email">
-    <input class="auth_input" type="password" name="password" id="password" placeholder="Enter your password">
-
-    <button class="auth_btn">Register</button>
-    <a href="/register">I don't have an account</a>
-</form>
-
-
+    <div class="SignIn-Registre">
+        <h1>Sign in</h1>
+        <form class="monform" action="" method="post">
+            <div><span class="start">*</span><span ></span></div> 
+            <input type="text" id="email" name="email"  class="inputForm" placeholder="Email or Username" required>
+             <div><span class="start">*</span><span ></span></div> 
+            <input type="password" id="motdepasse" name="motdepasse"  class="inputForm" placeholder="Password" required>
+            <input type="submit" id="submit" class="submitForm" value="Sign in" >
+        </form>
+           
+        <a href="/register" class="link">I don't have an Account</a>
+        
+    </div>
 {{end}}
 
 {{ define "Session"}}
-{{ if .Session }}
-<a href="/profil" class="drop-daown">{{.User.Username}} </a>
-<a href="/signout" class="drop-daown">sign out</a>
-{{else}}
-<a href="/register" class="drop-daown">register</a>
-<a href="/signin" class="drop-daown">sign in</a>
-{{end}}
+    {{ if .Session }}
+    <a href="/profil" class="drop-daown">{{.User.Username}} </a>
+    <a href="/signout" class="drop-daown">sign out</a>
+    {{else}}
+    <a href="/register" class="drop-daown">register</a>
+    <a href="/signin" class="drop-daown">sign in</a>
+    {{end}}
 {{end}}
 
 {{define "Category"}}
@@ -63,3 +68,72 @@
     <option value="Cuture">Cuture</option>
     <option value="Religion">Religion</option>
 {{end}}
+
+{{define "FilterForm" }}
+
+    <form action="" method="post">
+            <div class="select-opt1">               
+                <details>
+                    <summary>Choose the categories</summary>
+                    <div><input type="checkbox" name="category" value="education"  /><label>education</label></div>
+                    
+                    <div><input type="checkbox" name="category" value="sport" /><label>sport</label></div>
+                    
+                    <div><input type="checkbox" name="category" value="art" /><label>art</label></div>
+                
+                    <div><input type="checkbox" name="category" value="culture" /><label>culture</label></div>
+                    
+                    <div> <input type="checkbox" name="category" value="religion"  /><label>religion</label></div> 
+                </details>
+            </div>
+            <div>
+                <label for="creation-date">created posts</label>
+                <input type="date" value="2023-08-24">
+            </div>
+            <div>
+                <div>
+                <label >liked posts</label><br>
+                <label class="label-min-max" ><span>min-value</span> <span>max-value</span></label>
+                <div class="liked-post-content">
+                <input type="number" min="0" placeholder="0">
+                <input type="number" min="0" placeholder="1000">
+                </div>
+                </div>
+            </div>
+            <button type="submit">filter</button>
+            </form>
+    
+{{end}}
+
+
+{{define "addPostForm"}}
+     {{ if .Session }}
+        <div class="new-post"><i class="fa-solid fa-plus"></i> New Post</div>
+        <form class="form-new-post" action="/addpost" method="post">
+          <!-- checbox -->
+          <div class="select-opt">               
+                <details>
+                    <summary>Choose the categories</summary>
+                      <input type="checkbox" name="category" value="education"  /><label>education</label><br> 
+                    
+                      <input type="checkbox" name="category" value="sport" /><label>sport</label><br> 
+                    
+                      <input type="checkbox" name="category" value="art" /><label>art</label><br> 
+                  
+                      <input type="checkbox" name="category" value="culture" /><label>culture</label><br> 
+                    
+                      <input type="checkbox" name="category" value="religion"  /><label>religion</label><br>  
+                </details>
+          </div>
+          <div>
+            <input type="text" name="title" id="title" placeholder="title post" required>
+          </div>
+          <div>
+            <textarea name="content" id="content" cols="30" rows="5" required placeholder="Put the content here"></textarea>
+          </div>
+          <button type="submit">add post</button>
+        </form>
+    {{end}}
+{{end}}
+
+

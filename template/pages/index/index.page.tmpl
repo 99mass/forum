@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,42 +27,7 @@
       <button class="btn-filter"><i class="fa-solid fa-filter"></i> filter</button>
 
       <div class="filter-form">
-        <form action="" method="post">
-          <select name="categorie" required>
-            <!-- a supprimer -->
-
-            <option selected>categories </option>
-            {{ range .Category }}
-            <option value="{{.NameCategory}}">{{.NameCategory}}</option>
-            {{end}}
-            {{template "Category"}}
-
-
-            <!-- fin a supprimer -->
-          </select>
-          <div>
-            <label for="creation-date">created posts</label>
-            <input type="date">
-          </div>
-          <div>
-            <label for="creation-date">time posted</label>
-            <input type="time">
-          </div>
-          <div>
-            <div>
-              <label for="">liked posts</label>
-              <input type="number" min="0">
-            </div>
-            <div>
-              <label for="">disliked posts</label>
-              <input type="number" min="0">
-            </div>
-          </div>
-          <div>
-            <label></label>
-          </div>
-          <button type="submit">filter</button>
-        </form>
+        {{template "FilterForm"}}
       </div>
     </div>
 
@@ -76,32 +42,7 @@
 
       <!-- form add post -->
       <div class="bloc-add-post">
-        <div class="new-post"><i class="fa-solid fa-plus"></i> New Post</div>
-        <form class="form-new-post" action="/addpost" method="post">
-          <!-- checbox -->
-          <div class="select-opt">               
-                <details>
-                    <summary>Choose the categories</summary>
-                      <input type="checkbox" name="category" value="education"  /><label>education</label><br> 
-                    
-                      <input type="checkbox" name="category" value="sport" /><label>sport</label><br> 
-                    
-                      <input type="checkbox" name="category" value="art" /><label>art</label><br> 
-                  
-                      <input type="checkbox" name="category" value="culture" /><label>culture</label><br> 
-                    
-                      <input type="checkbox" name="category" value="religion"  /><label>religion</label><br>  
-                </details>
-          </div>
-          <div>
-            <input type="text" name="title" id="title" placeholder="title post" required>
-          </div>
-          <div>
-            <textarea name="content" id="content" cols="30" rows="5" required placeholder="Put the content here"></textarea>
-          </div>
-          <button type="submit">add post</button>
-        </form>
-
+         {{template "addPostForm" .}}
       </div>
 
       <!-- block post and comment -->

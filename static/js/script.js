@@ -12,6 +12,7 @@ const faxmark=document.querySelector('.faxmark');
             contentLink.style.display = "none";
         }
     });
+if (formUpdate && btnUpdate) {
     formUpdate.style.display="none";
     btnUpdate.addEventListener("click", () => {
         
@@ -22,7 +23,6 @@ const faxmark=document.querySelector('.faxmark');
         }
     });
     faxmark.addEventListener("click", () => {
-  
-            formUpdate.style.display = "none";
-  
+        formUpdate.style.display = "none";
     });
+};

@@ -63,17 +63,63 @@
     flex-direction: column;
     padding: 25px 5px 10px 5px;
 }
+
+.container .container-1 .filter-form form .select-opt1 details summary{
+    padding: 0.5rem;
+    background-color: transparent;
+    border: 1px solid var(--color-gray);
+  cursor: pointer;
+}
+.container .container-1 .filter-form form .select-opt1 details div{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+.container .container-1 .filter-form form .select-opt1 details div *{
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+}
+.container .container-1 .filter-form form .select-opt1 details div input{
+    width: 20px;
+    margin-right: 0.5rem;
+}
+.container .container-1 .filter-form form .liked-post-content{
+   
+     display: flex;
+     justify-content: space-between;
+     
+}
+.container .container-1 .filter-form form .label-min-max{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0px;
+}
+.container .container-1 .filter-form form .label-min-max span{
+    width: 50%;
+}
+.container .container-1 .filter-form form .label-min-max span:last-of-type{
+   padding-left: 1rem;
+}
+.container .container-1 .filter-form form .liked-post-content input{
+    width: 48%;
+    margin: 0;
+    outline: none;
+}
+
+
 .container .container-1 .filter-form form *{
     width: 100%;
     margin-bottom: 5px;
 }
-.container .container-1 .filter-form form select{
-    padding: 8px 5px;
-}
+
 .container .container-1 .filter-form form div  input,
 .container .container-1 .filter-form form div div input{
     padding: 5px 5px;
     margin-top: 0.5rem;
+    outline: none;
 }
 
 .container .container-1 .filter-form form div  label,
@@ -117,10 +163,6 @@
 .container .container-2 .categori-menu::-webkit-scrollbar-track {
     background-color:var(--color-white); 
 }
-
-
-
-
 
 .container .container-2 .categori-menu input{
     width: 120px;

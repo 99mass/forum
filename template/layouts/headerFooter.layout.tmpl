@@ -3,7 +3,9 @@
   <header>
     <nav class="nav1">
       <a href="/">Home</a>
-      <a href="/mypage">my page</a>
+       {{ if .Session }}
+          <a href="/mypage">my page</a>
+      {{end}}
 
     </nav>
     <nav class="nav2">
@@ -17,8 +19,10 @@
     <nav class="nav3">
       <div class="btn-fabars drop-daown"><span>forum</span><i class="fa-solid fa-bars"></i></div>
       <div class="content-link">
-        <a href="/">Home</a>
-        <a href="/mypage">my page</a>
+      <a href="/">Home</a>
+             {{ if .Session }}
+          <a href="/mypage">my page</a>
+      {{end}}
      {{template "Session" .}}
                 
         <form action="" method="post" class="drop-daown">
