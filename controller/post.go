@@ -116,3 +116,21 @@ func GetAllPosts(db *sql.DB) ([]models.Post, error) {
 
 	return posts, nil
 }
+
+// Function to get user by post ID
+func GetUserByPostID(db *sql.DB, postID uuid.UUID) (*models.User, error) {
+	query := `
+		SELECT u.id, u.username, u.email, u.created_at
+		FROM users u
+		INNER JOIN posts p ON u.id = p.user_id
+		WHERE p.id = ?;
+	`
+
+	var user models.User
+	err := db.QueryRow(query, postID).Scan(&user.ID, &user.Username, &user.Email, &user.CreatedAt)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}

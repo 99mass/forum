@@ -76,6 +76,7 @@ type HomeDataPost struct {
 	Comment     []CommentDetails
 	PostLike    int
 	PostDislike int
+	User	User
 }
 
 type CommentDetails struct {
