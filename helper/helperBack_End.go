@@ -34,6 +34,10 @@ func GetPostForHome(db *sql.DB) ([]models.HomeDataPost, error) {
 		}
 		var commentdetails []models.CommentDetails
 		for _, com := range comments {
+			user,err := controller.GetUserByCommentID(db,com.ID)
+			if err != nil{
+				return nil,err
+			}
 			var commentdetail models.CommentDetails
 			commentdetail.Comment = com
 			commentlike, err := controller.GetCommentLikesByCommentID(db, com.ID)
@@ -46,6 +50,7 @@ func GetPostForHome(db *sql.DB) ([]models.HomeDataPost, error) {
 			}
 			commentdetail.CommentLike = len(commentlike)
 			commentdetail.CommentDislike = len(commentdislike)
+			commentdetail.User = *user
 			commentdetails = append(commentdetails, commentdetail)
 
 		}

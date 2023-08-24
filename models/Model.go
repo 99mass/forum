@@ -83,6 +83,7 @@ type CommentDetails struct {
 	Comment        Comment
 	CommentLike    int
 	CommentDislike int
+	User		User
 }
 
 type Home struct {

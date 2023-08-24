@@ -28,6 +28,23 @@ func CreateComment(db *sql.DB, comment models.Comment) (uuid.UUID, error) {
 	return newUUID, nil
 }
 
+// Function to get user by comment ID
+func GetUserByCommentID(db *sql.DB, commentID uuid.UUID) (*models.User, error) {
+	query := `
+		SELECT u.id, u.username, u.email, u.created_at
+		FROM users u
+		INNER JOIN comments c ON u.id = c.user_id
+		WHERE c.id = ?;
+	`
+
+	var user models.User
+	err := db.QueryRow(query, commentID).Scan(&user.ID, &user.Username, &user.Email, &user.CreatedAt)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
 func GetCommentByID(db *sql.DB, commentID uuid.UUID) (models.Comment, error) {
 	var comment models.Comment
 	query := `
