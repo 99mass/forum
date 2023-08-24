@@ -35,7 +35,7 @@
             <option value="{{.NameCategory}}">{{.NameCategory}}</option>
             {{end}}
 
-            
+
             {{template "Category"}}
 
 
@@ -81,25 +81,20 @@
         <div class="new-post"><i class="fa-solid fa-plus"></i> New Post</div>
         <form class="form-new-post" action="/addpost" method="post">
           <!-- checbox -->
-          <div class="select-opt">               
-                <details>
-                    <summary>Choose the categories</summary>
-                      <input type="checkbox" name="category" value="education"  /><label>education</label><br> 
-                    
-                      <input type="checkbox" name="category" value="sport" /><label>sport</label><br> 
-                    
-                      <input type="checkbox" name="category" value="art" /><label>art</label><br> 
-                  
-                      <input type="checkbox" name="category" value="culture" /><label>culture</label><br> 
-                    
-                      <input type="checkbox" name="category" value="religion"  /><label>religion</label><br>  
-                </details>
+          <div class="select-opt">
+            <details>
+              <summary>Choose the categories</summary>
+              {{ range .Category}}
+              <input type="checkbox" name="category" value="{{.ID}}" /><label>{{.NameCategory}}</label><br>
+              {{end}}
+            </details>
           </div>
           <div>
             <input type="text" name="title" id="title" placeholder="title post" required>
           </div>
           <div>
-            <textarea name="content" id="content" cols="30" rows="5" required placeholder="Put the content here"></textarea>
+            <textarea name="content" id="content" cols="30" rows="5" required
+              placeholder="Put the content here"></textarea>
           </div>
           <button type="submit">add post</button>
         </form>
@@ -178,11 +173,11 @@
 
 
   <!-- begin header -->
-{{template "footer"}} 
+  {{template "footer"}}
   <!-- end header -->
 
 
-   <script src="/static/js/index.js"></script>
+  <script src="/static/js/index.js"></script>
   <script src="/static/js/script.js"></script>
 
 </body>

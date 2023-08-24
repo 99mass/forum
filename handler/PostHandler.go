@@ -45,12 +45,13 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 			if errForm != nil {
 				helper.Debug(errForm.Error())
 				helper.ErrorPage(w, http.StatusBadRequest)
-				http.Redirect(w, r, "/",http.StatusOK)
+				http.Redirect(w, r, "/",http.StatusSeeOther)
 				return
 			}
 			postTitle := r.FormValue("title")
 			postContent := r.FormValue("content")
 			_postCategorystring := r.Form["category"]
+			fmt.Println("hello:",_postCategorystring)
 			var _postCategoryuuid []uuid.UUID
 			for _, v := range _postCategorystring {
 				catuuid, _ := uuid.FromString(v)
@@ -67,10 +68,12 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 			}
 			_,err := controller.CreatePost(db, post)
 			if err != nil {
-				fmt.Println(err)
+				fmt.Println(err," pos no cre")
 				return
 			}
+			fmt.Println("hello")
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
-		http.Redirect(w, r, "/", http.StatusOK)
+		
 	}
 }

@@ -12,25 +12,27 @@ import (
 )
 
 func CreatePost(db *sql.DB, post models.Post) (uuid.UUID, error) {
+	
+	newUUID, err := uuid.NewV4()
+	if err != nil {
+		return uuid.UUID{}, err
+	}
 	fmt.Println("Creating post")
 	for _, v := range post.CategoryID {
 		fmt.Println("Creating postCategory",v)
-		err := CreatePostCategory(db, post.ID, v)
+		err := CreatePostCategory(db, newUUID, v)
 		if err!= nil {
-			fmt.Println(err)
+			fmt.Println(err,"pc no cre")
 			return v, errors.New("")
 		}
 	}
 
 	query := `
-        INSERT INTO posts (id, user_id, title, content, category_id, created_at)
+        INSERT INTO posts (id, user_id, title, content, created_at)
         VALUES (?, ?, ?, ?, ?);
     	`
 
-	newUUID, err := uuid.NewV4()
-	if err != nil {
-		return uuid.UUID{}, err
-	}
+	
 
 	_, err = db.Exec(query, newUUID.String(), post.UserID, post.Title, post.Content, time.Now())
 	if err != nil {
@@ -44,13 +46,13 @@ func CreatePost(db *sql.DB, post models.Post) (uuid.UUID, error) {
 func GetPostByID(db *sql.DB, postID uuid.UUID) (models.Post, error) {
 	var post models.Post
 	query := `
-        SELECT id, user_id, title, content, category_id, created_at
+        SELECT id, user_id, title, content, created_at
         FROM posts
         WHERE id = ?
         LIMIT 1;
     `
 
-	err := db.QueryRow(query, postID).Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.CategoryID, &post.CreatedAt)
+	err := db.QueryRow(query, postID).Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.CreatedAt)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return models.Post{}, errors.New("publication non trouvée")
@@ -64,11 +66,11 @@ func GetPostByID(db *sql.DB, postID uuid.UUID) (models.Post, error) {
 func UpdatePost(db *sql.DB, post models.Post) error {
 	query := `
         UPDATE posts
-        SET title = ?, content = ?, category_id = ?
+        SET title = ?, content = ?
         WHERE id = ?;
     `
 
-	_, err := db.Exec(query, post.Title, post.Content, post.CategoryID, post.ID)
+	_, err := db.Exec(query, post.Title, post.Content, post.ID)
 	if err != nil {
 		return err
 	}
@@ -92,7 +94,7 @@ func DeletePost(db *sql.DB, postID uuid.UUID) error {
 
 func GetAllPosts(db *sql.DB) ([]models.Post, error) {
 	query := `
-        SELECT id, user_id, title, content, category_id, created_at
+        SELECT id, user_id, title, content, created_at
         FROM posts;
     `
 
@@ -105,7 +107,7 @@ func GetAllPosts(db *sql.DB) ([]models.Post, error) {
 	var posts []models.Post
 	for rows.Next() {
 		var post models.Post
-		err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.CategoryID, &post.CreatedAt)
+		err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.CreatedAt)
 		if err != nil {
 			return nil, err
 		}
