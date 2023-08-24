@@ -2,6 +2,7 @@ package handler
 
 import (
 	"database/sql"
+	"fmt"
 	"forum/controller"
 	"forum/helper"
 	"forum/middlewares"
@@ -21,7 +22,8 @@ func Index(db *sql.DB) http.HandlerFunc {
 
 		data, err := helper.GetPostForHome(db)
 		if err != nil {
-			helper.ErrorPage(w, pageError)
+			fmt.Println("err: ",err)
+			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
 		}
 		var homeData models.Home
@@ -34,8 +36,8 @@ func Index(db *sql.DB) http.HandlerFunc {
 
 			sessiondata = true
 
-			_, errgets := controller.GetSessionByID(db, sessionID)
-			if errgets != nil {
+			session, errgets := controller.GetSessionByID(db, sessionID)
+			if errgets != nil || &session == nil {
 				sessiondata = false
 			}
 			homeData.User = controller.GetUserBySessionId(sessionID, db)

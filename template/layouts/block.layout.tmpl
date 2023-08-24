@@ -75,15 +75,9 @@
             <div class="select-opt1">               
                 <details>
                     <summary>Choose the categories</summary>
-                    <div><input type="checkbox" name="category" value="education"  /><label>education</label></div>
-                    
-                    <div><input type="checkbox" name="category" value="sport" /><label>sport</label></div>
-                    
-                    <div><input type="checkbox" name="category" value="art" /><label>art</label></div>
-                
-                    <div><input type="checkbox" name="category" value="culture" /><label>culture</label></div>
-                    
-                    <div> <input type="checkbox" name="category" value="religion"  /><label>religion</label></div> 
+                    {{ range .Category}}
+                    <div><input type="checkbox" name="category" value="{{.ID}}"  /><label>{{.NameCategory}}</label></div>
+                    {{end}}
                 </details>
             </div>
             <div>
@@ -114,15 +108,9 @@
           <div class="select-opt">               
                 <details>
                     <summary>Choose the categories</summary>
-                      <input type="checkbox" name="category" value="education"  /><label>education</label><br> 
-                    
-                      <input type="checkbox" name="category" value="sport" /><label>sport</label><br> 
-                    
-                      <input type="checkbox" name="category" value="art" /><label>art</label><br> 
-                  
-                      <input type="checkbox" name="category" value="culture" /><label>culture</label><br> 
-                    
-                      <input type="checkbox" name="category" value="religion"  /><label>religion</label><br>  
+                    {{ range .Category}}
+                      <input type="checkbox" name="category" value="{{.ID}}"  /><label>{{.NameCategory}}</label><br> 
+                      {{end}}
                 </details>
           </div>
           <div>

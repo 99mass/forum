@@ -27,7 +27,7 @@
       <button class="btn-filter"><i class="fa-solid fa-filter"></i> filter</button>
 
       <div class="filter-form">
-        {{template "FilterForm"}}
+        {{template "FilterForm" .}}
       </div>
     </div>
 
@@ -35,6 +35,7 @@
       <div class="categori-menu">
         {{ range .Category}}
         <form action="" method="post">
+          <input type="hidden" name="categorie" value="{{.ID}}" >
           <input type="submit" value="{{.NameCategory}}">
         </form>
         {{end}}
@@ -117,11 +118,11 @@
 
 
   <!-- begin header -->
-{{template "footer"}} 
+  {{template "footer"}}
   <!-- end header -->
 
 
-   <script src="/static/js/index.js"></script>
+  <script src="/static/js/index.js"></script>
   <script src="/static/js/script.js"></script>
 
 </body>

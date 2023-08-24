@@ -14,7 +14,7 @@ import (
 var PORT = ":8080"
 var Category = []models.Category{}
 
-//var CategoryName = []string{"Education", "Sport", "Art", "Culture", "Religion"}
+var CategoryName = []string{"Education", "Sport", "Art", "Culture", "Religion"}
 
 func main() {
 
