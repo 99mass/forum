@@ -12,17 +12,17 @@ import (
 )
 
 func CreatePost(db *sql.DB, post models.Post) (uuid.UUID, error) {
-	
+
 	newUUID, err := uuid.NewV4()
 	if err != nil {
 		return uuid.UUID{}, err
 	}
 	fmt.Println("Creating post")
 	for _, v := range post.CategoryID {
-		fmt.Println("Creating postCategory",v)
+		fmt.Println("Creating postCategory", v)
 		err := CreatePostCategory(db, newUUID, v)
-		if err!= nil {
-			fmt.Println(err,"pc no cre")
+		if err != nil {
+			fmt.Println(err, "pc no cre")
 			return v, errors.New("")
 		}
 	}
@@ -31,8 +31,6 @@ func CreatePost(db *sql.DB, post models.Post) (uuid.UUID, error) {
         INSERT INTO posts (id, user_id, title, content, created_at)
         VALUES (?, ?, ?, ?, ?);
     	`
-
-	
 
 	_, err = db.Exec(query, newUUID.String(), post.UserID, post.Title, post.Content, time.Now())
 	if err != nil {

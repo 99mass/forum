@@ -22,7 +22,7 @@ func Index(db *sql.DB) http.HandlerFunc {
 
 		data, err := helper.GetPostForHome(db)
 		if err != nil {
-			fmt.Println("err: ",err)
+			fmt.Println("err: ", err)
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
 		}
@@ -46,7 +46,7 @@ func Index(db *sql.DB) http.HandlerFunc {
 		category, err := controller.GetAllCategories(db)
 		if err != nil {
 			helper.ErrorPage(w, http.StatusInternalServerError)
-			
+
 		}
 		homeData.Session = sessiondata
 		homeData.Category = category

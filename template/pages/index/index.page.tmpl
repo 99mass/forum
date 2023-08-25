@@ -45,18 +45,17 @@
       <div class="bloc-add-post">
          {{template "addPostForm" .}}
       </div>
-
+    
       <!-- block post and comment -->
-      <!-- <h3>education</h3> -->
-      <div class="post-displaying">
-        {{range .Datas}}
+      <div class="post-displaying">     
+      
+        {{range .Datas}}        
           {{template "post" .}}
         {{end}}
-
       </div>
+      
 
-      <div class="see-post"><a href="/categorie/"><i class="fa-solid fa-circle-right"></i>see
-          more posts...</a></div>
+      <!-- <div class="see-post"><a href="/categorie/"><i class="fa-solid fa-circle-right"></i>see more posts...</a></div> -->
 
 
     </div>

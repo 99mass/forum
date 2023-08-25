@@ -230,7 +230,10 @@
    padding-bottom: 0px;
    margin-bottom:0px ;
 }
-
+.container .container-2 .bloc-add-post form textarea{
+    text-transform: lowercase;
+    font-size: small;
+}
 .container .container-2 .bloc-add-post form button{
     padding:1rem 6rem;
     background: var(--color-linear-gradient);
@@ -259,6 +262,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2,1fr);
+    /* grid-template-columns: repeat(1,1fr); */
     gap: 150;
 }
  h3 {
@@ -271,6 +275,7 @@
 }
 .categorie-specifique {
     width: 95%;
+    /* width: 75%; */
    display: flex;
    flex-direction: column;
    padding: 1rem;
@@ -287,21 +292,24 @@
     display: flex;
     justify-content: flex-end;
 }
-.categorie-specifique .comment-btn{
-  text-decoration: none;
-  margin-bottom: 10px;
-  width: fit-content;
-  
- border: 2px solid transparent;
- padding: 5px 10px;
- background: var(--color-linear-gradient);
- color: var(--color-white);
- text-transform: none;
+
+
+.categorie-specifique .comment-btn button{
+    color: var(--color-white);
+    text-decoration: none;
+    margin-bottom: 10px;
+    width: fit-content;
+    
+    border: 2px solid transparent;
+    padding: 5px 10px;
+    background: var(--color-linear-gradient);
+    cursor: pointer;
+    text-transform: none;
 }
-.categorie-specifique .comment-btn i {
-  margin-right: 2px;
-  color: var(--color-white);
-}
+.categorie-specifique .comment-btn button i {
+    margin-right: 2px;
+    color: var(--color-white);
+  }
 .categorie-specifique div,
 .categorie-specifique h6{
     margin-bottom: 0.5rem;
@@ -337,6 +345,30 @@
     font-size: 22px;
     font-weight: 600;
 }
+.content-comments{
+    overflow-y: scroll;
+    height: 13rem;
+    padding-right: 0.5rem;
+}
+ /* width */
+ .content-comments::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  .content-comments::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  .content-comments::-webkit-scrollbar-thumb {
+    background: var(--header-color);
+  }
+  
+  /* Handle on hover */
+  .content-comments::-webkit-scrollbar-thumb:hover {
+    background: var(--header-color);
+  } 
 .categorie-specifique div .fa-comments{
     margin-right: 0.5rem;
     font-size: 22px;
