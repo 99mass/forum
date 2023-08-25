@@ -9,7 +9,16 @@
     {{end}}
 {{end}}
 
-
+{{define "categorieMenu"}}
+  <div class="categori-menu">
+    {{ range .Category}}
+    <form action="" method="post">
+      <input type="hidden" name="categorie" value="{{.ID}}" >
+      <input type="submit" value="{{.NameCategory}}">
+    </form>
+    {{end}}
+  </div>
+{{end}}
 
 {{define "FilterForm" }}
 
@@ -81,7 +90,7 @@
       <span>|</span>
       <div><span><i class="fa-solid fa-calendar-days" ></i>date:</span>{{.Posts.CreatedAt}}</div>
     </div>
-
+  
     <div class="like-dislik-content">
       <form action="" method="post">
         <input type="hidden" name="liked" value="">
@@ -122,6 +131,7 @@
         <button type="submit"><i class="fa-regular fa-thumbs-down"></i>2</button>
       </form>
     </div>
+    <!-- begin delete -->
     <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic
       ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias
       placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
@@ -176,7 +186,7 @@
         <button type="submit"><i class="fa-regular fa-thumbs-down"></i>2</button>
       </form>
     </div>
-
+  <!-- end delete -->
    
   </div>
         {{range .Comment}}

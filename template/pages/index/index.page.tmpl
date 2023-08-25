@@ -32,14 +32,8 @@
     </div>
 
     <div class="container-2">
-      <div class="categori-menu">
-        {{ range .Category}}
-        <form action="" method="post">
-          <input type="hidden" name="categorie" value="{{.ID}}" >
-          <input type="submit" value="{{.NameCategory}}">
-        </form>
-        {{end}}
-      </div>
+      <!-- menu categorie -->
+      {{template "categorieMenu" .}}
 
       <!-- form add post -->
       <div class="bloc-add-post">
@@ -54,10 +48,6 @@
         {{end}}
       </div>
       
-
-      <!-- <div class="see-post"><a href="/categorie/"><i class="fa-solid fa-circle-right"></i>see more posts...</a></div> -->
-
-
     </div>
 
   </main>
