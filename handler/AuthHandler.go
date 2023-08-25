@@ -8,6 +8,8 @@ import (
 	"forum/models"
 	"net/http"
 	"time"
+
+	"github.com/gofrs/uuid"
 )
 
 func SinginHandler(db *sql.DB) http.HandlerFunc {
@@ -30,30 +32,21 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 			helper.RenderTemplate(w, "signin", "auth", homeData)
 
 		case http.MethodPost:
-			email := r.FormValue("email")
-			password := r.FormValue("motdepasse")
 
-			okEmail, errE := helper.CheckEmail(email)
-			if !okEmail {
-				homeData.ErrorAuth.EmailError = errE.Error()
-				helper.RenderTemplate(w, "signin", "auth", homeData)
+			datas, err := helper.GetDataTemplate(db, r, false, false, false, true, false)
+
+			if err != nil {
+				helper.RenderTemplate(w, "signin", "auth", datas)
 				return
-			} else {
-				homeData.ErrorAuth.EmailError = ""
 			}
-			//Check if the error has to be handled
-			userID, toConnect := helper.VerifUser(db, email, password)
-
-			if toConnect {
-				// Create a session
-				helper.AddSession(w, userID, db)
+			nul := uuid.UUID{}
+			if datas.User.ID != nul {
+				helper.AddSession(w, datas.User.ID, db)
 				// Redirect to home
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 			} else {
-				homeData.ErrorAuth.GeneralError = "L'email ou le mot de passe n'est pas correcte"
-				helper.RenderTemplate(w, "signin", "auth", homeData)
+				helper.RenderTemplate(w, "signin", "auth", datas)
 			}
-
 		}
 
 	}

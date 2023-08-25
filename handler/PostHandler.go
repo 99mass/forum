@@ -19,7 +19,14 @@ func GetPosts(w http.ResponseWriter, r *http.Request) {
 func GetOnePost(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
+		
 		fmt.Println("GetOnePost")
+
+		switch r.Method {
+		case "get ":
+		case "post":
+
+		}
 		homeData := models.Home{}
 		Datas, err := helper.GetPostForHome(db)
 		if err != nil {
@@ -41,19 +48,18 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			helper.ErrorPage(w, http.StatusNotFound)
 			return
 		}
-		fmt.Println(postData.User.Username,":session")
-		session, err := helper.GetSessionRequest(r)
-		if err != nil {
-			homeData.Session = false
-		}
-		fmt.Println(session,":session")
-		fmt.Println("verif session")
-		if helper.VerifySession(db, session) {
-			homeData.Session = true
-			homeData.User = controller.GetUserBySessionId(session, db)
-		} else {
-			homeData.Session = false
-		}
+
+		// session, err := helper.GetSessionRequest(r)
+		// if err != nil {
+		// 	homeData.Session = false
+		// }
+	
+		// if helper.VerifySession(db, session) {
+		// 	homeData.Session = true
+		// 	homeData.User = controller.GetUserBySessionId(session, db)
+		// } else {
+		// 	homeData.Session = false
+		// }
 		homeData.Datas = Datas
 		homeData.PostData = postData
 		fmt.Println("renderin", homeData)
