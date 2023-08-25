@@ -57,6 +57,8 @@ func GetPostByID(db *sql.DB, postID uuid.UUID) (models.Post, error) {
 		}
 		return models.Post{}, err
 	}
+	timeformated := post.CreatedAt[:10]
+	post.CreatedAt = timeformated
 
 	return post, nil
 }
@@ -109,8 +111,12 @@ func GetAllPosts(db *sql.DB) ([]models.Post, error) {
 		if err != nil {
 			return nil, err
 		}
+		timeformated := post.CreatedAt[:10]
+		post.CreatedAt = timeformated
 		posts = append(posts, post)
 	}
+
+	fmt.Println("time now : ", posts[0].CreatedAt)
 
 	return posts, nil
 }

@@ -184,7 +184,7 @@ func IsDuplicateUsernameOrEmail(db *sql.DB, username, email string) (bool, error
 		return false, errors.New("")
 	}
 	if count > 0 {
-		return true, errors.New("L'utilisateur existe déjà.")
+		return true, errors.New("l'utilisateur existe déjà")
 	}
 
 	return false, errors.New("")

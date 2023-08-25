@@ -156,3 +156,4 @@ func HashPassword(password string) (string, error) {
 func ConfirmPasswordsMatch(password, confirmPassword string) bool {
 	return password == confirmPassword
 }
+

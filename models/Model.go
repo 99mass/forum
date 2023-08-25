@@ -32,7 +32,8 @@ type Post struct {
 	Title      string
 	Content    string
 	CategoryID []uuid.UUID
-	CreatedAt  time.Time
+	CreatedAt  string
+	//CreatedAt  time.Time
 }
 
 type Comment struct {

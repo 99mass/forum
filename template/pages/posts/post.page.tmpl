@@ -48,9 +48,12 @@
                 </div>
                   <div class="content-form-comment">
                         <form action="" method="post">
-                            <input type="hidden" name="idPost" value="" >
+                            
                            <div> <label for="">comment here:</label></div>
-                            <textarea name="" id="" cols="30" rows="6" maxlength="500">put something here... maximum 500 characters</textarea>
+                            <textarea name="content" id="content" cols="30" rows="6" maxlength="500">put something here... maximum 500 characters</textarea>
+                            <input type="hidden" name="user_id" id="user_id" value=".User.ID">
+                            <input type="hidden" name="post_id" id="post_id" value="{{.PostData.Posts.ID}} ">
+
                             <button type="submit">comment</button>
                         </form>
                   </div>
