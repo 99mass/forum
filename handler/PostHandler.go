@@ -12,10 +12,6 @@ import (
 	"github.com/gofrs/uuid"
 )
 
-func GetPosts(w http.ResponseWriter, r *http.Request) {
-
-}
-
 func GetOnePost(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -23,58 +19,42 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 		fmt.Println("GetOnePost")
 
 		switch r.Method {
-		case "get ":
-		case "post":
+		case http.MethodGet:
+			homeData, err := helper.GetDataTemplate(db, r, true, true, true, false, false)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+			}
+
+			helper.RenderTemplate(w, "post", "posts", homeData)
+		case http.MethodPost:
+			var comment models.Comment
+
+			postID, errP := helper.StringToUuid(r, "post_id")
+			userID, errU := helper.StringToUuid(r, "user_id")
+			Content := r.FormValue("content")
+
+			if errP != nil || errU != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
+			}
+			if Content == "" {
+				http.Redirect(w, r, "/post", http.StatusSeeOther)
+				return
+			}
+			comment.PostID = postID
+			comment.UserID = userID
+			comment.Content = Content
+
+			_, err := controller.CreateComment(db, comment)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
+			}
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 
 		}
-		//homeData := models.Home{}
-		// Datas, err := helper.GetPostForHome(db)
-		// if err != nil {
-		// 	helper.ErrorPage(w, http.StatusInternalServerError)
-		// 	return
-		// }
 
-		// ID, err := helper.StringToUuid(r, "post_id")
-
-		// if err != nil {
-		// 	helper.ErrorPage(w, http.StatusInternalServerError)
-		// }
-		// postData, errPD := helper.GetPostDetails(db, ID)
-		// if errPD != nil {
-		// 	helper.ErrorPage(w, http.StatusInternalServerError)
-		// 	return
-		// }
-
-		// if postData.Posts.ID.String() == "" {
-		// 	helper.ErrorPage(w, http.StatusNotFound)
-		// 	return
-		// }
-
-		homeData, err := helper.GetDataTemplate(db, r, true, true, true, false, false)
-		if err != nil {
-			helper.ErrorPage(w, http.StatusInternalServerError)
-		}
-
-		// session, err := helper.GetSessionRequest(r)
-		// if err != nil {
-		// 	homeData.Session = false
-		// }
-
-		// if helper.VerifySession(db, session) {
-		// 	homeData.Session = true
-		// 	homeData.User = controller.GetUserBySessionId(session, db)
-		// } else {
-		// 	homeData.Session = false
-		// }
-		// homeData.Datas = Datas
-		// homeData.PostData = postData
-		//fmt.Println("renderin", homeData)
-		helper.RenderTemplate(w, "post", "posts", homeData)
 	}
-}
-func GetCategorie(w http.ResponseWriter, r *http.Request) {
-
-	helper.RenderTemplate(w, "categorie", "categories", nil)
 }
 
 func AddPostHandler(db *sql.DB) http.HandlerFunc {
