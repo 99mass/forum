@@ -52,28 +52,32 @@
 
 
 {{define "addPostForm"}}
-     {{ if .Session }}
-        <div class="new-post"><i class="fa-solid fa-plus"></i> New Post</div>
-        <form class="form-new-post" action="/addpost" method="post">
-          <!-- checbox -->
-          <div class="select-opt">               
-                <details>
-                    <summary>Choose the categories</summary>
-                    {{ range .Category}}
-                      <input type="checkbox" name="category" value="{{.ID}}"  /><label>{{.NameCategory}}</label><br> 
-                      {{end}}
-                </details>
-          </div>
-          <div>
+    <div class="new-post"><i class="fa-solid fa-plus"></i> New Post</div>
+    <form class="form-new-post" action="/addpost" method="post">
+        <!-- checbox -->
+        <div class="select-opt">               
+            <details>
+                <summary>Choose the categories</summary>
+                {{ range .Category}}
+                    <input type="checkbox" name="category" value="{{.ID}}"  /><label>{{.NameCategory}}</label><br> 
+                {{end}}
+            </details>
+        </div>
+        <div>
             <input type="text" name="title" id="title" placeholder="title post" required>
-          </div>
-          <div>
+        </div>
+        <div>
             <textarea name="content" id="content" cols="30" rows="5" maxlength="500" required placeholder="Put the content here"></textarea>
-          </div>
-          <button type="submit">add post</button>
-        </form>
-    {{end}}
+        </div>
+        {{ if not .Session }}
+            <p style="color: red;font-size: 1.3em;" >Please log in to submit a post.</p><br>
+            <button type="submit" disabled>add post</button>
+        {{ else }}
+            <button type="submit">add post</button>
+        {{ end }}
+    </form>
 {{end}}
+
 
 
 {{define "post"}}
