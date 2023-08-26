@@ -1,122 +1,130 @@
-
 {{ define "Session"}}
-    {{ if .Session }}
-    <a href="/profil" class="drop-daown">{{.User.Username}} </a>
-    <a href="/signout" class="drop-daown">sign out</a>
-    {{else}}
-    <a href="/register" class="drop-daown">register</a>
-    <a href="/signin" class="drop-daown">sign in</a>
-    {{end}}
+{{ if .Session }}
+<a href="/profil" class="drop-daown">{{.User.Username}} </a>
+<a href="/signout" class="drop-daown">sign out</a>
+{{else}}
+<a href="/register" class="drop-daown">register</a>
+<a href="/signin" class="drop-daown">sign in</a>
+{{end}}
 {{end}}
 
 {{define "categorieMenu"}}
-  <div class="categori-menu">
-    {{ range .Category}}
-    <form action="" method="post">
-      <input type="hidden" name="categorie" value="{{.ID}}" >
-      <input type="submit" value="{{.NameCategory}}">
-    </form>
-    {{end}}
-  </div>
+<div class="categori-menu">
+  {{ range .Category}}
+  <form action="" method="post">
+    <input type="hidden" name="categorie" value="{{.ID}}">
+    <input type="submit" value="{{.NameCategory}}">
+  </form>
+  {{end}}
+</div>
 {{end}}
 
 {{define "FilterForm" }}
 
-    <form action="" method="post">
-            <div class="select-opt1">               
-                <details>
-                    <summary>Choose the categories</summary>
-                    {{ range .Category}}
-                    <div><input type="checkbox" name="category" value="{{.ID}}"  /><label>{{.NameCategory}}</label></div>
-                    {{end}}
-                </details>
-            </div>
-            <div>
-                <label for="creation-date">created posts</label>
-                <input type="date" value="2023-08-24">
-            </div>
-            <div>
-                <div>
-                <label >liked posts</label><br>
-                <label class="label-min-max" ><span>min-value</span> <span>max-value</span></label>
-                <div class="liked-post-content">
-                <input type="number" min="0" placeholder="0">
-                <input type="number" min="0" placeholder="1000">
-                </div>
-                </div>
-            </div>
-            <button type="submit">filter</button>
-            </form>
-    
+<form action="" method="post">
+  <div class="select-opt1">
+    <details>
+      <summary>Choose the categories</summary>
+      {{ range .Category}}
+      <div><input type="checkbox" name="category" value="{{.ID}}" /><label>{{.NameCategory}}</label></div>
+      {{end}}
+    </details>
+  </div>
+  <div>
+    <label for="creation-date">created posts</label>
+    <input type="date" value="2023-08-24">
+  </div>
+  <div>
+    <div>
+      <label>liked posts</label><br>
+      <label class="label-min-max"><span>min-value</span> <span>max-value</span></label>
+      <div class="liked-post-content">
+        <input type="number" min="0" placeholder="0">
+        <input type="number" min="0" placeholder="1000">
+      </div>
+    </div>
+  </div>
+  <button type="submit">filter</button>
+</form>
+
 {{end}}
 
 
 {{define "addPostForm"}}
-    <div class="new-post"><i class="fa-solid fa-plus"></i> New Post</div>
-    <form class="form-new-post" action="/addpost" method="post">
-        <!-- checbox -->
-        <div class="select-opt">               
-            <details>
-                <summary>Choose the categories</summary>
-                {{ range .Category}}
-                    <input type="checkbox" name="category" value="{{.ID}}"  /><label>{{.NameCategory}}</label><br> 
-                {{end}}
-            </details>
-        </div>
-        <div>
-            <input type="text" name="title" id="title" placeholder="title post" required>
-        </div>
-        <div>
-            <textarea name="content" id="content" cols="30" rows="5" maxlength="500" required placeholder="Put the content here"></textarea>
-        </div>
-        {{ if not .Session }}
-            <p style="color: red;font-size: 1.3em;" >Please log in to submit a post.</p><br>
-            <button type="submit" disabled>add post</button>
-        {{ else }}
-            <button type="submit">add post</button>
-        {{ end }}
-    </form>
+<div class="new-post"><i class="fa-solid fa-plus"></i> New Post</div>
+<form class="form-new-post" action="/addpost" method="post">
+  <!-- checbox -->
+  <div class="select-opt">
+    <details>
+      <summary>Choose the categories</summary>
+      {{ range .Category}}
+      <input type="checkbox" name="category" value="{{.ID}}" /><label>{{.NameCategory}}</label><br>
+      {{end}}
+    </details>
+  </div>
+  <div>
+    <input type="text" name="title" id="title" placeholder="title post" required>
+  </div>
+  <div>
+    <textarea name="content" id="content" cols="30" rows="5" maxlength="500" required
+      placeholder="Put the content here"></textarea>
+  </div>
+  {{ if not .Session }}
+  <p style="color: red;font-size: 1.3em;">Please log in to submit a post.</p><br>
+  <button type="submit" disabled>add post</button>
+  {{ else }}
+  <button type="submit">add post</button>
+  {{ end }}
+</form>
 {{end}}
 
 
 
 {{define "post"}}
 <div class="categorie-specifique">
-    <!-- posts -->
-    <div class="categorie-name-content"><span><i class="fa-solid fa-square-poll-horizontal"></i>Categorie:</span><span>sport/football</span>  </div>
-        
-    <div class="title"><span><i class="fa-solid fa-feather"></i> Title:</span>{{.Posts.Title}}</div>
+  <!-- posts -->
+  <div class="categorie-name-content"><span><i class="fa-solid fa-square-poll-horizontal"></i>Categorie:</span>
 
-    <div><i class="fa-solid fa-quote-left"></i> {{.Posts.Content}}<i class="fa-solid fa-quote-left" style="margin-left: 5px;"></i> </div>
+    <span>
+      {{range .Posts.Categories}}
+      - {{.NameCategory}}  
+      {{end}}</span>
 
-    <div class="author-date">
-      <div><span><i class="fa-solid fa-at"></i>author:</span>{{.User.Username}} </div>
-      <span>|</span>
-      <div><span><i class="fa-solid fa-calendar-days" ></i>date:</span>{{.Posts.CreatedAt}}</div>
-    </div>
-  
-    <div class="like-dislik-content">
-      <form action="" method="post">
-        <input type="hidden" name="liked" value="">
-        <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}} </button>
-      </form>
-      <form action="" method="post">
-        <input type="hidden" name="disliked" value="">
-        <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}} </button>
-      </form>
-    </div>
+  </div>
 
-    <div class="comment ">
-    <form action="/post" method="post" class="comment-btn">
-        <input type="hidden" name="post_id" id="post_id" value="{{.Posts.ID}} ">
-        <button type="submit"><i class="fa-solid fa-message"></i>comment here</button>
+  <div class="title"><span><i class="fa-solid fa-feather"></i> Title:</span>{{.Posts.Title}}</div>
+
+  <div><i class="fa-solid fa-quote-left"></i> {{.Posts.Content}}<i class="fa-solid fa-quote-left"
+      style="margin-left: 5px;"></i> </div>
+
+  <div class="author-date">
+    <div><span><i class="fa-solid fa-at"></i>author:</span>{{.User.Username}} </div>
+    <span>|</span>
+    <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>{{.Posts.CreatedAt}}</div>
+  </div>
+
+  <div class="like-dislik-content">
+    <form action="" method="post">
+      <input type="hidden" name="liked" value="">
+      <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}} </button>
+    </form>
+    <form action="" method="post">
+      <input type="hidden" name="disliked" value="">
+      <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}} </button>
     </form>
   </div>
 
-    <!-- comment -->
-    
-    <h6>all comments</h6>
-    <div class="content-comments">
+  <div class="comment ">
+    <form action="/post" method="post" class="comment-btn">
+      <input type="hidden" name="post_id" id="post_id" value="{{.Posts.ID}} ">
+      <button type="submit"><i class="fa-solid fa-message"></i>comment here</button>
+    </form>
+  </div>
+
+  <!-- comment -->
+
+  <h6>all comments</h6>
+  <div class="content-comments">
     <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic
       ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias
       placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
@@ -190,11 +198,11 @@
         <button type="submit"><i class="fa-regular fa-thumbs-down"></i>2</button>
       </form>
     </div>
-  <!-- end delete -->
-   
+    <!-- end delete -->
+
   </div>
-        {{range .Comment}}
-        {{end}}
-  </div>
+  {{range .Comment}}
+  {{end}}
+</div>
 
 {{end}}

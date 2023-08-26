@@ -11,7 +11,7 @@ import (
 	"forum/routes"
 )
 
-var PORT = ":8080"
+var PORT = ":8081"
 var Category = []models.Category{}
 
 var CategoryName = []string{"Education", "Sport", "Art", "Culture", "Religion"}

@@ -86,7 +86,7 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 		}
 		datas.Session = sessiondata
 	}
-	
+
 	//---Get All Categories-------//
 	if Category {
 		category, err := controller.GetAllCategories(db)
@@ -112,7 +112,7 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 		}
 		//Check if the error has to be handled
 		userID, toConnect := VerifUser(db, email, password)
-		
+
 		if toConnect {
 			datas.User.ID = userID
 			// Create a session

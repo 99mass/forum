@@ -66,6 +66,12 @@ func GetPostForHome(db *sql.DB) ([]models.HomeDataPost, error) {
 		}
 		nbrdislikes := len(dislike)
 
+		category, err := controller.GetCategoriesByPost(db, post.ID)
+		if err != nil {
+			return nil, err
+		}
+
+		post.Categories = category
 		HomeData.Posts = post
 		HomeData.Comment = commentdetails
 		HomeData.PostLike = nbrlikes
@@ -111,6 +117,7 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeDataPost, error) {
 	}
 	likes, err := controller.GetPostLikesByPostID(db, post.ID)
 	if err != nil {
+
 		return models.HomeDataPost{}, err
 	}
 	nbrlikes := len(likes)
@@ -120,6 +127,12 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeDataPost, error) {
 	}
 	nbrdislikes := len(dislike)
 
+	category, err := controller.GetCategoriesByPost(db, postID)
+	if err != nil {
+		return models.HomeDataPost{}, err
+	}
+
+	HomeData.Posts.Categories = category
 	HomeData.Posts = post
 	HomeData.Comment = commentdetails
 	HomeData.PostLike = nbrlikes

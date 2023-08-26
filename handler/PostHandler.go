@@ -19,7 +19,7 @@ func GetPosts(w http.ResponseWriter, r *http.Request) {
 func GetOnePost(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		
+
 		fmt.Println("GetOnePost")
 
 		switch r.Method {
@@ -27,42 +27,48 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 		case "post":
 
 		}
-		homeData := models.Home{}
-		Datas, err := helper.GetPostForHome(db)
+		//homeData := models.Home{}
+		// Datas, err := helper.GetPostForHome(db)
+		// if err != nil {
+		// 	helper.ErrorPage(w, http.StatusInternalServerError)
+		// 	return
+		// }
+
+		// ID, err := helper.StringToUuid(r, "post_id")
+
+		// if err != nil {
+		// 	helper.ErrorPage(w, http.StatusInternalServerError)
+		// }
+		// postData, errPD := helper.GetPostDetails(db, ID)
+		// if errPD != nil {
+		// 	helper.ErrorPage(w, http.StatusInternalServerError)
+		// 	return
+		// }
+
+		// if postData.Posts.ID.String() == "" {
+		// 	helper.ErrorPage(w, http.StatusNotFound)
+		// 	return
+		// }
+
+		homeData, err := helper.GetDataTemplate(db, r, true, true, true, false, false)
 		if err != nil {
 			helper.ErrorPage(w, http.StatusInternalServerError)
-			return
-		}
-		ID, err := helper.StringToUuid(r, "post_id")
-		
-		if err != nil {
-			helper.ErrorPage(w, http.StatusInternalServerError)
-		}
-		postData, errPD := helper.GetPostDetails(db, ID)
-		if errPD != nil {
-			helper.ErrorPage(w, http.StatusInternalServerError)
-			return
-		}
-		
-		if postData.Posts.ID.String() == "" {
-			helper.ErrorPage(w, http.StatusNotFound)
-			return
 		}
 
 		// session, err := helper.GetSessionRequest(r)
 		// if err != nil {
 		// 	homeData.Session = false
 		// }
-	
+
 		// if helper.VerifySession(db, session) {
 		// 	homeData.Session = true
 		// 	homeData.User = controller.GetUserBySessionId(session, db)
 		// } else {
 		// 	homeData.Session = false
 		// }
-		homeData.Datas = Datas
-		homeData.PostData = postData
-		fmt.Println("renderin", homeData)
+		// homeData.Datas = Datas
+		// homeData.PostData = postData
+		//fmt.Println("renderin", homeData)
 		helper.RenderTemplate(w, "post", "posts", homeData)
 	}
 }
@@ -98,20 +104,28 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 			postTitle := r.FormValue("title")
 			postContent := r.FormValue("content")
 			_postCategorystring := r.Form["category"]
-			fmt.Println("hello:", _postCategorystring)
-			var _postCategoryuuid []uuid.UUID
+			// fmt.Println("hello:", _postCategorystring)
+			// var _postCategoryuuid []uuid.UUID
+			var _postCategories []models.Category
+			// for _, v := range _postCategorystring {
+			// 	catuuid, _ := uuid.FromString(v)
+			// 	_postCategoryuuid = append(_postCategoryuuid, catuuid)
+			// }
 			for _, v := range _postCategorystring {
+				var cat models.Category
 				catuuid, _ := uuid.FromString(v)
-				_postCategoryuuid = append(_postCategoryuuid, catuuid)
+				cat.ID = catuuid
+				_postCategories = append(_postCategories, cat)
 			}
 
 			user := controller.GetUserBySessionId(session, db)
 
 			post := models.Post{
-				UserID:     user.ID,
-				Title:      postTitle,
-				Content:    postContent,
-				CategoryID: _postCategoryuuid,
+				UserID:  user.ID,
+				Title:   postTitle,
+				Content: postContent,
+				// CategoryID: _postCategoryuuid,
+				Categories: _postCategories,
 			}
 			_, err := controller.CreatePost(db, post)
 			if err != nil {

@@ -1,160 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/header.css">
-    <link rel="stylesheet" href="/static/css/post.css">
-    <!-- cdn font awsome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>forum</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/header.css">
+  <link rel="stylesheet" href="/static/css/post.css">
+  <!-- cdn font awsome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>forum</title>
 </head>
+
 <body>
 
-<!-- begin header -->
-  {{template "header" .}} 
-<!-- end header -->
+  <!-- begin header -->
+  {{template "header" .}}
+  <!-- end header -->
 
-<!-- begin body -->
-   <main class="container">
-   
+  <!-- begin body -->
+  <main class="container">
 
-      <div class="container-2">
-       
-       <!-- block post and comment -->
+
+    <div class="container-2">
+
+      <!-- block post and comment -->
       <h3>education</h3>
-        <div class="post-displaying">         
-            <div class="categorie-specifique">                             
-                <!-- posts -->
-                <div class="title"><span> <i class="fa-solid fa-heading"></i>title:</span>sit amet consectetur</div>
-                
-                <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate, necessitatibus odit odio exercitationem itaque beatae.</div>
-                 
-                <div class="author-date">
-                    <div><span><i class="fa-solid fa-at"></i>author:</span>ssambadi</div>
-                    <span>|</span>
-                    <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 à 12h </div>
-                </div>
+      <div class="post-displaying">
+        <div class="categorie-specifique">
+          <!-- posts -->
+          <div class="title"><span> <i class="fa-solid fa-heading"></i>title:</span>{{.PostData.Posts.Title}}</div>
 
-                <div class="like-dislik-content">
-                      <form action="" method="post">
-                        <input type="hidden" name="liked" value="">
-                        <button type="submit"><i class="fa-regular fa-thumbs-up"></i>12</button>
-                      </form>
-                      <form action="" method="post">
-                        <input type="hidden" name="disliked" value="">
-                        <button type="submit"><i class="fa-regular fa-thumbs-down"></i>5</button>
-                      </form>
-                </div>
-                  <div class="content-form-comment">
-                        <form action="/post" method="post">
-                            
-                           <div> <label for="">comment here:</label></div>
-                            <textarea name="content" id="content" cols="30" rows="6" maxlength="500" placeholder="put something here... maximum 500 characters"></textarea>
-                            <input type="hidden" name="user_id" id="user_id" value=".User.ID">
-                            <input type="hidden" name="post_id" id="post_id" value="{{.PostData.Posts.ID}} ">
+          <div><i class="fa-regular fa-comments"></i>{{.PostData.Posts.Content}}</div>
 
-                            <button type="submit">comment</button>
-                        </form>
-                  </div>
-            </div>
-            <div class="categorie-specifique">                             
-                  <!-- comment -->
-                  <h6>all comments</h6>
-                  <div class="content-comments">
-                  <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
-                  <div class="author-date2">
-                    <div><span><i class="fa-solid fa-at"></i>author:</span>alo</div>
-                    <span>|</span>
-                    <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 at 2am </div>
-                  </div>
-  
-                  <div class="like-dislik-content">
-                      <form action="" method="post">
-                        <input type="hidden" name="liked" value="">
-                        <button type="submit"><i class="fa-regular fa-thumbs-up"></i>9</button>
-                      </form>
-                      <form action="" method="post">
-                        <input type="hidden" name="disliked" value="">
-                        <button type="submit"><i class="fa-regular fa-thumbs-down"></i>2</button>
-                      </form>
-                    </div>
-                    <hr>
-                  
-                      
-                  </div>
-              </div>
+          <div class="author-date">
+            <div><span><i class="fa-solid fa-at"></i>author:</span>{{.PostData.User.Username}}</div>
+            <span>|</span>
+            <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>{{.PostData.Posts.CreatedAt}}</div>
+          </div>
+
+          <div class="like-dislik-content">
+            <form action="" method="post">
+              <input type="hidden" name="liked" value="">
+              <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.PostData.PostLike}}</button>
+            </form>
+            
+            <form action="" method="post">
+              <input type="hidden" name="disliked" value="">
+              <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.PostData.PostDislike}}</button>
+            </form>
+          </div>
+          <!-- Formulaire de comment -->
+          <div class="content-form-comment">
+            <form action="/post" method="post">
+
+              <div> <label for="">comment here:</label></div>
+              <textarea name="content" id="content" cols="30" rows="6" maxlength="500"
+                placeholder="put something here... maximum 500 characters"></textarea>
+              <input type="hidden" name="user_id" id="user_id" value="{{.User.ID}}">
+              <input type="hidden" name="post_id" id="post_id" value="{{.PostData.Posts.ID}}">
+
+              <button type="submit">comment</button>
+            </form>
+          </div>
         </div>
-          <h4>other post by @ssambadi</h4>
+        <div class="categorie-specifique">
+          <!-- comment -->
+          <h6>all comments</h6>
+          {{range .PostData.Comment}}
+          <div class="content-comments">
+            <div><i class="fa-regular fa-comments"></i>{{.Comment.Content}}</div>
+            <div class="author-date2">
+              <div><span><i class="fa-solid fa-at"></i>author:</span>{{.User.Username}}</div>
+              <span>|</span>
+              <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>{{.Comment.CreatedAt}}</div>
+            </div>
 
-          <!-- 
+            <div class="like-dislik-content">
+              <form action="" method="post">
+                <input type="hidden" name="liked" value="">
+                <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
+              </form>
+              <form action="" method="post">
+                <input type="hidden" name="disliked" value="">
+                <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
+              </form>
+            </div>
+            <hr>
+
+          </div>
+          {{end}}
+        </div>
+      </div>
+
+      <h4>other post by @ssambadi</h4>
+
+      <!-- 
             ce bloc sera supprimer sa sert juste a la simulations
             -->
-         <!--debut  a supprimer- -->
-          <h3>art</h3>
-          <div class="post-displaying">         
-            <div class="categorie-specifique">                             
-                <!-- posts -->
-                <div class="title"><span> <i class="fa-solid fa-heading"></i>title:</span>sit amet consectetur</div>
-                
-                <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate, necessitatibus odit odio exercitationem itaque beatae.</div>
-                 
-                <div class="author-date">
-                    <div><span><i class="fa-solid fa-at"></i>author:</span>ssambadi</div>
-                    <span>|</span>
-                    <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 à 12h </div>
-                </div>
+      <!--debut  a supprimer- -->
+      <h3>art</h3>
+      <div class="post-displaying">
+        <div class="categorie-specifique">
+          <!-- posts -->
+          <div class="title"><span> <i class="fa-solid fa-heading"></i>title:</span>sit amet consectetur</div>
 
-                <div class="like-dislik-content">
-                      <form action="" method="post">
-                        <input type="hidden" name="liked" value="">
-                        <button type="submit"><i class="fa-regular fa-thumbs-up"></i>12</button>
-                      </form>
-                      <form action="" method="post">
-                        <input type="hidden" name="disliked" value="">
-                        <button type="submit"><i class="fa-regular fa-thumbs-down"></i>5</button>
-                      </form>
-                </div>
+          <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum
+            neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate,
+            necessitatibus odit odio exercitationem itaque beatae.</div>
 
-                <a href="/post/" class="comment"><div  class="comment-btn"><i class="fa-solid fa-up-right-from-square"></i>comment here</div></a>
-                
-                
-              </div>
-            <div class="categorie-specifique">                             
-               
-                  <!-- comment -->
-                  <h6>all comments</h6>
-                  <div class="content-comments">
-                  <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam hic ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus molestias placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
-                  <div class="author-date2">
-                    <div><span><i class="fa-solid fa-at"></i>author:</span>alo</div>
-                    <span>|</span>
-                    <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 at 2am </div>
-                  </div>
-  
-                  <div class="like-dislik-content">
-                      <form action="" method="post">
-                        <input type="hidden" name="liked" value="">
-                        <button type="submit"><i class="fa-regular fa-thumbs-up"></i>91</button>
-                      </form>
-                      <form action="" method="post">
-                        <input type="hidden" name="disliked" value="">
-                        <button type="submit"><i class="fa-regular fa-thumbs-down"></i>12</button>
-                      </form>
-                    </div>
-                  <hr>
-                  
-                  </div>
+          <div class="author-date">
+            <div><span><i class="fa-solid fa-at"></i>author:</span>ssambadi</div>
+            <span>|</span>
+            <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 à 12h </div>
+          </div>
+
+          <div class="like-dislik-content">
+            <form action="" method="post">
+              <input type="hidden" name="liked" value="">
+              <button type="submit"><i class="fa-regular fa-thumbs-up"></i>12</button>
+            </form>
+            <form action="" method="post">
+              <input type="hidden" name="disliked" value="">
+              <button type="submit"><i class="fa-regular fa-thumbs-down"></i>5</button>
+            </form>
+          </div>
+
+          <a href="/post/" class="comment">
+            <div class="comment-btn"><i class="fa-solid fa-up-right-from-square"></i>comment here</div>
+          </a>
+
+
+        </div>
+        <div class="categorie-specifique">
+
+          <!-- comment -->
+          <h6>all comments</h6>
+          <div class="content-comments">
+            <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
+              hic ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus
+              molestias placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
+            <div class="author-date2">
+              <div><span><i class="fa-solid fa-at"></i>author:</span>alo</div>
+              <span>|</span>
+              <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 at 2am </div>
             </div>
+
+            <div class="like-dislik-content">
+              <form action="" method="post">
+                <input type="hidden" name="liked" value="">
+                <button type="submit"><i class="fa-regular fa-thumbs-up"></i>91</button>
+              </form>
+              <form action="" method="post">
+                <input type="hidden" name="disliked" value="">
+                <button type="submit"><i class="fa-regular fa-thumbs-down"></i>12</button>
+              </form>
+            </div>
+            <hr>
+
+          </div>
+        </div>
       </div>
-     
-   </main>
-<!-- end body -->
 
-   <!--begin footer -->
-      {{template "footer"}}
-    <!-- end footer -->
+  </main>
+  <!-- end body -->
 
-<script src="/static/js/script.js"></script>
+  <!--begin footer -->
+  {{template "footer"}}
+  <!-- end footer -->
+
+  <script src="/static/js/script.js"></script>
 </body>
+
 </html>

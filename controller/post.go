@@ -18,12 +18,12 @@ func CreatePost(db *sql.DB, post models.Post) (uuid.UUID, error) {
 		return uuid.UUID{}, err
 	}
 	fmt.Println("Creating post")
-	for _, v := range post.CategoryID {
+	for _, v := range post.Categories {
 		fmt.Println("Creating postCategory", v)
-		err := CreatePostCategory(db, newUUID, v)
+		err := CreatePostCategory(db, newUUID, v.ID)
 		if err != nil {
 			fmt.Println(err, "pc no cre")
-			return v, errors.New("")
+			return v.ID, errors.New("")
 		}
 	}
 

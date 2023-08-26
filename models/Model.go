@@ -26,21 +26,11 @@ type Category struct {
 	NameCategory string
 }
 
-type Post struct {
-	ID         uuid.UUID
-	UserID     uuid.UUID
-	Title      string
-	Content    string
-	CategoryID []uuid.UUID
-	CreatedAt  string
-	//CreatedAt  time.Time
-}
-
 type Comment struct {
 	ID        uuid.UUID
 	UserID    uuid.UUID
 	PostID    uuid.UUID
-	Content   string
+	Content   string 
 	CreatedAt time.Time
 }
 
@@ -58,6 +48,43 @@ type PostDislike struct {
 	CreatedAt time.Time
 }
 
+type Home struct {
+	Session   bool
+	Category  []Category
+	Datas     []HomeDataPost
+	User      User
+	ErrorAuth ErrorAuth
+	PostData  HomeDataPost
+}
+type HomeDataPost struct {
+	Posts       Post
+	Comment     []CommentDetails
+	PostLike    int
+	PostDislike int
+	User        User
+}
+type Post struct {
+	ID         uuid.UUID
+	UserID     uuid.UUID
+	Title      string
+	Content    string
+	CategoryID []uuid.UUID
+	Categories []Category
+	CreatedAt  string
+	//CreatedAt  time.Time
+}
+type PostCategory struct {
+	CategoryID uuid.UUID
+	PostID     uuid.UUID
+}
+type CommentDetails struct {
+	Comment        Comment
+	CommentLike    int
+	CommentDislike int
+	User           User
+}
+
+
 type CommentLike struct {
 	ID        uuid.UUID
 	UserID    uuid.UUID
@@ -72,34 +99,8 @@ type CommentDislike struct {
 	CreatedAt time.Time
 }
 
-type HomeDataPost struct {
-	Posts       Post
-	Comment     []CommentDetails
-	PostLike    int
-	PostDislike int
-	User        User
-}
 
-type CommentDetails struct {
-	Comment        Comment
-	CommentLike    int
-	CommentDislike int
-	User           User
-}
 
-type Home struct {
-	Session   bool
-	Category  []Category
-	Datas     []HomeDataPost
-	User      User
-	ErrorAuth ErrorAuth
-	PostData  HomeDataPost
-}
-
-type PostCategory struct {
-	CategoryID uuid.UUID
-	PostID     uuid.UUID
-}
 
 type ErrorAuth struct {
 	EmailError    string
