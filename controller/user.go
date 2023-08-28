@@ -189,3 +189,21 @@ func IsDuplicateUsernameOrEmail(db *sql.DB, username, email string) (bool, error
 
 	return false, errors.New("")
 }
+
+// Function to get user by username
+func GetUserByUsername(db *sql.DB, username string) (*models.User, error) {
+	query := `
+		SELECT id, username, email, password, created_at
+		FROM users
+		WHERE username = ?
+		LIMIT 1;
+	`
+
+	var user models.User
+	err := db.QueryRow(query, username).Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.CreatedAt)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}

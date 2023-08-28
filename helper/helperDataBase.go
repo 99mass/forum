@@ -102,14 +102,14 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 		email := r.FormValue("email")
 		password := r.FormValue("motdepasse")
 
-		okEmail, errE := CheckEmail(email)
-		if !okEmail {
-			datas.ErrorAuth.EmailError = errE.Error()
-			//RenderTemplate(w, "signin", "auth", datas)
-			return datas, errE
-		} else {
-			datas.ErrorAuth.EmailError = ""
-		}
+		// okEmail, errE := CheckEmail(email)
+		// if !okEmail {
+		// 	datas.ErrorAuth.EmailError = errE.Error()
+		// 	//RenderTemplate(w, "signin", "auth", datas)
+		// 	return datas, errE
+		// } else {
+		// 	datas.ErrorAuth.EmailError = ""
+		// }
 		//Check if the error has to be handled
 		userID, toConnect := VerifUser(db, email, password)
 

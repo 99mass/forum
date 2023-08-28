@@ -159,17 +159,33 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeDataPost, error) {
 // }
 
 func VerifUser(db *sql.DB, email string, password string) (uuid.UUID, bool) {
-	user, err := controller.GetUserByEmail(db, email)
-	if err != nil {
-		return uuid.Nil, false
+	client := new(models.User)
+	okEmail, _ := CheckEmail(email)
+
+	if okEmail {
+		user, err := controller.GetUserByEmail(db, email)
+		if err != nil {
+			return uuid.Nil, false
+		}
+		if user == nil {
+			return uuid.Nil, false
+		}
+		client = user
+	} else {
+		user, err := controller.GetUserByUsername(db, email)
+		if err != nil {
+			return uuid.Nil, false
+		}
+		if user == nil {
+			return uuid.Nil, false
+		}
+		client = user
 	}
-	if user == nil {
-		return uuid.Nil, false
+
+	if !CheckPasswordHash(password, client.Password) {
+		return client.ID, false
 	}
-	if !CheckPasswordHash(password, user.Password) {
-		return user.ID, false
-	}
-	return user.ID, true
+	return client.ID, true
 }
 
 // CheckPasswordHash compares a password with its hashed version
