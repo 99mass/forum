@@ -17,12 +17,9 @@ func CreatePost(db *sql.DB, post models.Post) (uuid.UUID, error) {
 	if err != nil {
 		return uuid.UUID{}, err
 	}
-	fmt.Println("Creating post")
 	for _, v := range post.Categories {
-		fmt.Println("Creating postCategory", v)
 		err := CreatePostCategory(db, newUUID, v.ID)
 		if err != nil {
-			fmt.Println(err, "pc no cre")
 			return v.ID, errors.New("")
 		}
 	}
@@ -34,7 +31,6 @@ func CreatePost(db *sql.DB, post models.Post) (uuid.UUID, error) {
 
 	_, err = db.Exec(query, newUUID.String(), post.UserID, post.Title, post.Content, time.Now())
 	if err != nil {
-		fmt.Println(err, "error creating post")
 		return uuid.UUID{}, err
 	}
 
@@ -95,7 +91,8 @@ func DeletePost(db *sql.DB, postID uuid.UUID) error {
 func GetAllPosts(db *sql.DB) ([]models.Post, error) {
 	query := `
         SELECT id, user_id, title, content, created_at
-        FROM posts;
+        FROM posts
+		ORDER BY created_at DESC;
     `
 
 	rows, err := db.Query(query)
@@ -137,4 +134,33 @@ func GetUserByPostID(db *sql.DB, postID uuid.UUID) (*models.User, error) {
 	}
 
 	return &user, nil
+}
+
+func GetPostsByUserID(db *sql.DB, userID uuid.UUID) ([]models.Post, error) {
+	query := `
+		SELECT id, user_id, title, content, created_at
+		FROM posts
+		WHERE user_id = ?
+		ORDER BY created_at DESC;
+	`
+
+	rows, err := db.Query(query, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var posts []models.Post
+	for rows.Next() {
+		var post models.Post
+		err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
+		timeformated := post.CreatedAt[:10]
+		post.CreatedAt = timeformated
+		posts = append(posts, post)
+	}
+
+	return posts, nil
 }

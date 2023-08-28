@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"forum/controller"
 	"forum/helper"
+	"forum/models"
 	"net/http"
 )
 
@@ -30,7 +31,23 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 
 		}
 		if sessiondata {
-			helper.RenderTemplate(w, "mypage", "mypages", nil)
+			user := controller.GetUserBySessionId(sessionID, db)
+			PostsDetails, err := helper.GetPostForMyPage(db, user.ID)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
+			}
+			category, err := controller.GetAllCategories(db)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+				return 
+			}
+			datas := new(models.DataMypage)
+			datas.Datas = PostsDetails
+			datas.Session = sessiondata
+			datas.User = user
+			datas.Category = category
+			helper.RenderTemplate(w, "mypage", "mypages", datas)
 		} else {
 			http.Redirect(w, r, "/signin", http.StatusSeeOther)
 			return
