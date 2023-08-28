@@ -37,7 +37,7 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 				return
 			}
-			PostsDetails, err := helper.GetPostForMyPage(db, user.ID)
+			PostsDetails, err := helper.GetPostsForOneUser(db, user.ID)
 			if err != nil {
 				helper.ErrorPage(w, http.StatusInternalServerError)
 				return

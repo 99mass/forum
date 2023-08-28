@@ -16,14 +16,20 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		fmt.Println("GetOnePost")
-
 		switch r.Method {
 		case http.MethodGet:
-			homeData, err := helper.GetDataTemplate(db, r, true, true, true, false, false)
+			homeData, err := helper.GetDataTemplate(db, r, true, true, false, false, false)
 			if err != nil {
 				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
 			}
+			fmt.Println(homeData.PostData.User)
+			posts,err := helper.GetPostsForOneUser(db,homeData.PostData.User.ID)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
+			}
+			homeData.Datas = posts
 
 			helper.RenderTemplate(w, "post", "posts", homeData)
 		case http.MethodPost:
@@ -38,10 +44,16 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				return
 			}
 			if Content == "" {
-				homeData, err := helper.GetDataTemplate(db, r, true, true, true, false, false)
+				homeData, err := helper.GetDataTemplate(db, r, true, true, false, false, false)
 				if err != nil {
 					helper.ErrorPage(w, http.StatusInternalServerError)
 				}
+				posts,err := helper.GetPostsForOneUser(db,homeData.PostData.User.ID)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
+			}
+			homeData.Datas = posts
 				helper.RenderTemplate(w, "post", "posts", homeData)
 				return
 			}
@@ -58,6 +70,12 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			if err != nil {
 				helper.ErrorPage(w, http.StatusInternalServerError)
 			}
+			posts,err := helper.GetPostsForOneUser(db,homeData.User.ID)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
+			}
+			homeData.Datas = posts
 			helper.RenderTemplate(w, "post", "posts", homeData)
 
 		}
@@ -68,7 +86,6 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 func AddPostHandler(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("this is the url",r.URL.String())
 
 		ok, errorPage := middlewares.CheckRequest(r, "/addpost", "post")
 		if !ok {
@@ -134,7 +151,6 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("this is the url",r.URL.String())
 
 		ok, errorPage := middlewares.CheckRequest(r, "/addpostmypage", "post")
 		if !ok {
@@ -188,7 +204,6 @@ func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 			}
 			_, err = controller.CreatePost(db, post)
 			if err != nil {
-				fmt.Println(err, " pos no cre")
 				return
 			}
 			http.Redirect(w, r, "/mypage", http.StatusSeeOther)

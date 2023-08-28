@@ -131,12 +131,17 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeDataPost, error) {
 	if err != nil {
 		return models.HomeDataPost{}, err
 	}
+	user, err := controller.GetUserByPostID(db, post.ID)
+	if err != nil {
+		return models.HomeDataPost{}, err
+	}
 
 	HomeData.Posts.Categories = category
 	HomeData.Posts = post
 	HomeData.Comment = commentdetails
 	HomeData.PostLike = nbrlikes
 	HomeData.PostDislike = nbrdislikes
+	HomeData.User = *user
 
 	return HomeData, nil
 }
@@ -232,7 +237,7 @@ func StringToUuid(r *http.Request, s string) (uuid.UUID, error) {
 	return result, nil
 }
 
-func GetPostForMyPage(db *sql.DB,userID uuid.UUID) ([]models.HomeDataPost, error) {
+func GetPostsForOneUser(db *sql.DB,userID uuid.UUID) ([]models.HomeDataPost, error) {
 	
 	post, err := controller.GetPostsByUserID(db,userID)
 	if err != nil {
