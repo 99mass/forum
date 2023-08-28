@@ -120,7 +120,6 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 				fmt.Println(err, " pos no cre")
 				return
 			}
-			fmt.Println("hello")
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
 

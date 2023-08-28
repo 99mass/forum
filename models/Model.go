@@ -30,7 +30,7 @@ type Comment struct {
 	ID        uuid.UUID
 	UserID    uuid.UUID
 	PostID    uuid.UUID
-	Content   string 
+	Content   string
 	CreatedAt time.Time
 }
 
@@ -84,7 +84,6 @@ type CommentDetails struct {
 	User           User
 }
 
-
 type CommentLike struct {
 	ID        uuid.UUID
 	UserID    uuid.UUID
@@ -99,12 +98,16 @@ type CommentDislike struct {
 	CreatedAt time.Time
 }
 
-
-
-
 type ErrorAuth struct {
 	EmailError    string
 	UserNameError string
 	PasswordError string
 	GeneralError  string
+}
+
+type DataMypage struct {
+	Session     bool
+	Datas []HomeDataPost
+	User 	User
+	Category 	[]Category
 }

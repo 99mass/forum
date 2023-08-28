@@ -103,7 +103,6 @@ func GetUserByEmail(db *sql.DB, email string) (*models.User, error) {
 func GetUserBySessionId(sessionId uuid.UUID, db *sql.DB) models.User {
 
 	session, _ := GetSessionByID(db, sessionId)
-	fmt.Print(session)
 	user, _ := GetUserByID(db, session.UserID)
 	return *user
 
