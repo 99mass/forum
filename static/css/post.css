@@ -128,8 +128,9 @@ h4{
 }
 .categorie-specifique .content-form-comment textarea{
     padding: 5px;
-    font-size: small;
-}
+    font-size: medium;
+    text-transform: none;
+}   
 .categorie-specifique .content-form-comment button{
     width: auto;
     padding: 7px 17px;
