@@ -30,9 +30,10 @@
       <div class="post-displaying">
         <div class="categorie-specifique">
           <!-- posts -->
-          <div class="title"><span> <i class="fa-solid fa-heading"></i>title:</span>{{.PostData.Posts.Title}}</div>
+          <div class="title"><span><i class="fa-solid fa-feather"></i> Title:</span>{{.PostData.Posts.Title}}</div>
 
-          <div><i class="fa-regular fa-comments"></i>{{.PostData.Posts.Content}}</div>
+          <div><i class="fa-solid fa-quote-left"></i> {{.PostData.Posts.Content}}<i class="fa-solid fa-quote-left"
+            style="margin-left: 5px;"></i> </div>
 
           <div class="author-date">
             <div><span><i class="fa-solid fa-at"></i>author:</span>{{.PostData.User.Username}}</div>
