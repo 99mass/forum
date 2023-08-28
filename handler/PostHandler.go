@@ -38,7 +38,11 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				return
 			}
 			if Content == "" {
-				http.Redirect(w, r, "/post", http.StatusSeeOther)
+				homeData, err := helper.GetDataTemplate(db, r, true, true, true, false, false)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusInternalServerError)
+				}
+				helper.RenderTemplate(w, "post", "posts", homeData)
 				return
 			}
 			comment.PostID = postID
@@ -50,7 +54,11 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
 			}
-			http.Redirect(w, r, "/", http.StatusSeeOther)
+			homeData, err := helper.GetDataTemplate(db, r, true, true, true, false, false)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+			}
+			helper.RenderTemplate(w, "post", "posts", homeData)
 
 		}
 
