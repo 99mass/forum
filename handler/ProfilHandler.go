@@ -31,8 +31,13 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 
 		}
 		if sessiondata {
-			user := controller.GetUserBySessionId(sessionID, db)
-			PostsDetails, err := helper.GetPostForMyPage(db, user.ID)
+			user, err := controller.GetUserBySessionId(sessionID, db)
+			if err != nil {
+				controller.DeleteSession(db,sessionID)
+				http.Redirect(w, r, "/", http.StatusSeeOther)
+				return
+			}
+			PostsDetails, err := helper.GetPostsForOneUser(db, user.ID)
 			if err != nil {
 				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
@@ -40,7 +45,7 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 			category, err := controller.GetAllCategories(db)
 			if err != nil {
 				helper.ErrorPage(w, http.StatusInternalServerError)
-				return 
+				return
 			}
 			datas := new(models.DataMypage)
 			datas.Datas = PostsDetails

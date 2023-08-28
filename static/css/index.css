@@ -239,8 +239,8 @@
    margin-bottom:0px ;
 }
 .container .container-2 .bloc-add-post form textarea{
-    text-transform: lowercase;
-    font-size: small;
+    text-transform: none;
+    font-size: medium;
 }
 .container .container-2 .bloc-add-post form button{
     padding:1rem 6rem;

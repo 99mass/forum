@@ -82,7 +82,10 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 			if errgets != nil || &session == nil {
 				sessiondata = false
 			}
-			datas.User = controller.GetUserBySessionId(sessionID, db)
+			datas.User,errgets = controller.GetUserBySessionId(sessionID, db)
+			if errgets != nil{
+				sessiondata = false
+			}
 		}
 		datas.Session = sessiondata
 	}
