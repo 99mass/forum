@@ -127,7 +127,7 @@
 
   <div class="author-date">
     <div><span><i class="fa-solid fa-at"></i>author:</span>{{.User.Username}} </div>
-    <span>|</span>
+    <span class="bar">|</span>
     <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>{{.Posts.CreatedAt}}</div>
   </div>
 
@@ -150,14 +150,15 @@
   </div>
 
   <!-- comment -->
-
+  {{if len .Comment }}
   <h6>all comments</h6>
-  {{range .Comment}}
+  
   <div class="content-comments">
+    {{range .Comment}}
     <div><i class="fa-regular fa-comments"></i>{{.Comment.Content}}</div>
     <div class="author-date2">
       <div><span><i class="fa-solid fa-at"></i>author:</span>{{.User.Username}}</div>
-      <span>|</span>
+      <span class="bar">|</span>
       <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>{{.Comment.CreatedAt}}</div>
     </div>
     <div class="like-dislik-content">
@@ -170,10 +171,10 @@
         <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
       </form>
     </div>
-
+    {{end}}
   </div>
-
   {{end}}
+ 
 </div>
 
 {{end}}

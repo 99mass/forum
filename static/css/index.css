@@ -16,14 +16,13 @@
     --color-linear-gradient:linear-gradient(to right,#77530a,#ffd277,#77530a,#77530a,#ffd277,#77530a);
 }
 .container{
-    /* width: 100%; */
     height: auto;
     margin-top:  150px;
-    /* ****** */
-    width: 80%;
+
+    width: 85%;
     margin-left: 10%;
-    margin-right: 10%;
-    /* ******** */
+    margin-right: 5%;
+   
     display: flex;
     justify-content: space-between;
     padding: 1rem;
@@ -36,7 +35,6 @@
 }
 .container .container-1{
    width: 20%;
-   border-right: 2px solid var(--color-gray);
    height: 300px;
   display: flex;
   flex-direction: column;
@@ -57,7 +55,7 @@
    font-size: 20px !important;
 }
 .container .container-1 .filter-form{
-    width: 90%;
+    width: 100%;
     height: auto;
     margin-top: 0rem;
     background-color: #fff;
@@ -68,7 +66,9 @@
     flex-direction: column;
     padding: 25px 5px 10px 5px;
 }
-
+.container .container-1 .filter-form form  *{
+   font-size: 13px;
+}
 .container .container-1 .filter-form form .select-opt1 details summary{
     padding: 0.5rem;
     background-color: transparent;
@@ -239,8 +239,8 @@
    margin-bottom:0px ;
 }
 .container .container-2 .bloc-add-post form textarea{
-    text-transform: lowercase;
-    font-size: small;
+    text-transform: none;
+    font-size: medium;
 }
 .container .container-2 .bloc-add-post form button{
     padding:1rem 6rem;
@@ -254,7 +254,7 @@
 .new-post{
     padding:0.5rem 0rem;
     margin-bottom: 2rem;
-    width: 12%;
+    width: 8rem;
     background: var(--color-linear-gradient);
     text-align: center;
     color: var(--color-white);
@@ -411,7 +411,10 @@
 .categorie-specifique .author-date2 span{
     margin: 0px 3px;
 }
-
+.categorie-specifique  .author-date *,
+.content-comments  .author-date2 *{
+      font-size: 12px;
+  }
 .see-post{
     margin: 2rem 0rem;
     width: 100%;
@@ -430,6 +433,7 @@
         z-index: 1;
         
      }
+   
 }
 @media screen and (max-width:768px) {
     .container{
@@ -451,9 +455,7 @@
      .container .container-2{
         width: 100%;
     }
-    .new-post{
-        width: 13rem;
-    }
+   
     .post-displaying{
         width: 100%;
         display: grid;
@@ -462,6 +464,13 @@
     }
     .categorie-specifique {
         width: 98%;
+    }
+    .title{
+        font-size: 18px;
+    }
+    .categorie-specifique  .author-date *,
+  .content-comments  .author-date2 *{
+        font-size: 12px;
     }
 }
 @media screen and (max-width:500px) {
@@ -475,5 +484,14 @@
     .container .container-2 .bloc-add-post form .select-opt{
         padding-left: 0%;
         margin-bottom: 0px;
+    }
+}
+@media screen and (max-width:375px) {
+    .categorie-specifique  .author-date {
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+    }
+    .bar{
+        display: none;
     }
 }
