@@ -68,6 +68,7 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 func AddPostHandler(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("this is the url",r.URL.String())
 
 		ok, errorPage := middlewares.CheckRequest(r, "/addpost", "post")
 		if !ok {
@@ -121,6 +122,68 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 				return
 			}
 			http.Redirect(w, r, "/", http.StatusSeeOther)
+		}
+
+	}
+}
+
+func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
+
+	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("this is the url",r.URL.String())
+
+		ok, errorPage := middlewares.CheckRequest(r, "/addpostmypage", "post")
+		if !ok {
+			helper.Debug("Checkrequest addpost failled")
+			helper.ErrorPage(w, errorPage)
+			return
+		}
+		session, err := helper.GetSessionRequest(r)
+		if err != nil {
+			return
+		}
+
+		if helper.VerifySession(db, session) {
+
+			errForm := helper.CheckFormAddPost(r, db)
+			if errForm != nil {
+				helper.Debug(errForm.Error())
+				helper.ErrorPage(w, http.StatusBadRequest)
+				http.Redirect(w, r, "/", http.StatusSeeOther)
+				return
+			}
+			postTitle := r.FormValue("title")
+			postContent := r.FormValue("content")
+			_postCategorystring := r.Form["category"]
+			// fmt.Println("hello:", _postCategorystring)
+			// var _postCategoryuuid []uuid.UUID
+			var _postCategories []models.Category
+			// for _, v := range _postCategorystring {
+			// 	catuuid, _ := uuid.FromString(v)
+			// 	_postCategoryuuid = append(_postCategoryuuid, catuuid)
+			// }
+			for _, v := range _postCategorystring {
+				var cat models.Category
+				catuuid, _ := uuid.FromString(v)
+				cat.ID = catuuid
+				_postCategories = append(_postCategories, cat)
+			}
+
+			user := controller.GetUserBySessionId(session, db)
+
+			post := models.Post{
+				UserID:  user.ID,
+				Title:   postTitle,
+				Content: postContent,
+				// CategoryID: _postCategoryuuid,
+				Categories: _postCategories,
+			}
+			_, err := controller.CreatePost(db, post)
+			if err != nil {
+				fmt.Println(err, " pos no cre")
+				return
+			}
+			http.Redirect(w, r, "/mypage", http.StatusSeeOther)
 		}
 
 	}

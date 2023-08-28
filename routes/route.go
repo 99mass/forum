@@ -15,4 +15,5 @@ func Route(db *sql.DB) {
 	http.HandleFunc("/profil", handler.GetProfil)
 	http.HandleFunc("/signout", handler.SignOutHandler)
 	http.HandleFunc("/addpost", handler.AddPostHandler(db))
+	http.HandleFunc("/addpostmypage",handler.AddPostHandlerForMyPage(db))
 }
