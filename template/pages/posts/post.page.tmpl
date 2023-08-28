@@ -33,7 +33,7 @@
           <div class="title"><span><i class="fa-solid fa-feather"></i> Title:</span>{{.PostData.Posts.Title}}</div>
 
           <div><i class="fa-solid fa-quote-left"></i> {{.PostData.Posts.Content}}<i class="fa-solid fa-quote-left"
-            style="margin-left: 5px;"></i> </div>
+              style="margin-left: 5px;"></i> </div>
 
           <div class="author-date">
             <div><span><i class="fa-solid fa-at"></i>author:</span>{{.PostData.User.Username}}</div>
@@ -46,7 +46,7 @@
               <input type="hidden" name="liked" value="">
               <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.PostData.PostLike}}</button>
             </form>
-            
+
             <form action="" method="post">
               <input type="hidden" name="disliked" value="">
               <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.PostData.PostDislike}}</button>
@@ -69,7 +69,7 @@
         <div class="categorie-specifique">
           <!-- comment -->
           <h6>all comments</h6>
-          
+
           <div class="content-comments">
             {{range .PostData.Comment}}
             <div><i class="fa-regular fa-comments"></i>{{.Comment.Content}}</div>
@@ -92,7 +92,7 @@
             <hr>
             {{end}}
           </div>
-          
+
         </div>
       </div>
 
@@ -104,65 +104,9 @@
       <!--debut  a supprimer- -->
       <h3>art</h3>
       <div class="post-displaying">
-        <div class="categorie-specifique">
-          <!-- posts -->
-          <div class="title"><span> <i class="fa-solid fa-heading"></i>title:</span>sit amet consectetur</div>
-
-          <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum
-            neque voluptatem, est minima libero iusto quis magnam atque fuga illum exercitationem? Fuga voluptate,
-            necessitatibus odit odio exercitationem itaque beatae.</div>
-
-          <div class="author-date">
-            <div><span><i class="fa-solid fa-at"></i>author:</span>ssambadi</div>
-            <span class="bar">|</span>
-            <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 à 12h </div>
-          </div>
-
-          <div class="like-dislik-content">
-            <form action="" method="post">
-              <input type="hidden" name="liked" value="">
-              <button type="submit"><i class="fa-regular fa-thumbs-up"></i>12</button>
-            </form>
-            <form action="" method="post">
-              <input type="hidden" name="disliked" value="">
-              <button type="submit"><i class="fa-regular fa-thumbs-down"></i>5</button>
-            </form>
-          </div>
-
-          <a href="/post/" class="comment">
-            <div class="comment-btn"><i class="fa-solid fa-up-right-from-square"></i>comment here</div>
-          </a>
-
-
-        </div>
-        <div class="categorie-specifique">
-
-          <!-- comment -->
-          <h6>all comments</h6>
-          <div class="content-comments">
-            <div><i class="fa-regular fa-comments"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
-              hic ut, atque perspiciatis ducimus enim voluptate velit architecto, quod ea nobis, necessitatibus
-              molestias placeat assumenda incidunt suscipit modi! Reprehenderit, perspiciatis.</div>
-            <div class="author-date2">
-              <div><span><i class="fa-solid fa-at"></i>author:</span>alo</div>
-              <span class="bar">|</span>
-              <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>15/08/2023 at 2am </div>
-            </div>
-
-            <div class="like-dislik-content">
-              <form action="" method="post">
-                <input type="hidden" name="liked" value="">
-                <button type="submit"><i class="fa-regular fa-thumbs-up"></i>91</button>
-              </form>
-              <form action="" method="post">
-                <input type="hidden" name="disliked" value="">
-                <button type="submit"><i class="fa-regular fa-thumbs-down"></i>12</button>
-              </form>
-            </div>
-            <hr>
-
-          </div>
-        </div>
+        {{range .Datas}}
+        {{template "post" .}}
+        {{end}}
       </div>
 
   </main>
