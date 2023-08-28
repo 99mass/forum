@@ -100,11 +100,17 @@ func GetUserByEmail(db *sql.DB, email string) (*models.User, error) {
 	return user, nil
 }
 
-func GetUserBySessionId(sessionId uuid.UUID, db *sql.DB) models.User {
+func GetUserBySessionId(sessionId uuid.UUID, db *sql.DB) (models.User,error) {
 
-	session, _ := GetSessionByID(db, sessionId)
-	user, _ := GetUserByID(db, session.UserID)
-	return *user
+	session, err := GetSessionByID(db, sessionId)
+	if err != nil {
+		return models.User{},err
+	}
+	user, err := GetUserByID(db, session.UserID)
+	if err != nil{
+		return models.User{},err
+	}
+	return *user,nil
 
 }
 

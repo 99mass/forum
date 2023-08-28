@@ -107,8 +107,12 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 				_postCategories = append(_postCategories, cat)
 			}
 
-			user := controller.GetUserBySessionId(session, db)
-
+			user,err := controller.GetUserBySessionId(session, db)
+			if err != nil {
+				controller.DeleteSession(db,session)
+				http.Redirect(w, r, "/", http.StatusSeeOther)
+				return
+			}
 			post := models.Post{
 				UserID:  user.ID,
 				Title:   postTitle,
@@ -116,7 +120,7 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 				// CategoryID: _postCategoryuuid,
 				Categories: _postCategories,
 			}
-			_, err := controller.CreatePost(db, post)
+			_, err = controller.CreatePost(db, post)
 			if err != nil {
 				fmt.Println(err, " pos no cre")
 				return
@@ -169,8 +173,12 @@ func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 				_postCategories = append(_postCategories, cat)
 			}
 
-			user := controller.GetUserBySessionId(session, db)
-
+			user,err := controller.GetUserBySessionId(session, db)
+			if err != nil {
+				controller.DeleteSession(db,session)
+				http.Redirect(w, r, "/", http.StatusSeeOther)
+				return
+			}
 			post := models.Post{
 				UserID:  user.ID,
 				Title:   postTitle,
@@ -178,7 +186,7 @@ func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 				// CategoryID: _postCategoryuuid,
 				Categories: _postCategories,
 			}
-			_, err := controller.CreatePost(db, post)
+			_, err = controller.CreatePost(db, post)
 			if err != nil {
 				fmt.Println(err, " pos no cre")
 				return
