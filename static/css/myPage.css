@@ -201,6 +201,9 @@
     text-align: center;
 
 }
+.container .container-2 .bloc-add-post form textarea{
+  font-size: small;
+}
 .container .container-2 .bloc-add-post form div *{
     width: 50%;
     margin-bottom: 1rem;

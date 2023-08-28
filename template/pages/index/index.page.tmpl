@@ -12,6 +12,7 @@
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>Forum/Home</title>
+  
 </head>
 
 <body>
@@ -43,13 +44,30 @@
     
       <!-- block post and comment -->
       <div class="post-displaying">     
-      
-        {{range .Datas}}        
+        {{range .Datas}} 
           {{template "post" .}}
         {{end}}
       </div>
       
+
+
+
+
+      <div class="pagination">
+        <a >&laquo;</a>
+      </div>
+
     </div>
+
+
+
+
+
+
+
+
+
+
 
   </main>
   <!-- end body -->

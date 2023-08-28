@@ -424,7 +424,30 @@
     text-decoration: none;
     color: var(--header-color);
 }
-
+/* ************************************* */
+.pagination {
+    display: flex;
+    justify-content: center;
+    width: 78%;
+    
+  }
+  .pagination a:first-child,
+  .pagination a:last-child {
+    cursor: auto;
+  }
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+   .pagination a.active {
+    background-color: var(--header-color);
+    color: white;
+  }
+   .pagination a:hover:not(.active) {background-color: #ddd;}
 
 /* medias querys */
 @media screen and (max-width:1024px) {
