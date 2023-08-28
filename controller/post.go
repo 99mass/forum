@@ -91,7 +91,8 @@ func DeletePost(db *sql.DB, postID uuid.UUID) error {
 func GetAllPosts(db *sql.DB) ([]models.Post, error) {
 	query := `
         SELECT id, user_id, title, content, created_at
-        FROM posts;
+        FROM posts
+		ORDER BY created_at DESC;
     `
 
 	rows, err := db.Query(query)
@@ -139,7 +140,8 @@ func GetPostsByUserID(db *sql.DB, userID uuid.UUID) ([]models.Post, error) {
 	query := `
 		SELECT id, user_id, title, content, created_at
 		FROM posts
-		WHERE user_id = ?;
+		WHERE user_id = ?
+		ORDER BY created_at DESC;
 	`
 
 	rows, err := db.Query(query, userID)
