@@ -195,12 +195,13 @@ h4{
 
 .post-displaying2{
     width: 100%;
+    padding: 0px 15%;
     display: grid;
     grid-template-columns: repeat(1,1fr);
     gap: 150;
 }
 .post-displaying2 .categorie-specifique {
-    width: 70%;
+    width: 100%;
 }
 
 .categorie-specifique .comment-btn button{
@@ -243,6 +244,9 @@ h4{
     .post-displaying{
         
         display: block;
+    }
+    .post-displaying2{       
+        padding: 0px 0%;
     }
     .categorie-specifique {
         width: 100%;
