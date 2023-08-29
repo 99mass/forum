@@ -15,6 +15,7 @@
     --fontSize16:16px;
     --color-linear-gradient:linear-gradient(to right,#77530a,#ffd277,#77530a,#77530a,#ffd277,#77530a);
 }
+
 .container{
     height: auto;
     margin-top:  150px;
@@ -448,6 +449,9 @@
     color: white;
   }
    .pagination a:hover:not(.active) {background-color: #ddd;}
+   .actives{
+    background-color:  aqua;
+}
 
 /* medias querys */
 @media screen and (max-width:1024px) {
