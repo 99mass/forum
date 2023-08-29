@@ -24,9 +24,10 @@
 
 
     <div class="container-2">
-
+      {{range .Category}}
       <!-- block post and comment -->
-      <h3>education </h3>
+      <h3>{{.NameCategory}} </h3>
+      {{end}}
       <div class="post-displaying">
         <div class="categorie-specifique">
           <!-- posts -->
