@@ -146,23 +146,6 @@ func GetPostDetails(db *sql.DB, postID uuid.UUID) (models.HomeDataPost, error) {
 	return HomeData, nil
 }
 
-// func Register(db *sql.DB, user *models.User) (bool, error) {
-
-// 	// Check Duplicated case
-// 	dup, err := controller.IsDuplicateUsernameOrEmail(db, user.Username, user.Email)
-// 	if dup {
-// 		return false, errors.New("Nom d'utilisateur ou adresse e-mail déjà pris")
-// 	}
-
-// 	id, err := controller.CreateUser(db, user)
-// 	if err != nil {
-// 		Debug(err.Error())
-// 		return false, errors.New("Erreur lors de l'enregistrement de l'utilisateur")
-// 	}
-// 	//Debug("Register succeed, Id: " + strconv.FormatInt(id, 10))
-// 	return true, nil
-// }
-
 func VerifUser(db *sql.DB, email string, password string) (uuid.UUID, bool) {
 	client := new(models.User)
 	okEmail, _ := CheckEmail(email)

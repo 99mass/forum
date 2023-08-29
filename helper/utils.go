@@ -21,7 +21,6 @@ func CheckRegisterFormat(username, email, password, confirmPassword string, db *
 	} else {
 		okPassWord, errP := CheckPassword(password)
 		if !okPassWord {
-			//Debug(errP.Error())
 			ok = false
 			ErrAuth.PasswordError = errP.Error()
 		}
@@ -114,7 +113,6 @@ func CheckPassword(password string) (bool, error) {
 // Vérification du format du UserName
 // Il doit avoir 5 à 20 Caractères alpha_numérique
 func CheckUserName(username string) (bool, error) {
-	Debug("checkusername:" + username)
 	// Cette expression exige que le pseudo ait entre 5 et 20 caractères alphanumériques.
 	usernameRegex := `^[a-zA-Z0-9]{5,20}$`
 
@@ -144,10 +142,8 @@ func CheckContent(content string) {
 func HashPassword(password string) (string, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		Debug("Erreur du hashage")
 		return "", err
 	}
-	Debug("hashage réussi")
 	return string(hashedPassword), nil
 }
 

@@ -10,8 +10,6 @@ import (
 )
 
 func RenderTemplate(w http.ResponseWriter, tmplName string, tmplDir string, data interface{}) {
-	Debug("dir : "+tmplDir )
-	Debug("name : "+tmplName )
 	templateCache, err := createTemplateCache(tmplDir)
 
 	if err != nil {
@@ -38,17 +36,13 @@ func createTemplateCache(tmplDir string) (map[string]*template.Template, error) 
 	}
 
 	for _, page := range pages {
-		//fmt.Println("for pages :", page)
 		name := filepath.Base(page)
-		//fmt.Println(name)
 		tmpl := template.Must(template.ParseFiles(page))
 
-		//fmt.Println(tmpl.Name())
 		layouts, err := filepath.Glob("./template/layouts/*.layout.tmpl")
 		if err != nil {
 			return cache, err
 		}
-		//fmt.Println("not layout error")
 		if len(layouts) > 0 {
 			tmpl.ParseGlob("./template/layouts/*.layout.tmpl")
 		}

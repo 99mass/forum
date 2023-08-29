@@ -61,7 +61,6 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 		// Handle according to the method
 		switch r.Method {
 		case http.MethodPost:
-			helper.Debug("envoie du formulaire")
 			ok, pageError := middlewares.CheckRequest(r, "/register", "post")
 			if !ok {
 				helper.ErrorPage(w, pageError)
@@ -99,7 +98,6 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 
 		case http.MethodGet:
 			helper.DeleteSession(w, r)
-			//fmt.Println("affichage du formulaire d'enregistrement")
 			ok, pageError := middlewares.CheckRequest(r, "/register", "get")
 			if !ok {
 				helper.ErrorPage(w, pageError)

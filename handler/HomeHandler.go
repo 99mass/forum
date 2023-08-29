@@ -19,7 +19,6 @@ func Index(db *sql.DB) http.HandlerFunc {
 
 		// data, err := helper.GetPostForHome(db)
 		// if err != nil {
-		// 	fmt.Println("err: ", err)
 		// 	helper.ErrorPage(w, http.StatusInternalServerError)
 		// 	return
 		// }

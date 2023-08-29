@@ -3,7 +3,6 @@ package controller
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"time"
 
 	"forum/models"
@@ -100,17 +99,17 @@ func GetUserByEmail(db *sql.DB, email string) (*models.User, error) {
 	return user, nil
 }
 
-func GetUserBySessionId(sessionId uuid.UUID, db *sql.DB) (models.User,error) {
+func GetUserBySessionId(sessionId uuid.UUID, db *sql.DB) (models.User, error) {
 
 	session, err := GetSessionByID(db, sessionId)
 	if err != nil {
-		return models.User{},err
+		return models.User{}, err
 	}
 	user, err := GetUserByID(db, session.UserID)
-	if err != nil{
-		return models.User{},err
+	if err != nil {
+		return models.User{}, err
 	}
-	return *user,nil
+	return *user, nil
 
 }
 
@@ -183,9 +182,7 @@ func IsDuplicateUsernameOrEmail(db *sql.DB, username, email string) (bool, error
 
 	var count int
 	err := db.QueryRow(query, username, email).Scan(&count)
-	//fmt.Println(err, ":duplicate",count)
 	if err != nil {
-		fmt.Println("Error Base de donné")
 		return false, errors.New("")
 	}
 	if count > 0 {
