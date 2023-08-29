@@ -109,11 +109,12 @@
   <div class="like-dislik-content">
     <form action="" method="post">
       <input type="hidden" name="liked" value="">
-      <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}} </button>
+      <button type="submit"><i class="fa-solid fa-thumbs-up fa-beat"id="like"></i>{{.PostLike}} </button>
+      
     </form>
     <form action="" method="post">
       <input type="hidden" name="disliked" value="">
-      <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}} </button>
+      <button type="submit"><i class="fa-solid fa-thumbs-down"id="dislike" ></i>{{.PostDislike}} </button>
     </form>
   </div>
 
