@@ -27,7 +27,7 @@
 }
 
 .container .container-2{
-    width: 85%;
+    width: 65%;
     box-sizing: border-box;
 }
 
@@ -37,8 +37,10 @@
 
 .post-displaying{
     width: 100%;
+    margin-left: 2rem;
   display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(1,1fr);
+    
    
 }
  h3 ,h4{
@@ -54,6 +56,16 @@ h4{
     background: var(--color-linear-gradient);
     color: var(--color-white);
 }
+
+.categorie-name-content {
+    padding-bottom: 1rem;
+}
+.categorie-name-content i:first-of-type{
+    color: var(--color-gray);
+}
+.categorie-name-content span:last-of-type{
+    color: var(--header-color);
+}
 .categorie-specifique {
     width: 95%;
     height: fit-content;
@@ -64,19 +76,7 @@ h4{
    margin-bottom: 2rem;
    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
-.categorie-specifique .comment-btn{
-    text-decoration: none;
-    margin-bottom: 10px;
-    width: fit-content;
-   border: 2px solid transparent;
-   padding: 5px 10px;
-   background: var(--color-linear-gradient);
-   color: var(--color-white);
-   text-transform: capitalize;
-  }
-  .categorie-specifique .comment-btn i {
-    margin-right: 2px;
-  }
+
 .categorie-specifique  .like-dislik-content
 {
     display: flex;
@@ -136,12 +136,38 @@ h4{
 .categorie-specifique .author-date2 span{
     margin: 0px 3px;
 }
+.categorie-specifique  .author-date *,
+.content-comments  .author-date2 *{
+      font-size: 12px;
+  }
 .categorie-specifique hr{
     margin: 1rem;
 }
 .categorie-specifique hr:last-of-type{
     display: none;
 }
+.comment{
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.categorie-specifique .comment-btn button{
+    color: var(--color-white);
+    text-decoration: none;
+    margin-bottom: 10px;
+    width: fit-content;
+    
+    border: 2px solid transparent;
+    padding: 5px 10px;
+    background: var(--color-linear-gradient);
+    cursor: pointer;
+    text-transform: none;
+}
+.categorie-specifique .comment-btn button i {
+    margin-right: 2px;
+    color: var(--color-white);
+  }
 .content-comments{
     overflow-y: scroll;
     height: 13rem;

@@ -137,6 +137,15 @@ h4{
    font-style: italic;
    color: var(--color-gray);
 }
+.categorie-name-content {
+    padding-bottom: 1rem;
+}
+.categorie-name-content i:first-of-type{
+    color: var(--color-gray);
+}
+.categorie-name-content span:last-of-type{
+    color: var(--header-color);
+}
 .title {
     font-size: 18px;
     font-weight: 600;

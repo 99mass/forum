@@ -308,7 +308,6 @@
     color: var(--color-gray);
 }
 .categorie-name-content span:last-of-type{
-    /* font-size: 14px; */
     color: var(--header-color);
 }
 .title{
