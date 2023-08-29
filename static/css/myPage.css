@@ -33,11 +33,10 @@
 
 }
 .container .container-1{
-   width: 22%;
-  
-   height: 300px;
-  display: flex;
-  flex-direction: column;
+    width: 16rem;  
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
 }
 .container .container-1 .btn-filter{
    width: 90%;
@@ -78,6 +77,15 @@
     margin: 0px;
     padding: 0px;
     cursor: pointer;
+}
+.container .container-1 .filter-form form  .content-date-filter{
+    width: 100%;
+    display: flex;
+    margin-top: -5px;
+    padding-top: 0px;
+}
+.container .container-1 .filter-form form  .content-date-filter input:last-of-type{
+    margin-left: 5px;
 }
 .container .container-1 .filter-form form .select-opt1 details div input{
     width: 20px;
