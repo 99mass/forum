@@ -11,7 +11,7 @@
 {{define "categorieMenu"}}
 <div class="categori-menu">
   {{ range .Category}}
-  <form action="/category" method="post">
+  <form action="/category" method="GET">
     <input type="hidden" name="categorie" value="{{.ID}}">
     <input type="submit" value="{{.NameCategory}}">
   </form>
@@ -160,6 +160,6 @@
 
 {{define "pagination"}}
   <div class="pagination">
-    <a>pages</a>
+    <a class="page-page">pages</a>
   </div>
 {{end}}

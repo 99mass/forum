@@ -2,10 +2,8 @@ const postDisplaying = document.querySelector(".post-displaying").children;
 const pagination = document.querySelector('.pagination');
 const paginationCompt = Math.ceil(postDisplaying.length / 10); // Utilisez Math.ceil pour arrondir à la hausse
 
-console.log(postDisplaying.length);
-if (paginationCompt <= 1) { // Modifié la condition ici
-    pagination.style.display = "none";
-}
+
+
 
 for (let j = 1; j <= paginationCompt; j++) {
     const a = document.createElement('a');
@@ -13,19 +11,16 @@ for (let j = 1; j <= paginationCompt; j++) {
     a.classList = `page page${j}`;
     pagination.appendChild(a);
 }
+if (paginationCompt <= 1) { // Modifié la condition ici
+    pagination.style.display = "none";
+    
+}
+if ( postDisplaying.length<10) {
+    document.querySelector('.page-page').style.display = "none";
+}
 
-// if (paginationCompt > 1) { // Modifié la condition ici
-//     const aa = document.createElement('a');
-//     aa.textContent = "»"; // Utilisez une flèche simple ici
-//     aa.classList = `page-right`;
-//     pagination.appendChild(aa);
-// }
 
 const pages = document.querySelectorAll(".page");
-// const pageRight=document.querySelector(".page-right");
-// const pageLeft=document.querySelector(".page-left");
-
-// console.log(pagedroit);
 
 if (postDisplaying.length > 10) {
     for (let i = 1; i <= pages.length; i++) {
