@@ -27,6 +27,12 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
 			}
+			category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
+			if err != nil {
+				helper.ErrorPage(w,http.StatusInternalServerError)
+				return
+			}
+			homeData.Category = category
 			homeData.Datas = posts
 
 			helper.RenderTemplate(w, "post", "posts", homeData)
