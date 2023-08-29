@@ -2,7 +2,6 @@ package helper
 
 import (
 	"database/sql"
-	"fmt"
 	"forum/controller"
 	"forum/models"
 	"io/ioutil"
@@ -46,7 +45,6 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 	if Posts {
 		posts, err := GetPostForHome(db)
 		if err != nil {
-			fmt.Println("err: ", err)
 			//ErrorPage(w, http.StatusInternalServerError)
 			return datas, err
 		}
@@ -82,8 +80,8 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 			if errgets != nil || &session == nil {
 				sessiondata = false
 			}
-			datas.User,errgets = controller.GetUserBySessionId(sessionID, db)
-			if errgets != nil{
+			datas.User, errgets = controller.GetUserBySessionId(sessionID, db)
+			if errgets != nil {
 				sessiondata = false
 			}
 		}

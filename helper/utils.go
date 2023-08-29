@@ -21,7 +21,6 @@ func CheckRegisterFormat(username, email, password, confirmPassword string, db *
 	} else {
 		okPassWord, errP := CheckPassword(password)
 		if !okPassWord {
-			//Debug(errP.Error())
 			ok = false
 			ErrAuth.PasswordError = errP.Error()
 		}
@@ -61,7 +60,7 @@ func CheckEmail(email string) (bool, error) {
 
 	match, _ := regexp.MatchString(emailRegex, email)
 	if !match {
-		return false, errors.New("Format email non valide!")
+		return false, errors.New("format email non valide")
 	}
 
 	return match, nil
@@ -77,7 +76,7 @@ func CheckPassword(password string) (bool, error) {
 
 	if len(password) < 8 || len(password) > 25 {
 
-		return false, errors.New("Longueur mot de passe non valide: minimum 8, maximum 25")
+		return false, errors.New("longueur mot de passe non valide: minimum 8, maximum 25")
 	}
 
 	// Vérification des autres conditions avec des expressions régulières
@@ -88,19 +87,19 @@ func CheckPassword(password string) (bool, error) {
 
 	if !lowercaseRegex.MatchString(password) {
 
-		return false, errors.New("Le mot de passe doit contenir au moins une lettre minuscule")
+		return false, errors.New("le mot de passe doit contenir au moins une lettre minuscule")
 	}
 	if !uppercaseRegex.MatchString(password) {
 
-		return false, errors.New("Le mot de passe doit contenir au moins une lettre majuscule")
+		return false, errors.New("le mot de passe doit contenir au moins une lettre majuscule")
 	}
 	if !digitRegex.MatchString(password) {
 
-		return false, errors.New("Le mot de passe doit contenir au moins un chiffre")
+		return false, errors.New("le mot de passe doit contenir au moins un chiffre")
 	}
 	if !specialCharRegex.MatchString(password) {
 
-		return false, errors.New("Le mot de passe doit contenir au moins un caractère spécial")
+		return false, errors.New("le mot de passe doit contenir au moins un caractère spécial")
 	}
 
 	// if !match {
@@ -114,14 +113,13 @@ func CheckPassword(password string) (bool, error) {
 // Vérification du format du UserName
 // Il doit avoir 5 à 20 Caractères alpha_numérique
 func CheckUserName(username string) (bool, error) {
-	Debug("checkusername:" + username)
 	// Cette expression exige que le pseudo ait entre 5 et 20 caractères alphanumériques.
 	usernameRegex := `^[a-zA-Z0-9]{5,20}$`
 
 	match, _ := regexp.MatchString(usernameRegex, username)
 
 	if !match {
-		return false, errors.New("Format du username non valide!")
+		return false, errors.New("format du username non valide")
 	}
 
 	return match, nil
@@ -144,10 +142,8 @@ func CheckContent(content string) {
 func HashPassword(password string) (string, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		Debug("Erreur du hashage")
 		return "", err
 	}
-	Debug("hashage réussi")
 	return string(hashedPassword), nil
 }
 

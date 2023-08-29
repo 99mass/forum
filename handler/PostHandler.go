@@ -87,7 +87,6 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 
 		ok, errorPage := middlewares.CheckRequest(r, "/addpost", "post")
 		if !ok {
-			helper.Debug("Checkrequest addpost failled")
 			helper.ErrorPage(w, errorPage)
 			return
 		}
@@ -100,7 +99,6 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 
 			errForm := helper.CheckFormAddPost(r, db)
 			if errForm != nil {
-				helper.Debug(errForm.Error())
 				helper.ErrorPage(w, http.StatusBadRequest)
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 				return
@@ -150,7 +148,6 @@ func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 
 		ok, errorPage := middlewares.CheckRequest(r, "/addpostmypage", "post")
 		if !ok {
-			helper.Debug("Checkrequest addpost failled")
 			helper.ErrorPage(w, errorPage)
 			return
 		}
@@ -163,7 +160,6 @@ func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 
 			errForm := helper.CheckFormAddPost(r, db)
 			if errForm != nil {
-				helper.Debug(errForm.Error())
 				helper.ErrorPage(w, http.StatusBadRequest)
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 				return
