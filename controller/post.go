@@ -3,7 +3,6 @@ package controller
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"time"
 
 	"forum/models"
@@ -112,8 +111,6 @@ func GetAllPosts(db *sql.DB) ([]models.Post, error) {
 		post.CreatedAt = timeformated
 		posts = append(posts, post)
 	}
-
-	fmt.Println("time now : ", posts[0].CreatedAt)
 
 	return posts, nil
 }
