@@ -62,6 +62,8 @@ type HomeDataPost struct {
 	PostLike    int
 	PostDislike int
 	User        User
+	Liked       bool
+	Disliked    bool
 }
 type Post struct {
 	ID         uuid.UUID

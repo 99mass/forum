@@ -84,6 +84,6 @@ func ErrorPage(w http.ResponseWriter, i int) {
 		Message: http.StatusText(i),
 	}
 	
-	RenderTemplate(w, DataError.Code, "error", DataError.Message)
+	RenderTemplate(w, "error", "error", DataError.Message)
 
 }

@@ -33,6 +33,24 @@ func GetPostForHome(db *sql.DB) ([]models.HomeDataPost, error) {
 		if err != nil {
 			return nil, err
 		}
+
+		//Get if liked
+		liked, err := IsPostliked(db, user.ID, post.ID)
+		if err != nil {
+			return nil, err
+		}
+		if liked {
+			HomeData.Liked = true
+		}
+		//Get if disliked
+		disliked, errdis := IsPostDisliked(db, user.ID, post.ID)
+		if errdis != nil {
+			return nil, errdis
+		}
+		if disliked {
+			HomeData.Disliked = true
+		}
+
 		var commentdetails []models.CommentDetails
 		for _, com := range comments {
 			user, err := controller.GetUserByCommentID(db, com.ID)

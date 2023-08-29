@@ -439,10 +439,7 @@
     justify-content: center;
     width: 78%;
   }
-  .pagination a:first-child,
-  .pagination a:last-child {
-    cursor: auto;
-  }
+
   .pagination a {
     color: black;
     float: left;
@@ -463,7 +460,30 @@
     background-color:  aqua;
     cursor: pointer;
 }
+.pagination .page-page{
+    cursor: auto;
+  }
 
+/* like and dislike colors */
+
+.fa-solid {
+    font-size: 50px;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .fa-solid:hover {
+    color: darkblue;
+  }
+  #dislke{
+    font-size: 50px;
+    cursor: pointer;
+    user-select: none;
+  }
+  #dislike:hover {
+    color: darkred;
+  }
+  /* end */
 /* medias querys */
 @media screen and (max-width:1024px) {
     .container .container-1 .filter-form{
