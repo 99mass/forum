@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/gofrs/uuid"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -129,4 +130,34 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 	}
 
 	return datas, nil
+}
+
+func IsPostliked(db *sql.DB, UserId, PostId uuid.UUID) (bool, error) {
+	var like models.PostLike
+	query := `
+        SELECT id,user_id, post_id
+        FROM post_likes
+        WHERE user_id = ? AND post_id = ?
+        LIMIT 1;
+    `
+	err := db.QueryRow(query, UserId, PostId).Scan(&like.UserID, &like.PostID)
+	if err == sql.ErrNoRows {
+		return false, nil
+	}
+	return true, nil
+}
+
+func IsPostDisliked(db *sql.DB, UserId, PostId uuid.UUID) (bool, error) {
+	var dislike models.PostDislike
+	query := `
+        SELECT id,user_id, post_id
+        FROM post_dislikes
+        WHERE user_id = ? AND post_id = ?
+        LIMIT 1;
+    `
+	err := db.QueryRow(query, UserId, PostId).Scan(&dislike.UserID, &dislike.PostID)
+	if err == sql.ErrNoRows {
+		return false, nil
+	}
+	return true, nil
 }
