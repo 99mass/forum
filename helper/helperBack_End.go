@@ -220,9 +220,75 @@ func StringToUuid(r *http.Request, s string) (uuid.UUID, error) {
 	return result, nil
 }
 
-func GetPostsForOneUser(db *sql.DB,userID uuid.UUID) ([]models.HomeDataPost, error) {
-	
-	post, err := controller.GetPostsByUserID(db,userID)
+func GetPostsForOneUser(db *sql.DB, userID uuid.UUID) ([]models.HomeDataPost, error) {
+
+	post, err := controller.GetPostsByUserID(db, userID)
+	if err != nil {
+		return nil, err
+	}
+	var HomeDatas []models.HomeDataPost
+	for _, post := range post {
+		var HomeData models.HomeDataPost
+		comments, err := controller.GetCommentsByPostID(db, post.ID)
+		if err != nil {
+			return nil, err
+		}
+		user, err := controller.GetUserByPostID(db, post.ID)
+		if err != nil {
+			return nil, err
+		}
+		var commentdetails []models.CommentDetails
+		for _, com := range comments {
+			user, err := controller.GetUserByCommentID(db, com.ID)
+			if err != nil {
+				return nil, err
+			}
+			var commentdetail models.CommentDetails
+			commentdetail.Comment = com
+			commentlike, err := controller.GetCommentLikesByCommentID(db, com.ID)
+			if err != nil {
+				return nil, err
+			}
+			commentdislike, err := controller.GetCommentDislikesByCommentID(db, com.ID)
+			if err != nil {
+				return nil, err
+			}
+			commentdetail.CommentLike = len(commentlike)
+			commentdetail.CommentDislike = len(commentdislike)
+			commentdetail.User = *user
+			commentdetails = append(commentdetails, commentdetail)
+
+		}
+		likes, err := controller.GetPostLikesByPostID(db, post.ID)
+		if err != nil {
+			return nil, err
+		}
+		nbrlikes := len(likes)
+		dislike, err := controller.GetDislikesByPostID(db, post.ID)
+		if err != nil {
+			return nil, err
+		}
+		nbrdislikes := len(dislike)
+
+		category, err := controller.GetCategoriesByPost(db, post.ID)
+		if err != nil {
+			return nil, err
+		}
+
+		post.Categories = category
+		HomeData.Posts = post
+		HomeData.Comment = commentdetails
+		HomeData.PostLike = nbrlikes
+		HomeData.PostDislike = nbrdislikes
+		HomeData.User = *user
+
+		HomeDatas = append(HomeDatas, HomeData)
+	}
+	return HomeDatas, nil
+}
+
+func GetPostForCategory(db *sql.DB, catID uuid.UUID) ([]models.HomeDataPost, error) {
+	post, err := controller.GetPostsByCategory(db, catID)
 	if err != nil {
 		return nil, err
 	}
