@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"fmt"
 	"forum/controller"
 	"forum/helper"
 	"net/http"
@@ -18,10 +17,29 @@ func GetPostCategory(db *sql.DB) http.HandlerFunc {
 			return
 		}
 		if VerifCategory(db, categoryID) {
-			
+			category, err := controller.GetCategoryByID(db, categoryID)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
+			}
+			homeData, err := helper.GetDataTemplate(db, r, true, false, false, false, false)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+			}
+			posts, err := helper.GetPostForCategory(db, categoryID)
+			if err != nil {
+
+				helper.ErrorPage(w, http.StatusInternalServerError)
+			}
+
+			homeData.Category = append(homeData.Category, category)
+			homeData.Datas = posts
+			helper.RenderTemplate(w, "categorie", "categories", homeData)
+		} else {
+			helper.ErrorPage(w, http.StatusBadRequest)
+			return
 		}
 
-		fmt.Println(categoryID)
 	}
 }
 

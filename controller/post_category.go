@@ -57,7 +57,7 @@ func UpdatePostCategory(db *sql.DB, postID, categoryID uuid.UUID) error {
 // GetPostsByCategory récupère les posts associés à une catégorie donnée
 func GetPostsByCategory(db *sql.DB, categoryID uuid.UUID) ([]models.Post, error) {
 	query := `
-        SELECT p.id, p.user_id, p.title, p.content, p.category_id, p.created_at
+        SELECT p.id, p.user_id, p.title, p.content, p.created_at
         FROM posts p
         JOIN posts_categories pc ON p.id = pc.post_id
         WHERE pc.category_id = ?;
@@ -72,10 +72,12 @@ func GetPostsByCategory(db *sql.DB, categoryID uuid.UUID) ([]models.Post, error)
 	var posts []models.Post
 	for rows.Next() {
 		var post models.Post
-		err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.CategoryID, &post.CreatedAt)
+		err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.CreatedAt)
 		if err != nil {
 			return nil, err
 		}
+		timeformated, _ := FormatCreatedAt(post.CreatedAt)
+		post.CreatedAt = timeformated
 		posts = append(posts, post)
 	}
 
