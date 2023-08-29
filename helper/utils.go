@@ -54,7 +54,6 @@ func CheckRegisterFormat(username, email, password, confirmPassword string, db *
 
 // Check if the form it valid and try to connect the user
 
-
 // Vérification du format de l'email "name@name.ext"
 func CheckEmail(email string) (bool, error) {
 
@@ -156,4 +155,3 @@ func HashPassword(password string) (string, error) {
 func ConfirmPasswordsMatch(password, confirmPassword string) bool {
 	return password == confirmPassword
 }
-

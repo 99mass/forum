@@ -31,7 +31,7 @@ type Comment struct {
 	UserID    uuid.UUID
 	PostID    uuid.UUID
 	Content   string
-	CreatedAt time.Time
+	CreatedAt string
 }
 
 type PostLike struct {
@@ -106,8 +106,8 @@ type ErrorAuth struct {
 }
 
 type DataMypage struct {
-	Session     bool
-	Datas []HomeDataPost
-	User 	User
-	Category 	[]Category
+	Session  bool
+	Datas    []HomeDataPost
+	User     User
+	Category []Category
 }

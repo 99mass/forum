@@ -61,6 +61,8 @@ func GetCommentByID(db *sql.DB, commentID uuid.UUID) (models.Comment, error) {
 		}
 		return models.Comment{}, err
 	}
+	timeformated, _ := FormatCreatedAt(comment.CreatedAt)
+	comment.CreatedAt = timeformated
 
 	return comment, nil
 }
@@ -113,6 +115,8 @@ func GetAllComments(db *sql.DB) ([]models.Comment, error) {
 		if err != nil {
 			return nil, err
 		}
+		timeformated, _ := FormatCreatedAt(comment.CreatedAt)
+		comment.CreatedAt = timeformated
 		comments = append(comments, comment)
 	}
 
@@ -121,27 +125,29 @@ func GetAllComments(db *sql.DB) ([]models.Comment, error) {
 
 // GetCommentsByPostID retrieves all comments for a specific post by post ID.
 func GetCommentsByPostID(db *sql.DB, postID uuid.UUID) ([]models.Comment, error) {
-    query := `
+	query := `
         SELECT id, user_id, post_id, content, created_at
         FROM comments
         WHERE post_id = ?;
     `
 
-    rows, err := db.Query(query, postID)
-    if err != nil {
-        return nil, err
-    }
-    defer rows.Close()
+	rows, err := db.Query(query, postID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
 
-    var comments []models.Comment
-    for rows.Next() {
-        var comment models.Comment
-        err := rows.Scan(&comment.ID, &comment.UserID, &comment.PostID, &comment.Content, &comment.CreatedAt)
-        if err != nil {
-            return nil, err
-        }
-        comments = append(comments, comment)
-    }
+	var comments []models.Comment
+	for rows.Next() {
+		var comment models.Comment
+		err := rows.Scan(&comment.ID, &comment.UserID, &comment.PostID, &comment.Content, &comment.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
+		timeformated, _ := FormatCreatedAt(comment.CreatedAt)
+		comment.CreatedAt = timeformated
+		comments = append(comments, comment)
+	}
 
-    return comments, nil
+	return comments, nil
 }
