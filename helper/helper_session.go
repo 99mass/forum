@@ -155,8 +155,3 @@ func RequireLogin(next http.Handler, db *sql.DB) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 }
-
-
-// func GetSessionData(r *http.Request, db *sql.DB) bool {
-
-// }

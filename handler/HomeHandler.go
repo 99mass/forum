@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"fmt"
 	"forum/helper"
 	"forum/middlewares"
 	"net/http"
@@ -11,17 +10,13 @@ import (
 func Index(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println(r.URL.Path) 
-		if r.URL.Path[1:] != "" {
-			
-		}
+
 		ok, pageError := middlewares.CheckRequest(r, "/", "get")
 		if !ok {
 			helper.ErrorPage(w, pageError)
 			return
 		}
 
-		
 		homeData, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
 
 		if err != nil {
