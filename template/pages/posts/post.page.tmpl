@@ -54,6 +54,7 @@
           </div>
           <!-- Formulaire de comment -->
           <div class="content-form-comment">
+            {{if .Session}}
             <form action="/post" method="post">
 
               <div> <label for="">comment here:</label></div>
@@ -64,6 +65,7 @@
 
               <button type="submit">comment</button>
             </form>
+            {{end}}
           </div>
         </div>
 
