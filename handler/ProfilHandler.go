@@ -19,6 +19,9 @@ func GetProfil(db *sql.DB) http.HandlerFunc {
 			helper.ErrorPage(w, http.StatusBadRequest)
 			return
 		}
+		if !datas.Session {
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+		}
 
 		PostsDetails, err := helper.GetPostsForOneUser(db, datas.User.ID)
 		//fmt.Println(PostsDetails)
@@ -45,6 +48,7 @@ func GetProfil(db *sql.DB) http.HandlerFunc {
 		fmt.Println(catMap)
 		dataProfil.Categories = catMap
 		datas.DataProfil = dataProfil
+
 		helper.RenderTemplate(w, "profil", "profil", datas)
 	}
 }
