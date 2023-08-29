@@ -60,7 +60,7 @@ func CheckEmail(email string) (bool, error) {
 
 	match, _ := regexp.MatchString(emailRegex, email)
 	if !match {
-		return false, errors.New("Format email non valide!")
+		return false, errors.New("format email non valide")
 	}
 
 	return match, nil
@@ -76,7 +76,7 @@ func CheckPassword(password string) (bool, error) {
 
 	if len(password) < 8 || len(password) > 25 {
 
-		return false, errors.New("Longueur mot de passe non valide: minimum 8, maximum 25")
+		return false, errors.New("longueur mot de passe non valide: minimum 8, maximum 25")
 	}
 
 	// Vérification des autres conditions avec des expressions régulières
@@ -87,19 +87,19 @@ func CheckPassword(password string) (bool, error) {
 
 	if !lowercaseRegex.MatchString(password) {
 
-		return false, errors.New("Le mot de passe doit contenir au moins une lettre minuscule")
+		return false, errors.New("le mot de passe doit contenir au moins une lettre minuscule")
 	}
 	if !uppercaseRegex.MatchString(password) {
 
-		return false, errors.New("Le mot de passe doit contenir au moins une lettre majuscule")
+		return false, errors.New("le mot de passe doit contenir au moins une lettre majuscule")
 	}
 	if !digitRegex.MatchString(password) {
 
-		return false, errors.New("Le mot de passe doit contenir au moins un chiffre")
+		return false, errors.New("le mot de passe doit contenir au moins un chiffre")
 	}
 	if !specialCharRegex.MatchString(password) {
 
-		return false, errors.New("Le mot de passe doit contenir au moins un caractère spécial")
+		return false, errors.New("le mot de passe doit contenir au moins un caractère spécial")
 	}
 
 	// if !match {
@@ -119,7 +119,7 @@ func CheckUserName(username string) (bool, error) {
 	match, _ := regexp.MatchString(usernameRegex, username)
 
 	if !match {
-		return false, errors.New("Format du username non valide!")
+		return false, errors.New("format du username non valide")
 	}
 
 	return match, nil
