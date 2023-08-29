@@ -439,7 +439,6 @@
     display: flex;
     justify-content: center;
     width: 78%;
-    
   }
   .pagination a:first-child,
   .pagination a:last-child {
@@ -457,9 +456,13 @@
     background-color: var(--header-color);
     color: white;
   }
-   .pagination a:hover:not(.active) {background-color: #ddd;}
+   .pagination a:hover:not(.active) {
+        background-color: #ddd;
+        cursor: pointer;
+    }
    .actives{
     background-color:  aqua;
+    cursor: pointer;
 }
 
 /* medias querys */

@@ -14,26 +14,33 @@ for (let j = 1; j <= paginationCompt; j++) {
     pagination.appendChild(a);
 }
 
-if (paginationCompt > 1) { // Modifié la condition ici
-    const aa = document.createElement('a');
-    aa.textContent = "»"; // Utilisez une flèche simple ici
-    pagination.appendChild(aa);
-}
+// if (paginationCompt > 1) { // Modifié la condition ici
+//     const aa = document.createElement('a');
+//     aa.textContent = "»"; // Utilisez une flèche simple ici
+//     aa.classList = `page-right`;
+//     pagination.appendChild(aa);
+// }
 
 const pages = document.querySelectorAll(".page");
-console.log(pages);
+// const pageRight=document.querySelector(".page-right");
+// const pageLeft=document.querySelector(".page-left");
+
+// console.log(pagedroit);
 
 if (postDisplaying.length > 10) {
     for (let i = 1; i <= pages.length; i++) {
         const pa = document.querySelector(`.page${i}`);
-        
+
+        pa.addEventListener("click", () => {
+
+        });
         pa.addEventListener("click", () => {
             pages.forEach(page => page.classList.remove("actives"));
             pa.classList.add("actives");
 
             for (let index = 0; index < postDisplaying.length; index++) {
                 const categorieBloc = postDisplaying[index];
-                if (i !== Math.ceil((index + 1) / 10)) { // Modifié la condition ici
+                if (i !== Math.ceil((index + 1) / 10)) { 
                     categorieBloc.style.display = "none";
                 } else {
                     categorieBloc.style.display = "block";

@@ -15,13 +15,25 @@
     --fontSize16:16px;
     --color-linear-gradient:linear-gradient(to right,#77530a,#ffd277,#77530a,#77530a,#ffd277,#77530a);
 }
+/* ****************** */
+.alert{
+    margin-top:  120px;
+    margin-left: 10%;
+    margin-right: 20%;
+    padding: 20px;
+    background: gainsboro;
+    color: var(--header-color);
+}
+
+
+/* ****************** */
 .container{
     /* width: 100%; */
     width: 80%;
     margin-left: 10%;
     margin-right: 10%;
     height: auto;
-    margin-top:  150px;
+    margin-top:  30px;
     display: flex;
     justify-content: space-between;
     padding: 1rem;
@@ -464,7 +476,14 @@
 
 /* medias querys */
 @media screen and (max-width:1024px) {
-
+    .alert{
+        margin-top:  110px;
+        margin-left: 0px;
+        margin-right: 0px;
+        padding: 20px;
+        background: gainsboro;
+        color: var(--header-color);
+    }
     .container .container-1 .filter-form{
         width: 18rem;
         z-index: 1;
@@ -477,46 +496,7 @@
         width: 13rem;
     }
 }
-/* @media screen and (max-width:768px) {
-    .container{
-        display: block;
-        padding-top: 0rem;
-    }
-    .container .container-1{
-        width: 15rem;
-        border: none;
-        height: fit-content;
-        margin-bottom: 2rem;
-     }
-     .container .container-1 .filter-form{
-        width: 18rem;
-     }
-     .container .container-2{
-        width: 100%;
-    }
-    .new-post{
-        width: 13rem;
-    }
-    .post-displaying{
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(1,1fr);
-        gap: 150;
-    }
-}
-@media screen and (max-width:500px) {
 
-    .container .container-2 .bloc-add-post form div *{
-        width: 94%;
-    }
-    .container .container-2 .bloc-add-post form .select-opt details summary {
-        width: 100%;
-    }
-    .container .container-2 .bloc-add-post form .select-opt{
-        padding-left: 0%;
-        margin-bottom: 0px;
-    }
-} */
 @media screen and (max-width:768px) {
     .container{
         width: 100%;
