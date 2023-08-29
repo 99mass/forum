@@ -11,7 +11,7 @@ var paginationCompt=Math.round(postDisplaying.length/10)
 
 
 window.onload = () => {
-     console.log(paginationCompt);
+     console.log(postDisplaying.length);
      if (paginationCompt==0) {
         pagination.style.display="none"
      }
