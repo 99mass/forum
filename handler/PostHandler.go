@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"fmt"
 	"forum/controller"
 	"forum/helper"
 	"forum/middlewares"
@@ -23,8 +22,7 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
 			}
-			fmt.Println(homeData.PostData.User)
-			posts,err := helper.GetPostsForOneUser(db,homeData.PostData.User.ID)
+			posts, err := helper.GetPostsForOneUser(db, homeData.PostData.User.ID)
 			if err != nil {
 				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
@@ -48,12 +46,12 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				if err != nil {
 					helper.ErrorPage(w, http.StatusInternalServerError)
 				}
-				posts,err := helper.GetPostsForOneUser(db,homeData.PostData.User.ID)
-			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
-				return
-			}
-			homeData.Datas = posts
+				posts, err := helper.GetPostsForOneUser(db, homeData.PostData.User.ID)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusInternalServerError)
+					return
+				}
+				homeData.Datas = posts
 				helper.RenderTemplate(w, "post", "posts", homeData)
 				return
 			}
@@ -70,7 +68,7 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			if err != nil {
 				helper.ErrorPage(w, http.StatusInternalServerError)
 			}
-			posts,err := helper.GetPostsForOneUser(db,homeData.User.ID)
+			posts, err := helper.GetPostsForOneUser(db, homeData.User.ID)
 			if err != nil {
 				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
@@ -110,7 +108,6 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 			postTitle := r.FormValue("title")
 			postContent := r.FormValue("content")
 			_postCategorystring := r.Form["category"]
-			// fmt.Println("hello:", _postCategorystring)
 			// var _postCategoryuuid []uuid.UUID
 			var _postCategories []models.Category
 			// for _, v := range _postCategorystring {
@@ -124,9 +121,9 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 				_postCategories = append(_postCategories, cat)
 			}
 
-			user,err := controller.GetUserBySessionId(session, db)
+			user, err := controller.GetUserBySessionId(session, db)
 			if err != nil {
-				controller.DeleteSession(db,session)
+				controller.DeleteSession(db, session)
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 				return
 			}
@@ -139,7 +136,6 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 			}
 			_, err = controller.CreatePost(db, post)
 			if err != nil {
-				fmt.Println(err, " pos no cre")
 				return
 			}
 			http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -175,7 +171,6 @@ func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 			postTitle := r.FormValue("title")
 			postContent := r.FormValue("content")
 			_postCategorystring := r.Form["category"]
-			// fmt.Println("hello:", _postCategorystring)
 			// var _postCategoryuuid []uuid.UUID
 			var _postCategories []models.Category
 			// for _, v := range _postCategorystring {
@@ -189,9 +184,9 @@ func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 				_postCategories = append(_postCategories, cat)
 			}
 
-			user,err := controller.GetUserBySessionId(session, db)
+			user, err := controller.GetUserBySessionId(session, db)
 			if err != nil {
-				controller.DeleteSession(db,session)
+				controller.DeleteSession(db, session)
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 				return
 			}

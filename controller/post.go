@@ -10,6 +10,13 @@ import (
 	"github.com/gofrs/uuid"
 )
 
+func FormatCreatedAt(createdTimeStr string) (string, error) {
+	createdTime, err := time.Parse(time.RFC3339Nano, createdTimeStr)
+	if err != nil {
+		return "", err
+	}
+	return createdTime.Format("2006-01-02 15:04:05"), nil
+}
 func CreatePost(db *sql.DB, post models.Post) (uuid.UUID, error) {
 
 	newUUID, err := uuid.NewV4()
@@ -52,7 +59,7 @@ func GetPostByID(db *sql.DB, postID uuid.UUID) (models.Post, error) {
 		}
 		return models.Post{}, err
 	}
-	timeformated := post.CreatedAt[:10]
+	timeformated, _ := FormatCreatedAt(post.CreatedAt)
 	post.CreatedAt = timeformated
 
 	return post, nil
@@ -107,7 +114,7 @@ func GetAllPosts(db *sql.DB) ([]models.Post, error) {
 		if err != nil {
 			return nil, err
 		}
-		timeformated := post.CreatedAt[:10]
+		timeformated, _ := FormatCreatedAt(post.CreatedAt)
 		post.CreatedAt = timeformated
 		posts = append(posts, post)
 	}
@@ -154,7 +161,7 @@ func GetPostsByUserID(db *sql.DB, userID uuid.UUID) ([]models.Post, error) {
 		if err != nil {
 			return nil, err
 		}
-		timeformated := post.CreatedAt[:10]
+		timeformated, _ := FormatCreatedAt(post.CreatedAt)
 		post.CreatedAt = timeformated
 		posts = append(posts, post)
 	}
