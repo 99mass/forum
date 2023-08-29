@@ -1,64 +1,56 @@
+const postDisplaying = document.querySelector(".post-displaying").children;
+const pagination = document.querySelector('.pagination');
+const paginationCompt = Math.ceil(postDisplaying.length / 10); // Utilisez Math.ceil pour arrondir à la hausse
 
-const postDisplaying=document.querySelector(".post-displaying").children;
-// pagination button
-const  pagination=document.querySelector('.pagination');
+console.log(postDisplaying.length);
+if (paginationCompt <= 1) { // Modifié la condition ici
+    pagination.style.display = "none";
+}
 
-var paginationCompt=Math.round(postDisplaying.length/10)
+for (let j = 1; j <= paginationCompt; j++) {
+    const a = document.createElement('a');
+    a.textContent = j;
+    a.classList = `page page${j}`;
+    pagination.appendChild(a);
+}
 
+if (paginationCompt > 1) { // Modifié la condition ici
+    const aa = document.createElement('a');
+    aa.textContent = "»"; // Utilisez une flèche simple ici
+    pagination.appendChild(aa);
+}
 
-     console.log(postDisplaying.length);
-     if (paginationCompt==0) {
-        pagination.style.display="none"
-     }
-     for (let j = 1; j <= paginationCompt; j++) {       
-        const a=document.createElement('a');
-        a.textContent=j
-        a.classList=`page page${j}`
-        pagination.appendChild(a)
-     }
-     if (pagination) {
-        const aa=document.createElement('a');
-            aa.textContent="\""
-            pagination.appendChild(aa)
-     }
-     
- 
-     const pages=document.querySelectorAll(".page")
-     console.log(pages);
-    if (postDisplaying.length>10) {   
-       var bool=false      
+const pages = document.querySelectorAll(".page");
+console.log(pages);
 
-
-       for (let i = 1; i <= pages.length; i++) {
-         const pa =document.querySelector(`.page${i}`);
-         console.log(pa);
-         pa.addEventListener("click", () => {
-            
-            for (let index = 0; index < postDisplaying.length; index++) {
-                const categorieBloc = postDisplaying[index];
-                if (index>postDisplaying.length/pages.length) {
-                    bool=true
-                    categorieBloc.style.display="none";
-                } else{
-                    categorieBloc.style.display="block";
-                }
-                
-                
-             }
-         });
+if (postDisplaying.length > 10) {
+    for (let i = 1; i <= pages.length; i++) {
+        const pa = document.querySelector(`.page${i}`);
         
-       }
-   
-         if (!bool){
+        pa.addEventListener("click", () => {
+            pages.forEach(page => page.classList.remove("actives"));
+            pa.classList.add("actives");
+
             for (let index = 0; index < postDisplaying.length; index++) {
                 const categorieBloc = postDisplaying[index];
-                if (index>=10) {
-                    categorieBloc.style.display="none";
-                } 
-                
-             }   
-         }
+                if (i !== Math.ceil((index + 1) / 10)) { // Modifié la condition ici
+                    categorieBloc.style.display = "none";
+                } else {
+                    categorieBloc.style.display = "block";
+                }
+            }
+        });
     }
+
+    for (let index = 0; index < postDisplaying.length; index++) {
+        pages[0].classList="actives"
+        const categorieBloc = postDisplaying[index];
+        if (index >= 10) {
+            categorieBloc.style.display = "none";
+        }
+    }
+}
+
 
 
 
