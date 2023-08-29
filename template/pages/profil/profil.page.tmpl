@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/login.css">
+  <link rel="stylesheet" href="/static/css/header.css">
+  <link rel="stylesheet" href="/static/css/profil.css">
+  <!-- cdn font awsome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Account</title>
+</head>
+
+<body>
+  <!-- begin header -->
+  {{template "header" .}}
+
+  <!-- end header -->
+
+
+  <main>
+    <fieldset class="info-personnel">
+      <legend><i class="fa-solid fa-address-card"></i>informations personnel</legend>
+      <div><span>User-name:</span><span>{{.User.Username}}</span></div>
+      <div><span>E-mail:</span><span>{{.User.Email }}</span></div>
+      <button class="btn-update">update profil</button>
+    </fieldset>
+
+    <!-- form update -->
+    <form action="" method="post" class="form-update">
+      <span class="faxmark"><i class="fa-solid fa-xmark"></i></span>
+      <div>
+        <label for="userName">User-name</label>
+        <input type="text" value="" placeholder="ssambadi">
+      </div>
+      <div>
+        <label for="email">E-mail</label>
+        <input type="email" value="" placeholder="ssambadi@gmail.com">
+      </div>
+      <div>
+        <label for="userName">last Password</label>
+        <input type="password" value="" placeholder="1233" disabled>
+      </div>
+      <div>
+        <label for="userName">new Password</label>
+        <input type="password" value="" placeholder="ex: Ma@290">
+      </div>
+      <button type="submit">update</button>
+    </form>
+
+    <div class="categorie-block">
+      <table>
+        <thead>
+          <th>categorie</th>
+          <th>number of post</th>
+
+        </thead>
+        <tbody>
+          {{range $category, $educationLevel := .DataProfil.Categories}}
+          <tr>
+            <td>{{$category}}</td>
+            <td>{{$educationLevel}}</td>
+          </tr>
+          {{end}}
+
+        </tbody>
+      </table>
+    </div>
+    <div class="post-block">
+      <table>
+        <thead>
+          <th>title post</th>
+          <th>number of comment</th>
+          <th>number of like</th>
+          <th>number of disliked</th>
+        </thead>
+        <tbody>
+          {{range .DataProfil.Posts}}
+          <tr>
+            <td>{{.Posts.Title}}</td>
+            <td>{{len .Comment}}</td>
+            <td>{{.PostLike}}</td>
+            <td>{{.PostDislike}}</td>
+          </tr>
+          {{end}}
+      </table>
+    </div>
+
+  </main>
+
+
+
+
+  <!-- begin header -->
+  {{template "footer"}}
+  <!-- end header -->
+
+  <script src="/static/js/script.js"></script>
+</body>
+
+</html>

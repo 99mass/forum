@@ -49,12 +49,13 @@ type PostDislike struct {
 }
 
 type Home struct {
-	Session   bool
-	Category  []Category
-	Datas     []HomeDataPost
-	User      User
-	ErrorAuth ErrorAuth
-	PostData  HomeDataPost
+	Session    bool
+	Category   []Category
+	Datas      []HomeDataPost
+	User       User
+	ErrorAuth  ErrorAuth
+	PostData   HomeDataPost
+	DataProfil DataMyProfil
 }
 type HomeDataPost struct {
 	Posts       Post
@@ -112,4 +113,10 @@ type DataMypage struct {
 	Datas    []HomeDataPost
 	User     User
 	Category []Category
+}
+
+type DataMyProfil struct {
+	User       User
+	Categories map[string]int
+	Posts      []HomeDataPost
 }
