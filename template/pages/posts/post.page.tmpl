@@ -24,9 +24,10 @@
 
 
     <div class="container-2">
-
+      {{range .Category}}
       <!-- block post and comment -->
-      <h3>education </h3>
+      <h3>{{.NameCategory}} </h3>
+      {{end}}
       <div class="post-displaying">
         <div class="categorie-specifique">
           <!-- posts -->
@@ -54,6 +55,7 @@
           </div>
           <!-- Formulaire de comment -->
           <div class="content-form-comment">
+            {{if .Session}}
             <form action="/post" method="post">
 
               <div> <label for="">comment here:</label></div>
@@ -64,6 +66,18 @@
 
               <button type="submit">comment</button>
             </form>
+            {{else}}
+            <form action="/post" method="post">
+
+              <div> <label for="">comment here:</label></div>
+              <textarea name="content" id="content" cols="30" rows="6" maxlength="500"
+                placeholder="put something here... maximum 500 characters"></textarea>
+              <input type="hidden" name="user_id" id="user_id" value="{{.User.ID}}">
+              <input type="hidden" name="post_id" id="post_id" value="{{.PostData.Posts.ID}}">
+              <p style="color: red;font-size: 12px;">Please log in to comment a post.</p><br>
+              <button type="submit" disabled>comment</button>
+            </form>
+            {{end}}
           </div>
         </div>
 
@@ -97,14 +111,13 @@
         {{end}}
       </div>
 
-      <h4>other post by @ {{.PostData.User.Username}}</h4>
+      <h4>other post by @{{.PostData.User.Username}}</h4>
 
       <!-- 
             ce bloc sera supprimer sa sert juste a la simulations
             -->
       <!--debut  a supprimer- -->
-      <h3>art</h3>
-      <div class="post-displaying">
+      <div class="post-displaying2">
         {{range .Datas}}
         {{template "post" .}}
         {{end}}

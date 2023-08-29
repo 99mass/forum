@@ -35,8 +35,8 @@
 
 }
 .container .container-1{
-   width: 20%;
-   height: 300px;
+   width: 16rem;
+   height: fit-content;
   display: flex;
   flex-direction: column;
 }
@@ -69,6 +69,15 @@
 }
 .container .container-1 .filter-form form  *{
    font-size: 13px;
+}
+.container .container-1 .filter-form form  .content-date-filter{
+    width: 100%;
+    display: flex;
+    margin-top: -5px;
+    padding-top: 0px;
+}
+.container .container-1 .filter-form form  .content-date-filter input:last-of-type{
+    margin-left: 5px;
 }
 .container .container-1 .filter-form form .select-opt1 details summary{
     padding: 0.5rem;
@@ -430,7 +439,6 @@
     display: flex;
     justify-content: center;
     width: 78%;
-    
   }
   .pagination a:first-child,
   .pagination a:last-child {
@@ -448,9 +456,13 @@
     background-color: var(--header-color);
     color: white;
   }
-   .pagination a:hover:not(.active) {background-color: #ddd;}
+   .pagination a:hover:not(.active) {
+        background-color: #ddd;
+        cursor: pointer;
+    }
    .actives{
     background-color:  aqua;
+    cursor: pointer;
 }
 
 /* like and dislike colors */
@@ -533,7 +545,7 @@
         margin-bottom: 0px;
     }
 }
-@media screen and (max-width:375px) {
+@media screen and (max-width:345px) {
     .categorie-specifique  .author-date {
         display: grid;
         grid-template-columns: repeat(1,1fr);

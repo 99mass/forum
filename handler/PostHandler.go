@@ -27,6 +27,12 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
 			}
+			category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
+			}
+			homeData.Category = category
 			homeData.Datas = posts
 
 			helper.RenderTemplate(w, "post", "posts", homeData)
@@ -39,6 +45,30 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 
 			if errP != nil || errU != nil {
 				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
+			}
+			homeDataSess, err := helper.GetDataTemplate(db, r, true, false, false, false, false)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+			}
+			if !homeDataSess.Session {
+				homeData, err := helper.GetDataTemplate(db, r, true, true, false, false, false)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusInternalServerError)
+				}
+				posts, err := helper.GetPostsForOneUser(db, homeData.PostData.User.ID)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusInternalServerError)
+					return
+				}
+				category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusInternalServerError)
+					return
+				}
+				homeData.Category = category
+				homeData.Datas = posts
+				helper.RenderTemplate(w, "post", "posts", homeData)
 				return
 			}
 			if Content == "" {
@@ -59,8 +89,8 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			comment.UserID = userID
 			comment.Content = Content
 
-			_, err := controller.CreateComment(db, comment)
-			if err != nil {
+			_, erro := controller.CreateComment(db, comment)
+			if erro != nil {
 				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
 			}
@@ -73,6 +103,12 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
 			}
+			category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
+			}
+			homeData.Category = category
 			homeData.Datas = posts
 			helper.RenderTemplate(w, "post", "posts", homeData)
 

@@ -47,6 +47,7 @@
     display: flex;
     justify-content: space-between;
 }
+
  h3 ,h4{
     width: 100%;
     padding: 1rem 0.8rem;
@@ -74,20 +75,7 @@ h4{
 .categorie-specifique h6{
     margin-bottom: 0.5rem;
 }
-.categorie-specifique .comment-btn{
-    text-decoration: none;
-    margin-bottom: 10px;
-    width: fit-content;
-   border: 2px solid transparent;
-   padding: 5px 10px;
-   background: var(--color-linear-gradient);
-   color: var(--color-white);
-   text-transform: capitalize;
-  }
-  .categorie-specifique .comment-btn i {
-    margin-right: 2px;
-    color: var(--color-white);
-  }
+
 .categorie-specifique  .like-dislik-content
 {
     display: flex;
@@ -204,6 +192,35 @@ h4{
   .content-comments::-webkit-scrollbar-thumb:hover {
     background: var(--header-color);
   } 
+
+.post-displaying2{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    gap: 150;
+}
+.post-displaying2 .categorie-specifique {
+    width: 70%;
+}
+
+.categorie-specifique .comment-btn button{
+    color: var(--color-white);
+    text-decoration: none;
+    margin-bottom: 10px;
+    width: fit-content;
+    
+    border: 2px solid transparent;
+    padding: 5px 10px;
+    background: var(--color-linear-gradient);
+    cursor: pointer;
+    text-transform: none;
+}
+.categorie-specifique .comment-btn button i {
+    margin-right: 2px;
+    color: var(--color-white);
+  }
+
+
 /* medias querys */
 @media screen and (max-width:1024px) {
     .container .container-1 .filter-form{
@@ -211,6 +228,9 @@ h4{
         z-index: 1;
         
      }
+     .post-displaying2 .categorie-specifique {
+        width: 100%;
+    }
 }
 @media screen and (max-width:768px) {
     
@@ -237,11 +257,19 @@ h4{
         font-size: small;
     }
 }
-@media screen and (max-width:320px) {
+
+@media screen and (max-width:345px) {
     .author-date *{
         font-size: x-small;
     }
     .author-date .fa-at,.fa-calendar-days{
         font-size: 10px;
+    }
+    .categorie-specifique  .author-date {
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+    }
+    .bar{
+        display: none;
     }
 }
