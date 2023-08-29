@@ -19,6 +19,7 @@ func RenderTemplate(w http.ResponseWriter, tmplName string, tmplDir string, data
 	tmpl, ok := templateCache[tmplName+".page.tmpl"]
 
 	if !ok {
+		ErrorPage(w, 404)
 		http.Error(w, "le template n'existe pas", http.StatusInternalServerError)
 		return
 	}
@@ -83,7 +84,7 @@ func ErrorPage(w http.ResponseWriter, i int) {
 		Code:    strconv.Itoa(i),
 		Message: http.StatusText(i),
 	}
-	
-	RenderTemplate(w, "error", "error", DataError.Message)
+
+	RenderTemplate(w, "error", "error", DataError)
 
 }

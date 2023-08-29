@@ -48,7 +48,6 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 				helper.RenderTemplate(w, "signin", "auth", datas)
 			}
 		}
-
 	}
 }
 
