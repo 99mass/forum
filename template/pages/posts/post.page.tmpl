@@ -99,14 +99,13 @@
         {{end}}
       </div>
 
-      <h4>other post by @ {{.PostData.User.Username}}</h4>
+      <h4>other post by @{{.PostData.User.Username}}</h4>
 
       <!-- 
             ce bloc sera supprimer sa sert juste a la simulations
             -->
       <!--debut  a supprimer- -->
-      <h3>art</h3>
-      <div class="post-displaying">
+      <div class="post-displaying2">
         {{range .Datas}}
         {{template "post" .}}
         {{end}}
