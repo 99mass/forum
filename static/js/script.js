@@ -4,7 +4,14 @@ const  btnUpdate=document.querySelector('.btn-update');
 const formUpdate=document.querySelector('.form-update');
 const faxmark=document.querySelector('.faxmark');
 const  messageErro=document.querySelectorAll('.messageErro');
-// const monform=document.querySelector('.monform');
+
+window.addEventListener('load',()=>{
+    let loc=window.location.href;
+    if (loc.includes("register")) {
+            alert('ok')
+    
+    }
+})
 
 
     contentLink.style.display="none";
