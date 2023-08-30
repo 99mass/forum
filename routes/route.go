@@ -17,4 +17,5 @@ func Route(db *sql.DB) {
 	http.HandleFunc("/addpost", handler.AddPostHandler(db))
 	http.HandleFunc("/addpostmypage", handler.AddPostHandlerForMyPage(db))
 	http.HandleFunc("/category", handler.GetPostCategory(db))
+	http.HandleFunc("/likepost", handler.LikePoste(db))
 }

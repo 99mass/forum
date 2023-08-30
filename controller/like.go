@@ -66,6 +66,12 @@ func GetCommentLikesCount(db *sql.DB, postID uuid.UUID, commentID uuid.UUID) (in
 }
 
 func CreatePostLike(db *sql.DB, like models.PostLike) (uuid.UUID, error) {
+	
+	_,errlike := GetPostLikeByUserID(db,like)
+	if errlike == nil {
+		return uuid.UUID{}, errlike
+	}
+	
 	query := `
         INSERT INTO post_likes (id, user_id, post_id, created_at)
         VALUES (?, ?, ?, ?);
@@ -141,6 +147,27 @@ func GetCommentLikeByID(db *sql.DB, likeID uuid.UUID) (models.CommentLike, error
 
 	return like, nil
 }
+
+func GetPostLikeByUserID(db *sql.DB, like models.PostLike) (models.PostLike, error) {
+	//var like models.PostLike
+	query := `
+        SELECT id, user_id, post_id, created_at
+        FROM post_likes
+        WHERE user_id = ? AND post_id = ?
+        LIMIT 1;
+    `
+
+	err := db.QueryRow(query, like.UserID, like.PostID).Scan(&like.ID, &like.UserID, &like.PostID, &like.CreatedAt)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return models.PostLike{}, errors.New("like de publication non trouvé")
+		}
+		return models.PostLike{}, err
+	}
+	return like, nil
+}
+
+// func GetAllCommentLikesByUserID  fonction à créer
 
 func UpdatePostLike(db *sql.DB, like models.PostLike) error {
 	query := `
