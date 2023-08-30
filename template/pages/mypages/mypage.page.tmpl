@@ -46,8 +46,14 @@
       <!-- block post and comment -->
       
       <div class="post-displaying">
-        {{range .Datas}}
-        {{template "post" .}}
+        {{if len .Datas}}
+          {{range .Datas}}
+          {{template "post" .}}
+          {{end}}
+        {{else}}
+          <div class="alert1">
+            <strong>Info!</strong> you have nothing posted yet.
+          </div>
         {{end}}
 
       </div>

@@ -44,9 +44,15 @@
       </div>
     
       <!-- block post and comment -->
-      <div class="post-displaying">     
-        {{range .Datas}} 
-          {{template "post" .}}
+      <div class="post-displaying"> 
+        {{if len .Datas}}    
+          {{range .Datas}} 
+            {{template "post" .}}
+          {{end}}
+        {{else}}                   
+            <div class="alert1">
+              <strong>Info!</strong> no post found. be the first to create a post.
+            </div> 
         {{end}}
       </div>
 

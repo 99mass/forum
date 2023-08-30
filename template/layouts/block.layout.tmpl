@@ -37,7 +37,6 @@
 {{end}}
 
 {{define "FilterForm" }}
-
 <form action="" method="post">
   <div class="select-opt1">
     <details>
@@ -67,7 +66,6 @@
   </div>
   <button type="submit">filter</button>
 </form>
-
 {{end}}
 
 
@@ -80,7 +78,7 @@
     <details>
       <summary>Choose the categories</summary>
       {{ range .Category}}
-      <input type="checkbox" name="category" value="{{.ID}}" class="checkboxx" /><label>{{.NameCategory}}</label><br>
+      <input type="checkbox" name="category" value="{{.ID}}" class="checkboxx"  /><label>{{.NameCategory}}</label><br>
       {{end}}
     </details>
   </div>
@@ -149,7 +147,7 @@
   <div class="comment ">
     <form action="/post" method="GET" class="comment-btn">
       <input type="hidden" name="post_id" id="post_id" value="{{.Posts.ID}} ">
-      <button type="submit"><i class="fa-solid fa-message"></i>comment here</button>
+      <button type="submit"><i class="fa-solid fa-pen-to-square " style="color: #2a1f51;"></i>comment here</button>
     </form>
   </div>
 
@@ -187,4 +185,10 @@
   <div class="pagination">
     <a class="page-page">pages</a>
   </div>
+{{end}}
+
+{{define "blocError"}}
+
+
+
 {{end}}

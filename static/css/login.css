@@ -101,7 +101,9 @@ form{
    color: #8b5615;
    
 }
-
+body footer{
+   margin-top: 17rem;
+}
 @media screen and (max-width:1024px) {
    .SignIn-Registre{
       padding: 25px 2px;
