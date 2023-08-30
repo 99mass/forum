@@ -44,7 +44,7 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			Content := r.FormValue("content")
 
 			if errP != nil || errU != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			homeDataSess, err := helper.GetDataTemplate(db, r, true, false, false, false, false)
