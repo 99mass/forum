@@ -24,10 +24,13 @@
 
 
     <div class="container-2">
-      {{range .Category}}
-      <!-- block post and comment -->
-      <h3>{{.NameCategory}} </h3>
+       <!-- block post and comment -->
+       <!-- category list -->
+      <h3>
+      {{range .Category}}     
+         {{.NameCategory}} <span>/</span>
       {{end}}
+    </h3>
       <div class="post-displaying">
         <div class="categorie-specifique">
           <!-- posts -->
@@ -54,10 +57,8 @@
             </form>
           </div>
           <!-- Formulaire de comment -->
-          <div class="content-form-comment">
-            
+          <div class="content-form-comment">            
             <form action="/post" method="post">
-
               <div> <label for="">comment here:</label></div>
               <textarea name="content" id="content" cols="30" rows="6" maxlength="500"
                 placeholder="put something here... maximum 500 characters"></textarea>
@@ -105,9 +106,6 @@
 
       <h4>other post by @{{.PostData.User.Username}}</h4>
 
-      <!-- 
-            ce bloc sera supprimer sa sert juste a la simulations
-            -->
       <!--debut  a supprimer- -->
       <div class="post-displaying2">
         {{range .Datas}}

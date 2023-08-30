@@ -56,6 +56,9 @@
     margin-bottom: 1.5rem;
     color: var(--header-color);
 }
+.container .container-2 h3 span:last-of-type{
+    display: none;
+}
 h4{
     text-align: center;
     background: var(--color-linear-gradient);

@@ -24,12 +24,13 @@
 <div class="categori-menu">
   <form action="/mypage" method="post">
   <input type="hidden" name="categorie" value="">
-    <input type="submit" value="All">
+    <input type="submit" value="All" class="all">
   </form>
+  <span style="display: none;" class="category-id">{{.CategoryID}}</span>
   {{ range .Category}}
   <form action="/mypage" method="GET">
-    <input type="hidden" name="categorie" value="{{.ID}}">
-    <input type="submit" value="{{.NameCategory}}">
+    <input type="hidden" name="categorie" value="{{.ID}}" class="categories-id">
+    <input type="submit" value="{{.NameCategory}}" class="submit-btn">
   </form>
   {{end}}
 </div>

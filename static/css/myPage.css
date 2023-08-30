@@ -19,7 +19,7 @@
 .alert{
     margin-top:  120px;
     margin-left: 10%;
-    margin-right: 20%;
+    margin-right: 10%;
     padding: 20px;
     background: gainsboro;
     color: var(--header-color);
@@ -28,7 +28,6 @@
 
 /* ****************** */
 .container{
-    /* width: 100%; */
     width: 80%;
     margin-left: 10%;
     margin-right: 10%;
@@ -37,7 +36,6 @@
     display: flex;
     justify-content: space-between;
     padding: 1rem;
-    /* padding-right: 1rem; */
     z-index: -1;
 }
 .container *{
