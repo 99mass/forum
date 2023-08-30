@@ -135,13 +135,17 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 
 			errForm := helper.CheckFormAddPost(r, db)
 			if errForm != nil {
-				helper.ErrorPage(w, http.StatusBadRequest)
+				//helper.ErrorPage(w, http.StatusBadRequest)
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 				return
 			}
 			postTitle := r.FormValue("title")
 			postContent := r.FormValue("content")
 			_postCategorystring := r.Form["category"]
+			if _postCategorystring == nil {
+				http.Redirect(w,r,"/",http.StatusSeeOther)
+				return
+			}
 			// var _postCategoryuuid []uuid.UUID
 			var _postCategories []models.Category
 			// for _, v := range _postCategorystring {
