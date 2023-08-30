@@ -19,6 +19,18 @@
 </div>
 {{end}}
 
+
+{{define "categorieMenuMyPage"}}
+<div class="categori-menu">
+  {{ range .Category}}
+  <form action="/mypage" method="GET">
+    <input type="hidden" name="categorie" value="{{.ID}}">
+    <input type="submit" value="{{.NameCategory}}">
+  </form>
+  {{end}}
+</div>
+{{end}}
+
 {{define "FilterForm" }}
 
 <form action="" method="post">

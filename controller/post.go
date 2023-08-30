@@ -168,3 +168,30 @@ func GetPostsByUserID(db *sql.DB, userID uuid.UUID) ([]models.Post, error) {
 
 	return posts, nil
 }
+
+func GetPostsByUserAndCategory(db *sql.DB, userID uuid.UUID, categoryID uuid.UUID) ([]models.Post, error) {
+    query := `
+        SELECT p.id, p.user_id, p.title, p.content, p.created_at
+        FROM posts p
+        JOIN posts_categories pc ON p.id = pc.post_id
+        WHERE p.user_id = ? AND pc.category_id = ?;
+    `
+
+    rows, err := db.Query(query, userID.String(), categoryID.String())
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var posts []models.Post
+    for rows.Next() {
+        var post models.Post
+        err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.CreatedAt)
+        if err != nil {
+            return nil, err
+        }
+        posts = append(posts, post)
+    }
+
+    return posts, nil
+}
