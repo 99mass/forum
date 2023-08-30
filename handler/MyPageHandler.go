@@ -66,9 +66,36 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 					helper.ErrorPage(w, http.StatusInternalServerError)
 					return
 				}
-
 				datas := new(models.DataMypage)
 				datas.Datas = PostsDetails
+
+				// dataliked := models.Home{}
+				// for _, post := range datas.Datas {
+				// 	liked, err := helper.IsPostliked(db, datas.User.ID, post.Posts.ID)
+				// 	if err != nil {
+				// 		return }
+				// 	//Get if disliked
+				// 	disliked, errdis := helper.IsPostDisliked(db, datas.User.ID, post.Posts.ID)
+				// 	if errdis != nil {
+				// 		return
+				// 	}
+				// 	//fmt.Println(liked)
+				// 	if liked {
+				// 		post.Liked = true
+				// 		dataliked.Datas = append(dataliked.Datas, post)
+				// 		continue
+				// 	} else if disliked {
+				// 		post.Disliked = true
+				// 		dataliked.Datas = append(dataliked.Datas, post)
+				// 		continue
+				// 	} else {
+				// 		dataliked.Datas = append(dataliked.Datas, post)
+				// 	}
+				// }
+				// //fmt.Println(dataliked.Datas)
+				// fmt.Println(datas.Datas)
+				// datas.Datas = dataliked.Datas
+
 				datas.Session = sessiondata
 				datas.User = user
 				datas.Category = category

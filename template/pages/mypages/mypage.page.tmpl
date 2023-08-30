@@ -47,9 +47,15 @@
       
       <div class="post-displaying">
         {{if len .Datas}}
-          {{range .Datas}}
+        {{if .Session}}    <!-- If the user is connected -->
+        {{range .Datas}} 
           {{template "post" .}}
-          {{end}}
+        {{end}}
+      {{else}}           <!-- If the user is not connected -->
+      {{range .Datas}} 
+        {{template "post_disconected" .}}
+        {{end}}
+      {{end}}
         {{else}}
           <div class="alert1">
             <strong>Info!</strong> you have nothing posted yet.
