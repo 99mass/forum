@@ -26,6 +26,8 @@
             
             <input  type="text" id="email" name="email" class="inputForm" placeholder="Email or Username" required>
             <input type="password" id="motdepasse" name="motdepasse" class="inputForm" placeholder="Password" required>
+            <!-- An element to toggle between password visibility -->
+            <div><input type="checkbox" onclick="myFunction()"><p style="color: black;">Show Password</p></div>
             <input type="submit" id="submit" class="submitForm" value="Sign in">
         </form>
 
@@ -42,5 +44,14 @@
 
     <script src="/static/js/script.js"></script>
 </body>
-
+<script>
+    function myFunction() {
+  var x = document.getElementById("motdepasse");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+} 
+</script>
 </html>
