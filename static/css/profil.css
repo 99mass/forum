@@ -146,6 +146,7 @@ td{
     height: fit-content;
     box-shadow: 2px 2px 2px 2px var(--color-gray);
     padding-bottom: 10px;
+    padding-top: 0px;
     z-index: -1;
 }
 @media screen and (max-width:1024px) {
@@ -189,7 +190,7 @@ td{
         width: 50%;
 
     }
-    footer{
+   body footer{
         margin-top: 25rem;
     }
 }

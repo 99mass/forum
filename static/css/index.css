@@ -484,6 +484,12 @@
     color: darkred;
   }
   /* end */
+
+  header .nav1 .home{
+    background: var(--color-linear-gradient);
+    color: var(--color-white);
+    padding: 7px 15px;
+}
 /* medias querys */
 @media screen and (max-width:1024px) {
     .container .container-1 .filter-form{

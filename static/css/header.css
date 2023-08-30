@@ -10,6 +10,8 @@
     --header-color1: #57534E;
     --header-color: #8b5615;
     --fontSize18:18px;
+    --color-linear-gradient1:linear-gradient(to right,#77530a,#eab958,#77530a,#77530a,#d6aa51,#77530a);
+
 }
 .alert1 {
     padding:20px;
@@ -65,7 +67,7 @@ header .nav2 form .button--submit,
 header .nav3 form .button--submit{
   padding-left: 15px;
   padding-right: 15px;
-  background: var(--color-linear-gradient);
+  background: var(--color-linear-gradient1);
   color: white;
  box-shadow: 2px 2px 2px var(--header-color);
  text-transform: capitalize;
@@ -128,6 +130,7 @@ footer{
     color: var(--header-color);
     text-decoration: none;
   }
+
 
   /* Medias query */
 
