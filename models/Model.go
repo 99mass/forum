@@ -113,7 +113,7 @@ type DataMypage struct {
 	Datas    []HomeDataPost
 	User     User
 	Category []Category
-	CategoryID string
+	CategoryID uuid.UUID
 }
 
 type DataMyProfil struct {

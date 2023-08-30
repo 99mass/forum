@@ -57,7 +57,7 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 				datas.Datas = PostsDetails
 				datas.Session = sessiondata
 				datas.User = user
-				datas.CategoryID = CatId
+				datas.CategoryID = CategID
 				datas.Category = category
 				helper.RenderTemplate(w, "mypage", "mypages", datas)
 			} else {
