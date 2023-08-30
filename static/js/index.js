@@ -3,7 +3,10 @@ const formNewPost=document.querySelector('.form-new-post');
 const btnFilter=document.querySelector('.btn-filter');
 const filterForm=document.querySelector('.filter-form');
 const disabledBtn=document.querySelector('.disabled-btn');
-
+const  all=document.querySelector('.all');
+const categoryId=document.querySelector('.category-id');
+const categoriesId=document.querySelectorAll('.categories-id');
+const submitBtn=document.querySelectorAll('.submit-btn');
 
 window.onload = () => {
 
@@ -36,7 +39,28 @@ window.onload = () => {
     if (disabledBtn) {
         disabledBtn.setAttribute("disabled", '');
     }
-        
+    if (categoriesId.length>0 && categoryId) {
+        let boole=false
+        for (let index = 0; index < categoriesId.length; index++) {
+            const cat = categoriesId[index];
+            if (cat.value.trim()=== categoryId.textContent.trim()) {
+                console.log(categoryId);
+                console.log(cat.value);
+                submitBtn[index].style.background="var(--color-linear-gradient)";
+                submitBtn[index].style.color="#fff";
+                submitBtn[index].style.border="none";
+                submitBtn[index].style.borderRadius=0.5+"rem";
+                boole=true
+            }
+            
+        }
+        if (!boole) {
+            all.style.background="var(--color-linear-gradient)";
+            all.style.color="#fff";
+            all.style.border="none";
+            all.style.borderRadius=0.5+"rem";
+        }
+    }
   
   
   };

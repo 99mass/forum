@@ -109,10 +109,10 @@ type ErrorAuth struct {
 }
 
 type DataMypage struct {
-	Session  bool
-	Datas    []HomeDataPost
-	User     User
-	Category []Category
+	Session    bool
+	Datas      []HomeDataPost
+	User       User
+	Category   []Category
 	CategoryID uuid.UUID
 }
 
