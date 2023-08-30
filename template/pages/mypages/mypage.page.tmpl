@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <title>forum</title>
+  <title>forum/MyPage</title>
 </head>
 
 <body>
@@ -46,8 +46,14 @@
       <!-- block post and comment -->
       
       <div class="post-displaying">
-        {{range .Datas}}
-        {{template "post" .}}
+        {{if len .Datas}}
+          {{range .Datas}}
+          {{template "post" .}}
+          {{end}}
+        {{else}}
+          <div class="alert1">
+            <strong>Info!</strong> you have nothing posted yet.
+          </div>
         {{end}}
 
       </div>

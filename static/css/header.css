@@ -11,7 +11,13 @@
     --header-color: #8b5615;
     --fontSize18:18px;
 }
-
+.alert1 {
+    padding:20px;
+    font-size: large;
+    margin-bottom: 10rem;
+    background-color: #abcfed;;
+    color: white;
+  }
 header{
     width: 100%;
     height: 100px;

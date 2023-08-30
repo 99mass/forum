@@ -44,9 +44,21 @@
       </div>
     
       <!-- block post and comment -->
-      <div class="post-displaying">     
-        {{range .Datas}} 
-          {{template "post" .}}
+      <div class="post-displaying"> 
+        {{if len .Datas}}    <!-- If there is at least One post -->
+          {{if .Session}}    <!-- If the user is connected -->
+            {{range .Datas}} 
+              {{template "post" .}}
+            {{end}}
+          {{else}}           <!-- If the user is not connected -->
+          {{range .Datas}} 
+            {{template "post_disconected" .}}
+            {{end}}
+          {{end}}
+        {{else}}              <!-- If there is no post -->     
+            <div class="alert1">
+              <strong>Info!</strong> no post found. be the first to create a post.
+            </div> 
         {{end}}
       </div>
 

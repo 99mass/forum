@@ -56,6 +56,7 @@ type Home struct {
 	ErrorAuth  ErrorAuth
 	PostData   HomeDataPost
 	DataProfil DataMyProfil
+	Error 	string
 }
 type HomeDataPost struct {
 	Posts       Post

@@ -44,7 +44,7 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			Content := r.FormValue("content")
 
 			if errP != nil || errU != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			homeDataSess, err := helper.GetDataTemplate(db, r, true, false, false, false, false)
@@ -135,13 +135,30 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 
 			errForm := helper.CheckFormAddPost(r, db)
 			if errForm != nil {
-				helper.ErrorPage(w, http.StatusBadRequest)
+				//helper.ErrorPage(w, http.StatusBadRequest)
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 				return
 			}
 			postTitle := r.FormValue("title")
 			postContent := r.FormValue("content")
 			_postCategorystring := r.Form["category"]
+			if _postCategorystring == nil || postTitle == "" || postContent == "" {
+				homeData, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
+
+				if err != nil {
+					helper.ErrorPage(w, http.StatusInternalServerError)
+					return
+				}
+
+				if homeData.Session {
+					sessionID, _ := helper.GetSessionRequest(r)
+					helper.UpdateCookieSession(w, sessionID, db)
+				}
+				homeData.Error = "please complete all fields"
+
+				helper.RenderTemplate(w, "index", "index", homeData)
+				return
+			}
 			// var _postCategoryuuid []uuid.UUID
 			var _postCategories []models.Category
 			// for _, v := range _postCategorystring {
