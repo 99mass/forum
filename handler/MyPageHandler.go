@@ -36,14 +36,14 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 				return
 			}
+			category, err := controller.GetAllCategories(db)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
+			}
 			CatId := r.FormValue("categorie")
 			if CatId != "" {
 				CategID, err := uuid.FromString(CatId)
-				if err != nil {
-					helper.ErrorPage(w, http.StatusBadRequest)
-					return
-				}
-				categ, err := controller.GetCategoryByID(db, CategID)
 				if err != nil {
 					helper.ErrorPage(w, http.StatusBadRequest)
 					return
@@ -52,8 +52,7 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 				if err != nil {
 					helper.ErrorPage(w, http.StatusBadRequest)
 				}
-				category := []models.Category{}
-				category = append(category, categ)
+
 				datas := new(models.DataMypage)
 				datas.Datas = PostsDetails
 				datas.Session = sessiondata
@@ -66,11 +65,7 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 					helper.ErrorPage(w, http.StatusInternalServerError)
 					return
 				}
-				category, err := controller.GetAllCategories(db)
-				if err != nil {
-					helper.ErrorPage(w, http.StatusInternalServerError)
-					return
-				}
+
 				datas := new(models.DataMypage)
 				datas.Datas = PostsDetails
 				datas.Session = sessiondata
