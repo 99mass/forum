@@ -2,13 +2,14 @@ package handler
 
 import (
 	"database/sql"
+	"net/http"
+
+	"github.com/gofrs/uuid"
+
 	"forum/controller"
 	"forum/helper"
 	"forum/middlewares"
 	"forum/models"
-	"net/http"
-
-	"github.com/gofrs/uuid"
 )
 
 func GetOnePost(db *sql.DB) http.HandlerFunc {
@@ -290,6 +291,49 @@ func LikePoste(db *sql.DB) http.HandlerFunc {
 
 		like.PostID = postID
 		_, err := controller.CreatePostLike(db, like)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusInternalServerError)
+			return
+		}
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+
+	}
+}
+
+func DislikePoste(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		dislike := models.PostDislike{}
+
+		ok, errorPage := middlewares.CheckRequest(r, "/dislikepost", "post")
+		if !ok {
+			helper.ErrorPage(w, errorPage)
+			return
+		}
+
+		//check the session and get the user
+		sessionID, errsess := helper.GetSessionRequest(r)
+		if errsess != nil {
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+			return
+		} else {
+
+			session, errgets := controller.GetSessionByID(db, sessionID)
+			if errgets != nil || &session == nil {
+				http.Redirect(w, r, "/", http.StatusSeeOther)
+				return
+			}
+			User, errgetu := controller.GetUserBySessionId(sessionID, db)
+			if errgetu != nil {
+				http.Redirect(w, r, "/", http.StatusSeeOther)
+				return
+			}
+			dislike.UserID = User.ID
+		}
+
+		postID, _ := helper.StringToUuid(r, "post_id")
+
+		dislike.PostID = postID
+		_, err := controller.CreatePostDislike(db, dislike)
 		if err != nil {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return

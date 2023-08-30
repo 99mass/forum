@@ -2,8 +2,9 @@ package routes
 
 import (
 	"database/sql"
-	"forum/handler"
 	"net/http"
+
+	"forum/handler"
 )
 
 func Route(db *sql.DB) {
@@ -18,4 +19,5 @@ func Route(db *sql.DB) {
 	http.HandleFunc("/addpostmypage", handler.AddPostHandlerForMyPage(db))
 	http.HandleFunc("/category", handler.GetPostCategory(db))
 	http.HandleFunc("/likepost", handler.LikePoste(db))
+	http.HandleFunc("/dislikepost", handler.DislikePoste(db))
 }
