@@ -1,23 +1,4 @@
-{{ define "Session"}}
-{{ if .Session }}
-<a href="/profil" class="drop-daown">{{.User.Username}} </a>
-<a href="/signout" class="drop-daown">sign out</a>
-{{else}}
-<a href="/register" class="drop-daown">register</a>
-<a href="/signin" class="drop-daown">sign in</a>
-{{end}}
-{{end}}
 
-{{define "categorieMenu"}}
-<div class="categori-menu">
-  {{ range .Category}}
-  <form action="/category" method="GET">
-    <input type="hidden" name="categorie" value="{{.ID}}">
-    <input type="submit" value="{{.NameCategory}}">
-  </form>
-  {{end}}
-</div>
-{{end}}
 
 
 {{define "categorieMenuMyPage"}}
