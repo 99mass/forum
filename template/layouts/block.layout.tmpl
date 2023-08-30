@@ -94,29 +94,30 @@
     </span>
 
   </div>
-
+  <!-- Title -->
   <div class="title"><span><i class="fa-solid fa-feather"></i> Title:</span>{{.Posts.Title}}</div>
 
+  <!-- Content -->
   <div><i class="fa-solid fa-quote-left"></i> {{.Posts.Content}}<i class="fa-solid fa-quote-left"
       style="margin-left: 5px;"></i> </div>
-
+  <!-- Info post -->
   <div class="author-date">
     <div><span><i class="fa-solid fa-at"></i>author:</span>{{.User.Username}} </div>
     <span class="bar">|</span>
     <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>{{.Posts.CreatedAt}}</div>
   </div>
-
+  <!-- like and dislike -->
   <div class="like-dislik-content">
-    <form action="" method="post">
-      <input type="hidden" name="liked" value="">
+    <form action="/likepost" method="post">
+      <input type="hidden" id="post_id" name="post_id" value="{{.Posts.ID}}">
       {{if .Liked}}
         <button type="submit"><i class="fa-solid fa-thumbs-up fa-beat"id="like"></i>{{.PostLike}}</button>
       {{else}}  
         <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}}</button>
       {{end}}
     </form>
-    <form action="" method="post">
-      <input type="hidden" name="disliked" value="">
+    <form action="/dislikepost" method="post">
+      <input type="hidden" id="post_id" name="post_id" value="{{.Posts.ID}}">
       {{if .Disliked}}
       <button type="submit"><i class="fa-solid fa-thumbs-down"id="dislike" ></i>{{.PostDislike}}</button>
       {{else}}
@@ -124,7 +125,7 @@
       {{end}}
     </form>
   </div>
-
+  <!-- Comment button -->
   <div class="comment ">
     
     <form action="/post" method="GET" class="comment-btn">

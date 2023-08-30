@@ -255,3 +255,46 @@ func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 
 	}
 }
+
+func LikePoste(db *sql.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		like := models.PostLike{}
+
+		ok, errorPage := middlewares.CheckRequest(r, "/likepost", "post")
+		if !ok {
+			helper.ErrorPage(w, errorPage)
+			return
+		}
+
+		//check the session and get the user
+		sessionID, errsess := helper.GetSessionRequest(r)
+		if errsess != nil {
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+			return
+		} else {
+
+			session, errgets := controller.GetSessionByID(db, sessionID)
+			if errgets != nil || &session == nil {
+				http.Redirect(w, r, "/", http.StatusSeeOther)
+				return
+			}
+			User, errgetu := controller.GetUserBySessionId(sessionID, db)
+			if errgetu != nil {
+				http.Redirect(w, r, "/", http.StatusSeeOther)
+				return
+			}
+			like.UserID = User.ID
+		}
+
+		postID, _ := helper.StringToUuid(r, "post_id")
+
+		like.PostID = postID
+		_, err := controller.CreatePostLike(db, like)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusInternalServerError)
+			return
+		}
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+
+	}
+}
