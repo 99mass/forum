@@ -88,6 +88,34 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 		}
 		datas.Session = sessiondata
 	}
+	//Set liked or not
+	//Get if liked
+	dataliked := models.Home{}
+	for _, post := range datas.Datas {
+		liked, err := IsPostliked(db, datas.User.ID, post.Posts.ID)
+		if err != nil {
+			return datas, err
+		}
+		//Get if disliked
+		disliked, errdis := IsPostDisliked(db, datas.User.ID, post.Posts.ID)
+		if errdis != nil {
+			return datas, errdis
+		}
+		//fmt.Println(liked)
+		if liked {
+			post.Liked = true
+			dataliked.Datas = append(dataliked.Datas, post)
+			continue
+		} else if disliked {
+			post.Disliked = true
+			dataliked.Datas = append(dataliked.Datas, post)
+			continue
+		} else {
+			dataliked.Datas = append(dataliked.Datas, post)
+		}
+	}
+	//fmt.Println(dataliked.Datas)
+	datas.Datas = dataliked.Datas
 
 	//---Get All Categories-------//
 	if Category {
@@ -142,6 +170,7 @@ func IsPostliked(db *sql.DB, UserId, PostId uuid.UUID) (bool, error) {
     `
 	err := db.QueryRow(query, UserId, PostId).Scan(&like.UserID, &like.PostID)
 	if err == sql.ErrNoRows {
+
 		return false, nil
 	}
 	return true, nil

@@ -67,10 +67,18 @@ func GetCommentDislikesCount(db *sql.DB, PostID uuid.UUID, commentID uuid.UUID) 
 }
 
 func CreatePostDislike(db *sql.DB, dislike models.PostDislike) (uuid.UUID, error) {
-
 	_, errdislike := GetPostDislikeByUserID(db, dislike)
 	if errdislike == nil {
 		return uuid.UUID{}, errdislike
+	}
+
+	like := models.PostLike{
+		UserID: dislike.UserID,
+		PostID: dislike.PostID,
+	}
+	lik, errlike := GetPostLikeByUserID(db, like)
+	if errlike == nil {
+		RemovePostLike(db, lik.ID)
 	}
 
 	query := `

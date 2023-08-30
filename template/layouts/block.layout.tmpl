@@ -111,7 +111,7 @@
     <form action="/likepost" method="post">
       <input type="hidden" id="post_id" name="post_id" value="{{.Posts.ID}}">
       {{if .Liked}}
-        <button type="submit"><i class="fa-solid fa-thumbs-up fa-beat"id="like"></i>{{.PostLike}}</button>
+        <button type="submit"><i class="fa-solid fa-thumbs-up"id="like"></i>{{.PostLike}}</button>
       {{else}}  
         <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}}</button>
       {{end}}

@@ -3,6 +3,7 @@ package controller
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"forum/models"
 	"time"
 
@@ -66,12 +67,20 @@ func GetCommentLikesCount(db *sql.DB, postID uuid.UUID, commentID uuid.UUID) (in
 }
 
 func CreatePostLike(db *sql.DB, like models.PostLike) (uuid.UUID, error) {
-	
-	_,errlike := GetPostLikeByUserID(db,like)
+
+	_, errlike := GetPostLikeByUserID(db, like)
 	if errlike == nil {
 		return uuid.UUID{}, errlike
 	}
-	
+	dislike := models.PostDislike{
+		UserID: like.UserID,
+		PostID: like.PostID,
+	}
+	disl, errdislike := GetPostDislikeByUserID(db, dislike)
+	if errdislike == nil {
+		RemovePostDislike(db, disl.ID)
+	}
+
 	query := `
         INSERT INTO post_likes (id, user_id, post_id, created_at)
         VALUES (?, ?, ?, ?);
@@ -158,8 +167,10 @@ func GetPostLikeByUserID(db *sql.DB, like models.PostLike) (models.PostLike, err
     `
 
 	err := db.QueryRow(query, like.UserID, like.PostID).Scan(&like.ID, &like.UserID, &like.PostID, &like.CreatedAt)
+	fmt.Println("check if row")
 	if err != nil {
 		if err == sql.ErrNoRows {
+			fmt.Println("no like")
 			return models.PostLike{}, errors.New("like de publication non trouvé")
 		}
 		return models.PostLike{}, err
