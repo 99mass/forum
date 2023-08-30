@@ -3,10 +3,11 @@ package controller
 import (
 	"database/sql"
 	"errors"
-	"forum/models"
 	"time"
 
 	"github.com/gofrs/uuid"
+
+	"forum/models"
 )
 
 // func DislikePost(db *sql.DB, userID uuid.UUID, postID uuid.UUID) error {
@@ -66,6 +67,12 @@ func GetCommentDislikesCount(db *sql.DB, PostID uuid.UUID, commentID uuid.UUID) 
 }
 
 func CreatePostDislike(db *sql.DB, dislike models.PostDislike) (uuid.UUID, error) {
+
+	_, errdislike := GetPostDislikeByUserID(db, dislike)
+	if errdislike == nil {
+		return uuid.UUID{}, errdislike
+	}
+
 	query := `
         INSERT INTO post_dislikes (id, user_id, post_id, created_at)
         VALUES (?, ?, ?, ?);
@@ -320,4 +327,22 @@ func GetCommentDislikesByCommentID(db *sql.DB, commentID uuid.UUID) ([]models.Co
 	}
 
 	return commentDislikes, nil
+}
+
+func GetPostDislikeByUserID(db *sql.DB, dislike models.PostDislike) (models.PostDislike, error) {
+	query := `
+        SELECT id, user_id, post_id, created_at
+        FROM post_dislikes
+        WHERE user_id = ? AND post_id = ?
+        LIMIT 1;
+    `
+
+	err := db.QueryRow(query, dislike.UserID, dislike.PostID).Scan(&dislike.ID, &dislike.UserID, &dislike.PostID, &dislike.CreatedAt)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return models.PostDislike{}, errors.New("like de publication non trouvé")
+		}
+		return models.PostDislike{}, err
+	}
+	return dislike, nil
 }
