@@ -3,11 +3,12 @@ package helper
 import (
 	"database/sql"
 	"errors"
-	"forum/controller"
-	"forum/models"
 	"regexp"
 
 	"golang.org/x/crypto/bcrypt"
+
+	"forum/controller"
+	"forum/models"
 )
 
 func CheckRegisterFormat(username, email, password, confirmPassword string, db *sql.DB) (bool, models.ErrorAuth) {
@@ -114,7 +115,7 @@ func CheckPassword(password string) (bool, error) {
 // Il doit avoir 5 à 20 Caractères alpha_numérique
 func CheckUserName(username string) (bool, error) {
 	// Cette expression exige que le pseudo ait entre 5 et 20 caractères alphanumériques.
-	usernameRegex := `^[a-zA-Z0-9]{5,20}$`
+	usernameRegex := `^[a-zA-Z0-9]{3,20}$`
 
 	match, _ := regexp.MatchString(usernameRegex, username)
 
