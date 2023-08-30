@@ -56,7 +56,7 @@ type Home struct {
 	ErrorAuth  ErrorAuth
 	PostData   HomeDataPost
 	DataProfil DataMyProfil
-	Error 	string
+	Error      string
 }
 type HomeDataPost struct {
 	Posts       Post
@@ -86,6 +86,8 @@ type CommentDetails struct {
 	CommentLike    int
 	CommentDislike int
 	User           User
+	Liked          bool
+	Disliked       bool
 }
 
 type CommentLike struct {

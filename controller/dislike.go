@@ -100,6 +100,20 @@ func CreatePostDislike(db *sql.DB, dislike models.PostDislike) (uuid.UUID, error
 }
 
 func CreateCommentDislike(db *sql.DB, dislike models.CommentDislike) (uuid.UUID, error) {
+	_, errdislike := GetCommentDislikeByUserID(db, dislike)
+	if errdislike == nil {
+		return uuid.UUID{}, errdislike
+	}
+
+	like := models.CommentLike{
+		UserID:    dislike.UserID,
+		CommentID: dislike.CommentID,
+	}
+	lik, errlike := GetCommentLikeByUserID(db, like)
+	if errlike == nil {
+		RemoveCommentLike(db, lik.ID)
+	}
+	
 	query := `
         INSERT INTO comment_dislikes (id, user_id, comment_id, created_at)
         VALUES (?, ?, ?, ?);
@@ -351,6 +365,24 @@ func GetPostDislikeByUserID(db *sql.DB, dislike models.PostDislike) (models.Post
 			return models.PostDislike{}, errors.New("like de publication non trouvé")
 		}
 		return models.PostDislike{}, err
+	}
+	return dislike, nil
+}
+
+func GetCommentDislikeByUserID(db *sql.DB, dislike models.CommentDislike) (models.CommentDislike, error) {
+	query := `
+        SELECT id, user_id, comment_id, created_at
+        FROM comment_dislikes
+        WHERE user_id = ? AND comment_id = ?
+        LIMIT 1;
+    `
+
+	err := db.QueryRow(query, dislike.UserID, dislike.CommentID).Scan(&dislike.ID, &dislike.UserID, &dislike.CommentID, &dislike.CreatedAt)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return models.CommentDislike{}, errors.New("like de commentaire non trouvé")
+		}
+		return models.CommentDislike{}, err
 	}
 	return dislike, nil
 }

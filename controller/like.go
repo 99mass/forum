@@ -4,10 +4,11 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"forum/models"
 	"time"
 
 	"github.com/gofrs/uuid"
+
+	"forum/models"
 )
 
 // func LikePost(db *sql.DB, userID uuid.UUID, postID uuid.UUID) error {
@@ -66,8 +67,8 @@ func GetCommentLikesCount(db *sql.DB, postID uuid.UUID, commentID uuid.UUID) (in
 	return count, nil
 }
 
+//Create a Like of Post
 func CreatePostLike(db *sql.DB, like models.PostLike) (uuid.UUID, error) {
-
 	_, errlike := GetPostLikeByUserID(db, like)
 	if errlike == nil {
 		return uuid.UUID{}, errlike
@@ -99,7 +100,22 @@ func CreatePostLike(db *sql.DB, like models.PostLike) (uuid.UUID, error) {
 	return newUUID, nil
 }
 
+//Create a like of comment
 func CreateCommentLike(db *sql.DB, like models.CommentLike) (uuid.UUID, error) {
+
+	_, errlike := GetCommentLikeByUserID(db, like)
+	if errlike == nil {
+		return uuid.UUID{}, errlike
+	}
+	dislike := models.CommentDislike{
+		UserID: like.UserID,
+		CommentID: like.CommentID,
+	}
+	disl, errdislike := GetCommentDislikeByUserID(db, dislike)
+	if errdislike == nil {
+		RemoveCommentDislike(db, disl.ID)
+	}
+
 	query := `
         INSERT INTO comment_likes (id, user_id, comment_id, created_at)
         VALUES (?, ?, ?, ?);
@@ -117,6 +133,7 @@ func CreateCommentLike(db *sql.DB, like models.CommentLike) (uuid.UUID, error) {
 
 	return newUUID, nil
 }
+
 func GetPostLikeByID(db *sql.DB, likeID uuid.UUID) (models.PostLike, error) {
 	var like models.PostLike
 	query := `
@@ -174,6 +191,25 @@ func GetPostLikeByUserID(db *sql.DB, like models.PostLike) (models.PostLike, err
 			return models.PostLike{}, errors.New("like de publication non trouvé")
 		}
 		return models.PostLike{}, err
+	}
+	return like, nil
+}
+
+func GetCommentLikeByUserID(db *sql.DB, like models.CommentLike) (models.CommentLike, error) {
+	query := `
+        SELECT id, user_id, comment_id, created_at
+        FROM comment_likes
+        WHERE user_id = ? AND comment_id = ?
+        LIMIT 1;
+    `
+
+	err := db.QueryRow(query, like.UserID, like.CommentID).Scan(&like.ID, &like.UserID, &like.CommentID, &like.CreatedAt)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			fmt.Println("no like")
+			return models.CommentLike{}, errors.New("like de commentaire non trouvé")
+		}
+		return models.CommentLike{}, err
 	}
 	return like, nil
 }

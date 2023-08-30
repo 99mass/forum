@@ -20,4 +20,6 @@ func Route(db *sql.DB) {
 	http.HandleFunc("/category", handler.GetPostCategory(db))
 	http.HandleFunc("/likepost", handler.LikePoste(db))
 	http.HandleFunc("/dislikepost", handler.DislikePoste(db))
+	http.HandleFunc("/likecomment", handler.LikeComment(db))
+	http.HandleFunc("/dislikecomment", handler.DislikeComment(db))
 }
