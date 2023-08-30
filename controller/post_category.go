@@ -60,7 +60,8 @@ func GetPostsByCategory(db *sql.DB, categoryID uuid.UUID) ([]models.Post, error)
         SELECT p.id, p.user_id, p.title, p.content, p.created_at
         FROM posts p
         JOIN posts_categories pc ON p.id = pc.post_id
-        WHERE pc.category_id = ?;
+        WHERE pc.category_id = ?
+		ORDER BY created_at DESC;
     `
 
 	rows, err := db.Query(query, categoryID)
