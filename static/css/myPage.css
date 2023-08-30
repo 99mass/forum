@@ -444,6 +444,12 @@
     display: none;
 }
 
+.mypage{
+    background: var(--color-linear-gradient);
+    color: var(--color-white);
+    padding: 7px 15px;
+}
+
 /* ************************************* */
 .pagination {
     display: flex;

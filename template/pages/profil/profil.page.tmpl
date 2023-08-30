@@ -77,15 +77,18 @@
           <th>number of like</th>
           <th>number of disliked</th>
         </thead>
-        <tbody>
-          {{range .DataProfil.Posts}}
-          <tr>
-            <td>{{.Posts.Title}}</td>
-            <td>{{len .Comment}}</td>
-            <td>{{.PostLike}}</td>
-            <td>{{.PostDislike}}</td>
-          </tr>
-          {{end}}
+        {{if len .DataProfil.Posts}}
+            <tbody>
+              {{range .DataProfil.Posts}}
+              <tr>
+                <td>{{.Posts.Title}}</td>
+                <td>{{len .Comment}}</td>
+                <td>{{.PostLike}}</td>
+                <td>{{.PostDislike}}</td>
+              </tr>
+              {{end}}
+            </tbody>
+         {{end}}
       </table>
     </div>
 
