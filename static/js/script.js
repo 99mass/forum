@@ -3,7 +3,6 @@ const contentLink=document.querySelector('.content-link');
 const  btnUpdate=document.querySelector('.btn-update');
 const formUpdate=document.querySelector('.form-update');
 const faxmark=document.querySelector('.faxmark');
-// const  messageErro=document.querySelectorAll('.messageErro');
 const errorPost=document.querySelector('.error-post');
 const alertLikePost=document.querySelector('.alert-likePost');
 const likeDeconnected=document.querySelectorAll('.like-deconnected');
@@ -54,22 +53,6 @@ window.addEventListener('load',()=>{
             formUpdate.style.display = "none";
         });
     };
-    
-    // if (messageErro.length>0) {
-        
-    //     window.addEventListener("load", () => {
-    //         for (let index = 0; index < messageErro.length; index++) {
-    //             const element = messageErro[index];
-    //              if (element.textContent!="") {
-    //                 setTimeout(() => {
-    //                     element.innerHTML=""
-    //                 }, 2000);
-                    
-    //              }                                    
-    //         }
-           
-    //     });
-    // }
 })
 
 if (alertLikePost && likeDeconnected) {
