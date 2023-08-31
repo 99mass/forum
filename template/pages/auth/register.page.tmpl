@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2p0T-r4pTdjFEnObJS8xSM9FHJPTLbqA8Ew&usqp=CAU" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/login.css">
     <link rel="stylesheet" href="/static/css/index.css">
     <link rel="stylesheet" href="/static/css/header.css">
@@ -12,6 +13,12 @@
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>forum</title>
+    <style>
+        header .nav1 .home{
+            border:none;   
+            padding: 0px;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,8 +34,8 @@
 
             <div><span  class="start">* </span><span  class="messageErro">{{.ErrorAuth.EmailError}}</span></div> 
             <input type="email" id="email" name="email" class="inputForm" placeholder="Email" required>
-            <input type="password" id="password" name="password" class="inputForm" placeholder="Password" required>
-            <div><span  class="start">* </span><span  class="messageErro">{{.ErrorAuth.PasswordError}}</span></div> 
+            <div><span  class="start">* </span><span  class="messageErro">{{.ErrorAuth.PasswordError}}</span></div>
+            <input type="password" id="password" name="password" class="inputForm" placeholder="Password" required>             
             <input type="password" id="password_validation" name="password_validation" class="inputForm"
                 placeholder=" Confirm Password" required>
             <input type="submit" class="submitForm" name="submit" value="Create">

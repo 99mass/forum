@@ -241,11 +241,11 @@
   <div class="like-dislik-content">
     <div>
       <input type="hidden" name="liked" value="">
-      <button class="" style="background: transparent;border: none;padding-right: 8px;"><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}}</button>
+      <button class="like-deconnected" style="background: transparent;border: none;padding-right: 8px;"><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}}</button>
     </div>
     <div>
       <input type="hidden" name="disliked" value="">
-      <button style="background: transparent;border: none;"><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}}</button>
+      <button class="like-deconnected" style="background: transparent;border: none;"><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}}</button>
     </div>
   </div>
 
@@ -270,10 +270,10 @@
     </div>
     <div class="like-dislik-content">
       <div>
-        <button style="background: transparent;border: none;padding-right: 8px;"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
+        <button class="like-deconnected" style="background: transparent;border: none;padding-right: 8px;"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
       </div>
       <div>
-        <button style="background: transparent;border: none;"><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
+        <button class="like-deconnected" style="background: transparent;border: none;"><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
       </div>
     </div>
     {{end}}

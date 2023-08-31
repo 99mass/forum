@@ -5,12 +5,24 @@ const formUpdate=document.querySelector('.form-update');
 const faxmark=document.querySelector('.faxmark');
 const  messageErro=document.querySelectorAll('.messageErro');
 const errorPost=document.querySelector('.error-post');
-var compt=0
-
+const alertLikePost=document.querySelector('.alert-likePost');
+const likeDeconnected=document.querySelectorAll('.like-deconnected');
+const signin=document.querySelector('.signin');
+const register=document.querySelector('.register');
 // console.log(errorPost);
 window.addEventListener('load',()=>{
-    let loc=window.location.href;
-
+       let loc=window.location.href;
+       if (signin && loc.includes('signin')) {
+            signin.style.border=1+"px  solid var(--header-color)"; 
+            signin.style.padding= 7+"px "+15+"px";
+       }
+       if (register && loc.includes('register')) {
+            register.style.border=1+"px  solid var(--header-color)"; 
+            register.style.padding= 7+"px "+15+"px";
+        }
+        if (alertLikePost) {
+            alertLikePost.style.display='none';
+        }    
         // display the error post form
         if (errorPost) {
             let childsErroPost=errorPost.children
@@ -58,7 +70,13 @@ window.addEventListener('load',()=>{
            
         });
     }
-    compt=compt+1;
 })
-console.log(compt);
 
+if (alertLikePost && likeDeconnected) {
+    for (let index = 0; index < likeDeconnected.length; index++) {
+        const btn = likeDeconnected[index];
+        btn.addEventListener("click",()=>{
+            alertLikePost.style.display='block';
+        })
+    }
+}
