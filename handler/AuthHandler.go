@@ -7,6 +7,7 @@ import (
 	"forum/middlewares"
 	"forum/models"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gofrs/uuid"
@@ -66,9 +67,13 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 				return
 			}
 			username := r.FormValue("username")
+			username = strings.TrimSpace(username)
 			email := r.FormValue("email")
+			email = strings.TrimSpace(email)
 			password := r.FormValue("password")
+			password = strings.TrimSpace(password)
 			confirmPassword := r.FormValue("password_validation")
+			confirmPassword = strings.TrimSpace(confirmPassword)
 			// Hasher le mot de passe
 			hashedPassword, _ := helper.HashPassword(password)
 
