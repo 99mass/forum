@@ -1,6 +1,6 @@
 -- Create the users table
 CREATE TABLE IF NOT EXISTS users (
-    id TEXT PRIMARY KEY,
+    id TEXT PRIMARY KEY NOT NULL,
     username TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 -- Create the sessions table
 CREATE TABLE IF NOT EXISTS sessions (
-    id TEXT PRIMARY KEY,
+    id TEXT PRIMARY KEY NOT NULL,
     user_id TEXT NOT NULL,
     expires_at TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -17,14 +17,14 @@ CREATE TABLE IF NOT EXISTS sessions (
 
 -- Create the categories table
 CREATE TABLE IF NOT EXISTS categories (
-    id TEXT PRIMARY KEY,
+    id TEXT PRIMARY KEY NOT NULL,
     name_category TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create the posts table
 CREATE TABLE IF NOT EXISTS posts (
-    id TEXT PRIMARY KEY,
+    id TEXT PRIMARY KEY NOT NULL,
     user_id TEXT NOT NULL,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS posts_categories (
 
 -- Create the comments table
 CREATE TABLE IF NOT EXISTS comments (
-    id TEXT PRIMARY KEY,
+    id TEXT PRIMARY KEY NOT NULL,
     user_id TEXT NOT NULL,
     post_id TEXT NOT NULL,
     content TEXT NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS comments (
 
 -- Create the likes table for posts
 CREATE TABLE IF NOT EXISTS post_likes (
-    id TEXT PRIMARY KEY,
+    id TEXT PRIMARY KEY NOT NULL,
     user_id TEXT NOT NULL,
     post_id TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS post_likes (
 
 -- Create the dislikes table for posts
 CREATE TABLE IF NOT EXISTS post_dislikes (
-    id TEXT PRIMARY KEY,
+    id TEXT PRIMARY KEY NOT NULL,
     user_id TEXT NOT NULL,
     post_id TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS post_dislikes (
 
 -- Create the likes table for comments
 CREATE TABLE IF NOT EXISTS comment_likes (
-    id TEXT PRIMARY KEY,
+    id TEXT PRIMARY KEY NOT NULL,
     user_id TEXT NOT NULL,
     comment_id TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 
 -- Create the dislikes table for comments
 CREATE TABLE IF NOT EXISTS comment_dislikes (
-    id TEXT PRIMARY KEY,
+    id TEXT PRIMARY KEY NOT NULL,
     user_id TEXT NOT NULL,
     comment_id TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

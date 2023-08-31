@@ -79,6 +79,35 @@
 </form>
 {{end}}
 
+{{define "addPostFormForMyPage"}}
+<div class="new-post"><i class="fa-solid fa-plus"></i> New Post</div>
+
+<form class="form-new-post" action="/addpostmypage" method="post">
+  <!-- checbox -->
+  <div class="select-opt">
+    <details>
+      <summary>Choose the categories</summary>
+      {{ range .Category}}
+      <input type="checkbox" name="category" value="{{.ID}}" class="checkboxx"  /><label>{{.NameCategory}}</label><br>
+      {{end}}
+    </details>
+  </div>
+  <div>
+    <input type="text" name="title" id="title" placeholder="title post" class="titles" required>
+  </div>
+  <div>
+    <textarea name="content" id="content" cols="30" rows="5" maxlength="500" required style="font-size: small;"
+      placeholder="put the content here"></textarea>
+  </div>
+    {{ if .Session }}
+      <button type="submit" class="btn-submit-form">add post</button>
+    {{ else }}
+      <p style="color: red;font-size: 12px;">Please log in to submit a post.</p><br>
+      <button  class="disabled-btn">add post</button>
+    {{ end }}
+</form>
+{{end}}
+
 
 
 
