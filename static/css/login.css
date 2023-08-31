@@ -91,6 +91,7 @@ form{
 }
 .monform div .messageErro {
    font-size: smaller;
+   text-transform: lowercase;
 }
 .start{
    bottom: 0;
@@ -105,11 +106,12 @@ body footer{
    margin-top: 17rem;
 }
 
-header  .signin,
+/* header  .signin,
 header  .register{
    border:1px  solid var(--header-color); 
    padding: 7px 15px;
-}
+} */
+
 header .signin:hover,
 header  .register:hover{
    border: none;

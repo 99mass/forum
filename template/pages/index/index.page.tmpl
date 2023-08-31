@@ -5,6 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2p0T-r4pTdjFEnObJS8xSM9FHJPTLbqA8Ew&usqp=CAU" type="image/x-icon">
   <link rel="stylesheet" href="/static/css/header.css">
   <link rel="stylesheet" href="/static/css/index.css">
   <!-- cdn font awsome -->
@@ -42,7 +43,9 @@
        
          {{template "addPostForm" .}}
       </div>
-    
+      <div class="alert-likePost">
+        <strong> <i class="fa-solid fa-triangle-exclamation" style="font-size: 22px;"></i></strong> You can't like or dislike while you're offline.<a href="/signin">click here</a> to connect.
+      </div> 
       <!-- block post and comment -->
       <div class="post-displaying"> 
         {{if len .Datas}}    <!-- If there is at least One post -->

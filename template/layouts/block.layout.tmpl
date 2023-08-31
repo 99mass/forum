@@ -1,6 +1,4 @@
 
-
-
 {{define "categorieMenuMyPage"}}
 <div class="categori-menu">
   <form action="/mypage" method="post">
@@ -153,16 +151,16 @@
       <input type="hidden" id="post_id" name="post_id" value="{{.Posts.ID}}">
       <input type="hidden" name="route" id="route" value="{{.Route}}">
       {{if .Liked}}
-        <button type="submit"><i class="fa-solid fa-thumbs-up"id="like"></i>{{.PostLike}}</button>
+        <button type="submit"><i class="fa-solid fa-thumbs-up"id="like" style="color: darkblue;"></i>{{.PostLike}}</button>
       {{else}}  
-        <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}}</button>
+        <button type="submit"><i class="fa-regular fa-thumbs-up" ></i>{{.PostLike}}</button>
       {{end}}
     </form>
     <form action="/dislikepost" method="post">
       <input type="hidden" id="post_id" name="post_id" value="{{.Posts.ID}}">
       <input type="hidden" name="route" id="route" value="{{.Route}}">
       {{if .Disliked}}
-      <button type="submit"><i class="fa-solid fa-thumbs-down"id="dislike" ></i>{{.PostDislike}}</button>
+      <button type="submit"><i class="fa-solid fa-thumbs-down"id="dislike" style="color: darkred;"></i>{{.PostDislike}}</button>
       {{else}}
       <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}}</button>
       {{end}}
@@ -196,16 +194,16 @@
             <input type="hidden" id="comment_id" name="comment_id" value="{{.Comment.ID}}">
             <input type="hidden" name="route" id="route" value="{{.Route}}">
             {{if .Liked}}
-              <button type="submit"><i class="fa-solid fa-thumbs-up"id="like"></i>{{.CommentLike}}</button>
+              <button type="submit"><i class="fa-solid fa-thumbs-up"  style="color: darkblue;"></i>{{.CommentLike}}</button>
             {{else}}  
-              <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
+              <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}{{.Liked}}</button>
             {{end}}
           </form>
           <form action="/dislikecomment" method="post">
             <input type="hidden" id="comment_id" name="comment_id" value="{{.Comment.ID}}">
             <input type="hidden" name="route" id="route" value="{{.Route}}">
             {{if .Disliked}}
-              <button type="submit"><i class="fa-solid fa-thumbs-down"id="dislike"></i>{{.CommentDislike}}</button>
+              <button type="submit"><i class="fa-solid fa-thumbs-down fa-thumbs-down1"  style="color: darkred;"></i>{{.CommentDislike}}</button>
             {{else}}  
               <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
             {{end}}
@@ -247,18 +245,18 @@
   <div class="like-dislik-content">
     <div>
       <input type="hidden" name="liked" value="">
-      <button><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}}</button>
+      <button title="you can't like while you're offline" class="like-deconnected" style="background: transparent;border: none;padding-right: 8px;"><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}}</button>
     </div>
     <div>
       <input type="hidden" name="disliked" value="">
-      <button><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}}</button>
+      <button title="you can't dislike while you're offline" class="like-deconnected" style="background: transparent;border: none;"><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}}</button>
     </div>
   </div>
 
   <div class="comment ">
     <form action="/post" method="GET" class="comment-btn">
       <input type="hidden" name="post_id" id="post_id" value="{{.Posts.ID}} ">
-      <button type="submit"><i class="fa-solid fa-pen-to-square " style="color: #2a1f51;"></i>comment here</button>
+      <button type="submit" ><i class="fa-solid fa-pen-to-square " style="color: #2a1f51;"></i>comment here</button>
     </form>
   </div>
 
@@ -276,10 +274,10 @@
     </div>
     <div class="like-dislik-content">
       <div>
-        <button ><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
+        <button class="like-deconnected" style="background: transparent;border: none;padding-right: 8px;"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
       </div>
       <div>
-        <button ><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
+        <button class="like-deconnected" style="background: transparent;border: none;"><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
       </div>
     </div>
     {{end}}

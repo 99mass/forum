@@ -63,11 +63,13 @@
    font-size: 20px !important;
 }
 .container .container-1 .filter-form{
-    width: 90%;
+    width: 105%;
+    /* margin-left: -10%; */
     height: auto;
     background-color: #fff;
     margin-top: 0rem;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    z-index: 1;
 }
 
 
