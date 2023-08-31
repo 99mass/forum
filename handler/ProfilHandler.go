@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"fmt"
 	"forum/helper"
 	"forum/models"
 	"net/http"
@@ -35,12 +34,12 @@ func GetProfil(db *sql.DB) http.HandlerFunc {
 		for _, cat := range datas.Category {
 			catMap[cat.NameCategory] = 0
 		}
-		
+
 		for _, post := range dataProfil.Posts {
 			for _, cat := range post.Posts.Categories {
 
 				catMap[cat.NameCategory] += 1
-				
+
 			}
 		}
 		dataProfil.Categories = catMap
