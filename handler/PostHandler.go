@@ -257,7 +257,7 @@ func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-//Like post
+// Like post
 func LikePoste(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		like := models.PostLike{}
@@ -301,7 +301,7 @@ func LikePoste(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-//dDislike posts
+// dDislike posts
 func DislikePoste(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		dislike := models.PostDislike{}
@@ -345,7 +345,7 @@ func DislikePoste(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-//Like Comments
+// Like Comments
 func LikeComment(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		like := models.CommentLike{}
@@ -389,7 +389,7 @@ func LikeComment(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-//Dislike comments
+// Dislike comments
 func DislikeComment(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		dislike := models.CommentDislike{}
