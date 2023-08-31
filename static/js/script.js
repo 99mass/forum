@@ -4,15 +4,21 @@ const  btnUpdate=document.querySelector('.btn-update');
 const formUpdate=document.querySelector('.form-update');
 const faxmark=document.querySelector('.faxmark');
 const  messageErro=document.querySelectorAll('.messageErro');
-const errorPost=document.querySelector('.error-post').children;
+const errorPost=document.querySelector('.error-post');
 
 
-console.log(errorPost);
+// console.log(errorPost);
 window.addEventListener('load',()=>{
     let loc=window.location.href;
     if (loc.includes("register")) {
             alert('ok')
     
+    }
+    if (errorPost) {
+        let childsErroPost=errorPost.children
+        if (childsErroPost[1].textContent.trim()) {
+            
+        }
     }
 })
 
