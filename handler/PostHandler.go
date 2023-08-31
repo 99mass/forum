@@ -207,23 +207,56 @@ func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 		}
 
 		if helper.VerifySession(db, session) {
+			sessiondata := true
 
 			errForm := helper.CheckFormAddPost(r, db)
 			if errForm != nil {
-				homeData, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
-
+				user, err := controller.GetUserBySessionId(session, db)
+				if err != nil {
+					controller.DeleteSession(db, session)
+					http.Redirect(w, r, "/", http.StatusSeeOther)
+					return
+				}
+				category, err := controller.GetAllCategories(db)
 				if err != nil {
 					helper.ErrorPage(w, http.StatusInternalServerError)
 					return
 				}
+				CatId := r.FormValue("categorie")
+				if CatId != "" {
+					CategID, err := uuid.FromString(CatId)
+					if err != nil {
+						helper.ErrorPage(w, http.StatusBadRequest)
+						return
+					}
+					PostsDetails, err := helper.GetPostsForOneUserAndCategory(db, user.ID, CategID)
+					if err != nil {
+						helper.ErrorPage(w, http.StatusBadRequest)
+					}
 
-				if homeData.Session {
-					sessionID, _ := helper.GetSessionRequest(r)
-					helper.UpdateCookieSession(w, sessionID, db)
+					datas := new(models.DataMypage)
+					datas.Datas = PostsDetails
+					datas.Session = sessiondata
+					datas.User = user
+					datas.CategoryID = CategID
+					datas.Category = category
+					datas.Error = errForm.Error()
+					helper.RenderTemplate(w, "mypage", "mypages", datas)
+				} else {
+					PostsDetails, err := helper.GetPostsForOneUser(db, user.ID)
+					if err != nil {
+						helper.ErrorPage(w, http.StatusInternalServerError)
+						return
+					}
+					datas := new(models.DataMypage)
+					datas.Datas = PostsDetails
+
+					datas.Session = sessiondata
+					datas.User = user
+					datas.Category = category
+					datas.Error = errForm.Error()
+					helper.RenderTemplate(w, "mypage", "mypages", datas)
 				}
-				homeData.Error = errForm.Error()
-
-				helper.RenderTemplate(w,"mypage", "mypages", homeData)
 				return
 			}
 			postTitle := r.FormValue("title")

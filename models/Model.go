@@ -117,6 +117,7 @@ type DataMypage struct {
 	User       User
 	Category   []Category
 	CategoryID uuid.UUID
+	Error 	string
 }
 
 type DataMyProfil struct {
