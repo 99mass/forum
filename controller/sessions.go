@@ -79,11 +79,11 @@ func ValidateSession(session models.Session) bool {
 }
 
 // GetSessionIDForUser retrieves the session ID for a given user ID from the database.
-func GetSessionIDForUser(db *sql.DB, userID uuid.UUID) (*uuid.UUID, error) {
+func GetSessionIDForUser(db *sql.DB, userID uuid.UUID) (uuid.UUID, error) {
 	var sessionID uuid.UUID
 	query := `
 		SELECT id FROM sessions
-		WHERE user_id = ? AND expires_at > NOW()
+		WHERE user_id = ?
 		LIMIT 1;
 	`
 
@@ -92,10 +92,10 @@ func GetSessionIDForUser(db *sql.DB, userID uuid.UUID) (*uuid.UUID, error) {
 	if err != nil {
 		if err == sql.ErrNoRows {
 			// No session found for the user
-			return nil, nil
+			return uuid.Nil, nil
 		}
-		return nil, err
+		return uuid.Nil, err
 	}
 
-	return &sessionID, nil
+	return sessionID, nil
 }
