@@ -203,7 +203,9 @@ func CheckPasswordHash(password, hash string) bool {
 
 func CheckFormAddPost(r *http.Request, db *sql.DB) error {
 	postTitle := r.FormValue("title")
+	postTitle = strings.TrimSpace(postTitle)
 	postContent := r.FormValue("content")
+	postContent = strings.TrimSpace(postContent)
 	// content and title empty
 	if postTitle == "" || postContent == "" {
 		return errors.New("all fields must be completed")
