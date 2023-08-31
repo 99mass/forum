@@ -346,7 +346,9 @@ func LikePoste(db *sql.DB) http.HandlerFunc {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
 		}
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		route := r.FormValue("route")
+		fmt.Println(route)
+		http.Redirect(w, r, "/"+route, http.StatusSeeOther)
 
 	}
 }
@@ -390,7 +392,9 @@ func DislikePoste(db *sql.DB) http.HandlerFunc {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
 		}
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		route := r.FormValue("route")
+		fmt.Println(route)
+		http.Redirect(w, r, "/"+route, http.StatusSeeOther)
 
 	}
 }
