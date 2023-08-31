@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gofrs/uuid"
 
@@ -21,17 +22,17 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 		case http.MethodGet:
 			homeData, err := helper.GetDataTemplate(db, r, true, true, false, false, false)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			posts, err := helper.GetPostsForOneUser(db, homeData.PostData.User.ID)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			homeData.Category = category
@@ -44,6 +45,7 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			postID, errP := helper.StringToUuid(r, "post_id")
 			userID, errU := helper.StringToUuid(r, "user_id")
 			Content := r.FormValue("content")
+			Content = strings.TrimSpace(Content)
 
 			if errP != nil || errU != nil {
 				helper.ErrorPage(w, http.StatusBadRequest)
@@ -51,21 +53,21 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			}
 			homeDataSess, err := helper.GetDataTemplate(db, r, true, false, false, false, false)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 			}
 			if !homeDataSess.Session {
 				homeData, err := helper.GetDataTemplate(db, r, true, true, false, false, false)
 				if err != nil {
-					helper.ErrorPage(w, http.StatusInternalServerError)
+					helper.ErrorPage(w, http.StatusBadRequest)
 				}
 				posts, err := helper.GetPostsForOneUser(db, homeData.PostData.User.ID)
 				if err != nil {
-					helper.ErrorPage(w, http.StatusInternalServerError)
+					helper.ErrorPage(w, http.StatusBadRequest)
 					return
 				}
 				category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 				if err != nil {
-					helper.ErrorPage(w, http.StatusInternalServerError)
+					helper.ErrorPage(w, http.StatusBadRequest)
 					return
 				}
 				homeData.Category = category
@@ -76,14 +78,21 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			if Content == "" {
 				homeData, err := helper.GetDataTemplate(db, r, true, true, false, false, false)
 				if err != nil {
-					helper.ErrorPage(w, http.StatusInternalServerError)
+					helper.ErrorPage(w, http.StatusBadRequest)
 				}
 				posts, err := helper.GetPostsForOneUser(db, homeData.PostData.User.ID)
 				if err != nil {
-					helper.ErrorPage(w, http.StatusInternalServerError)
+					helper.ErrorPage(w, http.StatusBadRequest)
 					return
 				}
+				category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusBadRequest)
+					return
+				}
+				homeData.Category = category
 				homeData.Datas = posts
+				homeData.Error = "comments cannot be empty"
 				helper.RenderTemplate(w, "post", "posts", homeData)
 				return
 			}
@@ -93,21 +102,21 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 
 			_, erro := controller.CreateComment(db, comment)
 			if erro != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			homeData, err := helper.GetDataTemplate(db, r, true, true, true, false, false)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 			}
 			posts, err := helper.GetPostsForOneUser(db, homeData.User.ID)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			homeData.Category = category
@@ -207,23 +216,56 @@ func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 		}
 
 		if helper.VerifySession(db, session) {
+			sessiondata := true
 
 			errForm := helper.CheckFormAddPost(r, db)
 			if errForm != nil {
-				homeData, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
-
+				user, err := controller.GetUserBySessionId(session, db)
+				if err != nil {
+					controller.DeleteSession(db, session)
+					http.Redirect(w, r, "/", http.StatusSeeOther)
+					return
+				}
+				category, err := controller.GetAllCategories(db)
 				if err != nil {
 					helper.ErrorPage(w, http.StatusInternalServerError)
 					return
 				}
+				CatId := r.FormValue("categorie")
+				if CatId != "" {
+					CategID, err := uuid.FromString(CatId)
+					if err != nil {
+						helper.ErrorPage(w, http.StatusBadRequest)
+						return
+					}
+					PostsDetails, err := helper.GetPostsForOneUserAndCategory(db, user.ID, CategID)
+					if err != nil {
+						helper.ErrorPage(w, http.StatusBadRequest)
+					}
 
-				if homeData.Session {
-					sessionID, _ := helper.GetSessionRequest(r)
-					helper.UpdateCookieSession(w, sessionID, db)
+					datas := new(models.DataMypage)
+					datas.Datas = PostsDetails
+					datas.Session = sessiondata
+					datas.User = user
+					datas.CategoryID = CategID
+					datas.Category = category
+					datas.Error = errForm.Error()
+					helper.RenderTemplate(w, "mypage", "mypages", datas)
+				} else {
+					PostsDetails, err := helper.GetPostsForOneUser(db, user.ID)
+					if err != nil {
+						helper.ErrorPage(w, http.StatusInternalServerError)
+						return
+					}
+					datas := new(models.DataMypage)
+					datas.Datas = PostsDetails
+
+					datas.Session = sessiondata
+					datas.User = user
+					datas.Category = category
+					datas.Error = errForm.Error()
+					helper.RenderTemplate(w, "mypage", "mypages", datas)
 				}
-				homeData.Error = errForm.Error()
-
-				helper.RenderTemplate(w,"mypage", "mypages", homeData)
 				return
 			}
 			postTitle := r.FormValue("title")
