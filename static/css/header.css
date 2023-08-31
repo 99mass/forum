@@ -20,6 +20,14 @@
     background-color: #abcfed;;
     color: white;
   }
+  .alert-likePost{
+    padding:10px 20px;
+    font-size: large;
+    margin-bottom: 1rem;
+    background-color: #f44336;
+    color: white;
+    width: 84%;
+  }
 header{
     width: 100%;
     height: 100px;

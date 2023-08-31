@@ -1,6 +1,4 @@
 
-
-
 {{define "categorieMenuMyPage"}}
 <div class="categori-menu">
   <form action="/mypage" method="post">
@@ -243,18 +241,18 @@
   <div class="like-dislik-content">
     <div>
       <input type="hidden" name="liked" value="">
-      <button><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}}</button>
+      <button class="" style="background: transparent;border: none;padding-right: 8px;"><i class="fa-regular fa-thumbs-up"></i>{{.PostLike}}</button>
     </div>
     <div>
       <input type="hidden" name="disliked" value="">
-      <button><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}}</button>
+      <button style="background: transparent;border: none;"><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}}</button>
     </div>
   </div>
 
   <div class="comment ">
     <form action="/post" method="GET" class="comment-btn">
       <input type="hidden" name="post_id" id="post_id" value="{{.Posts.ID}} ">
-      <button type="submit"><i class="fa-solid fa-pen-to-square " style="color: #2a1f51;"></i>comment here</button>
+      <button type="submit" ><i class="fa-solid fa-pen-to-square " style="color: #2a1f51;"></i>comment here</button>
     </form>
   </div>
 
@@ -272,10 +270,10 @@
     </div>
     <div class="like-dislik-content">
       <div>
-        <button ><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
+        <button style="background: transparent;border: none;padding-right: 8px;"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
       </div>
       <div>
-        <button ><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
+        <button style="background: transparent;border: none;"><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
       </div>
     </div>
     {{end}}

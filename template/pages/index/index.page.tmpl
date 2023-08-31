@@ -42,7 +42,9 @@
        
          {{template "addPostForm" .}}
       </div>
-    
+      <div class="alert-likePost">
+        <strong> <i class="fa-solid fa-triangle-exclamation" style="font-size: 22px;"></i></strong> You can't comment while you're offline.
+      </div> 
       <!-- block post and comment -->
       <div class="post-displaying"> 
         {{if len .Datas}}    <!-- If there is at least One post -->
