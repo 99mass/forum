@@ -82,6 +82,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			if !ok {
 				homeData.ErrorAuth = ErrAuth
 				helper.RenderTemplate(w, "register", "auth", homeData)
+				homeData.ErrorAuth = models.ErrorAuth{}
 				return
 			}
 

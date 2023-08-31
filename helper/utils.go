@@ -40,12 +40,17 @@ func CheckRegisterFormat(username, email, password, confirmPassword string, db *
 		ErrAuth.EmailError = errE.Error()
 	} else {
 		//fmt.Println("checking dupli")
-		dup, errdup := controller.IsDuplicateUsernameOrEmail(db, username, email)
+		email, errdup := controller.IsDuplicateEmail(db, email)
 
-		if dup {
+		if email {
 			ok = false
 			ErrAuth.EmailError = errdup.Error()
 			//return false,models.ErrorAuth{}
+		}
+		username, err := controller.IsDuplicateUsername(db,username)
+		if username {
+			ok = false
+			ErrAuth.UserNameError = err.Error()
 		}
 	}
 	//fmt.Println(ErrAuth.EmailError,)
