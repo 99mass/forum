@@ -82,6 +82,7 @@ header  a:hover,
 header .nav1 a:hover{
     background: var(--color-linear-gradient);
     color: var(--color-white);
+    border: none;
     padding: 7px 15px;
 }
 header .nav3  div{

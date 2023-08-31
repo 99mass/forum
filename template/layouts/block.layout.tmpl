@@ -54,6 +54,12 @@
 <div class="new-post"><i class="fa-solid fa-plus"></i> New Post</div>
 
 <form class="form-new-post" action="/addpost" method="post">
+  <div style="border: none;display: flex;justify-content: center;">
+      <p class="error-post" style="border: none; text-align: left;font-size: small;text-transform: lowercase;margin-left: 0rem;color: red;">
+          <i class="fa-solid fa-triangle-exclamation" style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem;"></i>
+          <span style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem ;" >{{.Error}}</span>
+       </p>
+  </div>
   <!-- checbox -->
   <div class="select-opt">
     <details>
@@ -84,6 +90,12 @@
 
 <form class="form-new-post" action="/addpostmypage" method="post">
   <!-- checbox -->
+  <div style="border: none;display: flex;justify-content: center;" >
+    <p class="error-post" style="border: none; text-align: left;font-size: small;text-transform: lowercase;margin-left: 0rem;color: red;">
+        <i class="fa-solid fa-triangle-exclamation" style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem;"></i> 
+        <span style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem ;" >{{.Error}}</span>
+     </p>
+</div>
   <div class="select-opt">
     <details>
       <summary>Choose the categories</summary>
