@@ -206,19 +206,19 @@ func CheckFormAddPost(r *http.Request, db *sql.DB) error {
 	postContent := r.FormValue("content")
 	// content and title empty
 	if postTitle == "" || postContent == "" {
-		return errors.New("tous les champs doivent être remplis")
+		return errors.New("all fields must be completed")
 	}
 	_postCategorystring := r.Form["category"]
 	// No category received
 	if len(_postCategorystring) == 0 {
-		return errors.New("aucune catégorie n'a été choisie")
+		return errors.New("no category selected")
 	}
 	// Category not matched
 	for _, v := range _postCategorystring {
 		catuuid, _ := uuid.FromString(v)
 
 		if !verifCategory(db, catuuid) {
-			return errors.New("une des categories n'est pas conforme")
+			return errors.New("one of the categories is not compliant")
 		}
 	}
 
