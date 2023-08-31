@@ -2,6 +2,7 @@ package handler
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/gofrs/uuid"
@@ -136,14 +137,6 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 
 			errForm := helper.CheckFormAddPost(r, db)
 			if errForm != nil {
-				//helper.ErrorPage(w, http.StatusBadRequest)
-				http.Redirect(w, r, "/", http.StatusSeeOther)
-				return
-			}
-			postTitle := r.FormValue("title")
-			postContent := r.FormValue("content")
-			_postCategorystring := r.Form["category"]
-			if _postCategorystring == nil || postTitle == "" || postContent == "" {
 				homeData, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
 
 				if err != nil {
@@ -155,11 +148,14 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 					sessionID, _ := helper.GetSessionRequest(r)
 					helper.UpdateCookieSession(w, sessionID, db)
 				}
-				homeData.Error = "please complete all fields"
+				homeData.Error = errForm.Error()
 
 				helper.RenderTemplate(w, "index", "index", homeData)
 				return
 			}
+			postTitle := r.FormValue("title")
+			postContent := r.FormValue("content")
+			_postCategorystring := r.Form["category"]
 			// var _postCategoryuuid []uuid.UUID
 			var _postCategories []models.Category
 			// for _, v := range _postCategorystring {
@@ -172,6 +168,7 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 				cat.ID = catuuid
 				_postCategories = append(_postCategories, cat)
 			}
+			fmt.Println(_postCategories)
 
 			user, err := controller.GetUserBySessionId(session, db)
 			if err != nil {
@@ -180,10 +177,9 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 				return
 			}
 			post := models.Post{
-				UserID:  user.ID,
-				Title:   postTitle,
-				Content: postContent,
-				// CategoryID: _postCategoryuuid,
+				UserID:     user.ID,
+				Title:      postTitle,
+				Content:    postContent,
 				Categories: _postCategories,
 			}
 			_, err = controller.CreatePost(db, post)
@@ -214,8 +210,20 @@ func AddPostHandlerForMyPage(db *sql.DB) http.HandlerFunc {
 
 			errForm := helper.CheckFormAddPost(r, db)
 			if errForm != nil {
-				helper.ErrorPage(w, http.StatusBadRequest)
-				http.Redirect(w, r, "/", http.StatusSeeOther)
+				homeData, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
+
+				if err != nil {
+					helper.ErrorPage(w, http.StatusInternalServerError)
+					return
+				}
+
+				if homeData.Session {
+					sessionID, _ := helper.GetSessionRequest(r)
+					helper.UpdateCookieSession(w, sessionID, db)
+				}
+				homeData.Error = errForm.Error()
+
+				helper.RenderTemplate(w,"mypage", "mypages", homeData)
 				return
 			}
 			postTitle := r.FormValue("title")
