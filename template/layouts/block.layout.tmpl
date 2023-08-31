@@ -189,9 +189,9 @@
           <form action="/dislikecomment" method="post">
             <input type="hidden" name="disliked" value="{{.Comment.ID}}">
             {{if .Disliked}}
-            <button type="submit"><i class="fa-solid fa-thumbs-up"id="like"></i>{{.CommentDislike}}</button>
+            <button type="submit"><i class="fa-solid fa-thumbs-down"id="dislike"></i>{{.CommentDislike}}</button>
           {{else}}  
-            <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.CommentDislike}}</button>
+            <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
           {{end}}
           </form>
         </div>
