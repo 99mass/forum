@@ -428,7 +428,7 @@ func DislikeComment(db *sql.DB) http.HandlerFunc {
 			dislike.UserID = User.ID
 		}
 
-		commentID, _ := helper.StringToUuid(r, "post_id")
+		commentID, _ := helper.StringToUuid(r, "comment_id")
 
 		dislike.CommentID = commentID
 		_, err := controller.CreateCommentDislike(db, dislike)

@@ -179,7 +179,7 @@
         </div>
         <div class="like-dislik-content">
           <form action="/likecomment" method="post">
-            <input type="hidden" name="liked" value="{{.Comment.ID}}">
+            <input type="hidden" id="comment_id" name="comment_id" value="{{.Comment.ID}}">
             {{if .Liked}}
             <button type="submit"><i class="fa-solid fa-thumbs-up"id="like"></i>{{.CommentLike}}</button>
           {{else}}  
@@ -187,7 +187,7 @@
           {{end}}
           </form>
           <form action="/dislikecomment" method="post">
-            <input type="hidden" name="disliked" value="{{.Comment.ID}}">
+            <input type="hidden" id="comment_id" name="comment_id" value="{{.Comment.ID}}">
             {{if .Disliked}}
             <button type="submit"><i class="fa-solid fa-thumbs-down"id="dislike"></i>{{.CommentDislike}}</button>
           {{else}}  
