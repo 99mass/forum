@@ -22,17 +22,17 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 		case http.MethodGet:
 			homeData, err := helper.GetDataTemplate(db, r, true, true, false, false, false)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			posts, err := helper.GetPostsForOneUser(db, homeData.PostData.User.ID)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			homeData.Category = category
@@ -53,21 +53,21 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			}
 			homeDataSess, err := helper.GetDataTemplate(db, r, true, false, false, false, false)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 			}
 			if !homeDataSess.Session {
 				homeData, err := helper.GetDataTemplate(db, r, true, true, false, false, false)
 				if err != nil {
-					helper.ErrorPage(w, http.StatusInternalServerError)
+					helper.ErrorPage(w, http.StatusBadRequest)
 				}
 				posts, err := helper.GetPostsForOneUser(db, homeData.PostData.User.ID)
 				if err != nil {
-					helper.ErrorPage(w, http.StatusInternalServerError)
+					helper.ErrorPage(w, http.StatusBadRequest)
 					return
 				}
 				category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 				if err != nil {
-					helper.ErrorPage(w, http.StatusInternalServerError)
+					helper.ErrorPage(w, http.StatusBadRequest)
 					return
 				}
 				homeData.Category = category
@@ -78,16 +78,16 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			if Content == "" {
 				homeData, err := helper.GetDataTemplate(db, r, true, true, false, false, false)
 				if err != nil {
-					helper.ErrorPage(w, http.StatusInternalServerError)
+					helper.ErrorPage(w, http.StatusBadRequest)
 				}
 				posts, err := helper.GetPostsForOneUser(db, homeData.PostData.User.ID)
 				if err != nil {
-					helper.ErrorPage(w, http.StatusInternalServerError)
+					helper.ErrorPage(w, http.StatusBadRequest)
 					return
 				}
 				category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 				if err != nil {
-					helper.ErrorPage(w, http.StatusInternalServerError)
+					helper.ErrorPage(w, http.StatusBadRequest)
 					return
 				}
 				homeData.Category = category
@@ -102,21 +102,21 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 
 			_, erro := controller.CreateComment(db, comment)
 			if erro != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			homeData, err := helper.GetDataTemplate(db, r, true, true, true, false, false)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 			}
 			posts, err := helper.GetPostsForOneUser(db, homeData.User.ID)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
+				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
 			homeData.Category = category
@@ -470,7 +470,7 @@ func DislikeComment(db *sql.DB) http.HandlerFunc {
 			dislike.UserID = User.ID
 		}
 
-		commentID, _ := helper.StringToUuid(r, "post_id")
+		commentID, _ := helper.StringToUuid(r, "comment_id")
 
 		dislike.CommentID = commentID
 		_, err := controller.CreateCommentDislike(db, dislike)
