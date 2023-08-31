@@ -86,6 +86,7 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 					return
 				}
 				homeData.Datas = posts
+				homeData.Error = "comments cannot be empty"
 				helper.RenderTemplate(w, "post", "posts", homeData)
 				return
 			}
