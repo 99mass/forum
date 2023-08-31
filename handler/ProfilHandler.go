@@ -24,7 +24,6 @@ func GetProfil(db *sql.DB) http.HandlerFunc {
 		}
 
 		PostsDetails, err := helper.GetPostsForOneUser(db, datas.User.ID)
-		//fmt.Println(PostsDetails)
 		if err != nil {
 			helper.ErrorPage(w, http.StatusBadRequest)
 			return
@@ -32,20 +31,17 @@ func GetProfil(db *sql.DB) http.HandlerFunc {
 
 		dataProfil.Posts = PostsDetails
 		dataProfil.User = datas.User
-		//fmt.Println(datas.Datas)
 		for _, cat := range datas.Category {
 			catMap[cat.NameCategory] = 0
 		}
 		fmt.Print(catMap)
 		for _, post := range dataProfil.Posts {
-			//fmt.Println(post)
 			for _, cat := range post.Posts.Categories {
 
 				catMap[cat.NameCategory] += 1
-				//fmt.Println(cat.NameCategory)
+				
 			}
 		}
-		fmt.Println(catMap)
 		dataProfil.Categories = catMap
 		datas.DataProfil = dataProfil
 
