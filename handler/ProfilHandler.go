@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"fmt"
 	"forum/helper"
 	"forum/models"
 	"net/http"
@@ -20,7 +19,8 @@ func GetProfil(db *sql.DB) http.HandlerFunc {
 			return
 		}
 		if !datas.Session {
-			http.Redirect(w, r, "/", http.StatusSeeOther)
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+			return
 		}
 
 		PostsDetails, err := helper.GetPostsForOneUser(db, datas.User.ID)
@@ -34,12 +34,12 @@ func GetProfil(db *sql.DB) http.HandlerFunc {
 		for _, cat := range datas.Category {
 			catMap[cat.NameCategory] = 0
 		}
-		fmt.Print(catMap)
+
 		for _, post := range dataProfil.Posts {
 			for _, cat := range post.Posts.Categories {
 
 				catMap[cat.NameCategory] += 1
-				
+
 			}
 		}
 		dataProfil.Categories = catMap
