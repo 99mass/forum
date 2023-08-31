@@ -173,20 +173,38 @@ func DeleteUser(db *sql.DB, userID uuid.UUID) error {
 
 // Verification duplicatat pseudo ou email.
 
-func IsDuplicateUsernameOrEmail(db *sql.DB, username, email string) (bool, error) {
+func IsDuplicateEmail(db *sql.DB,  email string) (bool, error) {
 	query := `
         SELECT COUNT(*)
         FROM users
-        WHERE username = ? OR email = ?;
+        WHERE email = ?;
     `
 
 	var count int
-	err := db.QueryRow(query, username, email).Scan(&count)
+	err := db.QueryRow(query, email).Scan(&count)
 	if err != nil {
 		return false, errors.New("")
 	}
 	if count > 0 {
-		return true, errors.New("l'utilisateur existe déjà")
+		return true, errors.New("email already exists")
+	}
+
+	return false, errors.New("")
+}
+func IsDuplicateUsername(db *sql.DB, username string) (bool, error) {
+	query := `
+        SELECT COUNT(*)
+        FROM users
+        WHERE username = ? ;
+    `
+
+	var count int
+	err := db.QueryRow(query, username).Scan(&count)
+	if err != nil {
+		return false, errors.New("")
+	}
+	if count > 0 {
+		return true, errors.New("username already exists")
 	}
 
 	return false, errors.New("")
