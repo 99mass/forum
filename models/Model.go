@@ -66,6 +66,7 @@ type HomeDataPost struct {
 	User        User
 	Liked       bool
 	Disliked    bool
+	Route       string
 }
 type Post struct {
 	ID         uuid.UUID
@@ -88,6 +89,7 @@ type CommentDetails struct {
 	User           User
 	Liked          bool
 	Disliked       bool
+	Route          string
 }
 
 type CommentLike struct {
@@ -117,7 +119,7 @@ type DataMypage struct {
 	User       User
 	Category   []Category
 	CategoryID uuid.UUID
-	Error 	string
+	Error      string
 }
 
 type DataMyProfil struct {
