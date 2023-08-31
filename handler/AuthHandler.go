@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"fmt"
 	"forum/controller"
 	"forum/helper"
 	"forum/middlewares"
@@ -43,11 +42,11 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 			}
 			nul := uuid.UUID{}
 			if datas.User.ID != nul {
-				sess,err := controller.GetSessionIDForUser(db,datas.User.ID)
+				sess, err := controller.GetSessionIDForUser(db, datas.User.ID)
 				if err == nil {
-					err := controller.DeleteSession(db,sess)
+					err := controller.DeleteSession(db, sess)
 					if err != nil {
-						helper.ErrorPage(w,http.StatusInternalServerError)
+						helper.ErrorPage(w, http.StatusInternalServerError)
 						return
 					}
 				}
