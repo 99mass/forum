@@ -7,9 +7,13 @@ const  all=document.querySelector('.all');
 const categoryId=document.querySelector('.category-id');
 const categoriesId=document.querySelectorAll('.categories-id');
 const submitBtn=document.querySelectorAll('.submit-btn');
+const errorPost=document.querySelector('.error-post');
+
+
 
 window.onload = () => {
 
+    // open or non open the post form
     if (formNewPost && btnNewPost) {
         formNewPost.style.display="none";
         btnNewPost.addEventListener("click", (event) => {
@@ -23,7 +27,7 @@ window.onload = () => {
             }
         });
     }
-   
+//    open or non the the filter form
     filterForm.style.display="none";
 
     btnFilter.addEventListener("click", (event) => {
@@ -62,7 +66,20 @@ window.onload = () => {
         }
     }
   
-  
+    // display the error post form
+    if (errorPost) {
+        let childsErroPost=errorPost.children
+        if (childsErroPost[1].textContent.trim()=="") {
+            childsErroPost[0].style.display="none";
+        }else{
+            formNewPost.style.display = "block";
+            btnNewPost.innerHTML="";
+            btnNewPost.innerHTML="<i class='fa-solid fa-xmark'></i> Fermer";
+        }
+    }
+
+
+
   };
 
 
