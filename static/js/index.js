@@ -7,9 +7,6 @@ const  all=document.querySelector('.all');
 const categoryId=document.querySelector('.category-id');
 const categoriesId=document.querySelectorAll('.categories-id');
 const submitBtn=document.querySelectorAll('.submit-btn');
-const errorPost=document.querySelector('.error-post');
-
-
 
 window.onload = () => {
 
