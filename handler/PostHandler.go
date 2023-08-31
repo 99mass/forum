@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gofrs/uuid"
 
@@ -44,6 +45,7 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			postID, errP := helper.StringToUuid(r, "post_id")
 			userID, errU := helper.StringToUuid(r, "user_id")
 			Content := r.FormValue("content")
+			Content = strings.TrimSpace(Content)
 
 			if errP != nil || errU != nil {
 				helper.ErrorPage(w, http.StatusBadRequest)
@@ -84,6 +86,7 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 					return
 				}
 				homeData.Datas = posts
+				homeData.Error = "comments cannot be empty"
 				helper.RenderTemplate(w, "post", "posts", homeData)
 				return
 			}
