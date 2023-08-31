@@ -149,6 +149,7 @@
   <div class="like-dislik-content">
     <form action="/likepost" method="post">
       <input type="hidden" id="post_id" name="post_id" value="{{.Posts.ID}}">
+      <input type="hidden" name="route" id="route" value="{{.Route}}">
       {{if .Liked}}
         <button type="submit"><i class="fa-solid fa-thumbs-up"id="like"></i>{{.PostLike}}</button>
       {{else}}  
@@ -157,6 +158,7 @@
     </form>
     <form action="/dislikepost" method="post">
       <input type="hidden" id="post_id" name="post_id" value="{{.Posts.ID}}">
+      <input type="hidden" name="route" id="route" value="{{.Route}}">
       {{if .Disliked}}
       <button type="submit"><i class="fa-solid fa-thumbs-down"id="dislike" ></i>{{.PostDislike}}</button>
       {{else}}
@@ -190,19 +192,21 @@
         <div class="like-dislik-content">
           <form action="/likecomment" method="post">
             <input type="hidden" id="comment_id" name="comment_id" value="{{.Comment.ID}}">
+            <input type="hidden" name="route" id="route" value="{{.Route}}">
             {{if .Liked}}
-            <button type="submit"><i class="fa-solid fa-thumbs-up"id="like"></i>{{.CommentLike}}</button>
-          {{else}}  
-            <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
-          {{end}}
+              <button type="submit"><i class="fa-solid fa-thumbs-up"id="like"></i>{{.CommentLike}}</button>
+            {{else}}  
+              <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
+            {{end}}
           </form>
           <form action="/dislikecomment" method="post">
             <input type="hidden" id="comment_id" name="comment_id" value="{{.Comment.ID}}">
+            <input type="hidden" name="route" id="route" value="{{.Route}}">
             {{if .Disliked}}
-            <button type="submit"><i class="fa-solid fa-thumbs-down"id="dislike"></i>{{.CommentDislike}}</button>
-          {{else}}  
-            <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
-          {{end}}
+              <button type="submit"><i class="fa-solid fa-thumbs-down"id="dislike"></i>{{.CommentDislike}}</button>
+            {{else}}  
+              <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
+            {{end}}
           </form>
         </div>
       {{end}}
