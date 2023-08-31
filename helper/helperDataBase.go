@@ -6,6 +6,7 @@ import (
 	"forum/models"
 	"io/ioutil"
 	"net/http"
+	"strings"
 
 	"github.com/gofrs/uuid"
 	_ "github.com/mattn/go-sqlite3"
@@ -130,7 +131,9 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 	//---Get Error autification---//
 	if ErrAuth {
 		email := r.FormValue("email")
+		email = strings.TrimSpace(email)
 		password := r.FormValue("motdepasse")
+		password = strings.TrimSpace(password)
 
 		// okEmail, errE := CheckEmail(email)
 		// if !okEmail {
@@ -151,7 +154,7 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 			//http.Redirect(w, r, "/", http.StatusSeeOther)
 			return datas, nil
 		} else {
-			datas.ErrorAuth.GeneralError = "L'email ou le mot de passe n'est pas correcte"
+			datas.ErrorAuth.GeneralError = "Incorrect email address or password"
 			return datas, nil
 			//RenderTemplate(w, "signin", "auth", datas)
 		}
