@@ -5,7 +5,7 @@ const formUpdate=document.querySelector('.form-update');
 const faxmark=document.querySelector('.faxmark');
 const  messageErro=document.querySelectorAll('.messageErro');
 const errorPost=document.querySelector('.error-post');
-
+var compt=0
 
 // console.log(errorPost);
 window.addEventListener('load',()=>{
@@ -44,7 +44,7 @@ window.addEventListener('load',()=>{
     };
     
     if (messageErro.length>0) {
-        var compt=0
+        
         window.addEventListener("load", () => {
             for (let index = 0; index < messageErro.length; index++) {
                 const element = messageErro[index];
@@ -55,9 +55,10 @@ window.addEventListener('load',()=>{
                     
                  }                                    
             }
-            compt+=1;
+           
         });
     }
+    compt=compt+1;
 })
-
+console.log(compt);
 
