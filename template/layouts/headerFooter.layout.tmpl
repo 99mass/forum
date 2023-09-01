@@ -30,10 +30,36 @@
 
   </nav>
   <nav class="nav2">
-    <form action="#" method="post">
-      <input type="search" class="input" placeholder="search here">
-      <input class="button--submit" value="search" type="submit">
+    
+    <form action="/search" method="post">
+      <input type="text" class="input" placeholder="search here" name="title">
+      <datalist id="title">
+        {{range .Datas}}
+        <option value="{{.Posts.Title}}">
+          <p>{{.Posts.Title}} - Title</p>
+          {{end}}
+      </datalist>
+      <script>
+        // JavaScript code
+        document.addEventListener("DOMContentLoaded", function () {
+            var dataList = document.getElementById("artist");
+            var options = dataList.getElementsByTagName("option");
+            var values = {};
+
+            for (var i = 0; i < options.length; i++) {
+                var value = options[i].value;
+                if (values[value]) {
+                    dataList.removeChild(options[i]);
+                    i--; // Decrement i as we removed an option
+                } else {
+                    values[value] = true;
+                }
+            }
+        });
+    </script>
+    <input class="button--submit" value="search" type="submit">
     </form>
+    
     {{template "Session" .}}
 
     </nav>

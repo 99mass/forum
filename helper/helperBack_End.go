@@ -374,7 +374,7 @@ func GetPostForCategory(db *sql.DB, catID uuid.UUID) ([]models.HomeDataPost, err
 	return HomeDatas, nil
 }
 
-func GetPostsForOneUserAndCategory(db *sql.DB, userID,catID uuid.UUID) ([]models.HomeDataPost, error) {
+func GetPostsForOneUserAndCategory(db *sql.DB, userID, catID uuid.UUID) ([]models.HomeDataPost, error) {
 
 	post, err := controller.GetPostsByUserAndCategory(db, userID, catID)
 	if err != nil {
@@ -439,4 +439,63 @@ func GetPostsForOneUserAndCategory(db *sql.DB, userID,catID uuid.UUID) ([]models
 		HomeDatas = append(HomeDatas, HomeData)
 	}
 	return HomeDatas, nil
+}
+
+func GetDetailPost(db *sql.DB, post models.Post) (models.HomeDataPost, error) {
+
+	var HomeData models.HomeDataPost
+	comments, err := controller.GetCommentsByPostID(db, post.ID)
+	if err != nil {
+		return models.HomeDataPost{}, err
+	}
+	var commentdetails []models.CommentDetails
+	for _, com := range comments {
+		user, err := controller.GetUserByCommentID(db, com.ID)
+		if err != nil {
+			return models.HomeDataPost{}, err
+		}
+		var commentdetail models.CommentDetails
+		commentdetail.Comment = com
+		commentlike, err := controller.GetCommentLikesByCommentID(db, com.ID)
+		if err != nil {
+			return models.HomeDataPost{}, err
+		}
+		commentdislike, err := controller.GetCommentDislikesByCommentID(db, com.ID)
+		if err != nil {
+			return models.HomeDataPost{}, err
+		}
+		commentdetail.CommentLike = len(commentlike)
+		commentdetail.CommentDislike = len(commentdislike)
+		commentdetail.User = *user
+		commentdetails = append(commentdetails, commentdetail)
+	}
+	likes, err := controller.GetPostLikesByPostID(db, post.ID)
+	if err != nil {
+
+		return models.HomeDataPost{}, err
+	}
+	nbrlikes := len(likes)
+	dislike, err := controller.GetDislikesByPostID(db, post.ID)
+	if err != nil {
+		return models.HomeDataPost{}, err
+	}
+	nbrdislikes := len(dislike)
+
+	category, err := controller.GetCategoriesByPost(db, post.ID)
+	if err != nil {
+		return models.HomeDataPost{}, err
+	}
+	user, err := controller.GetUserByPostID(db, post.ID)
+	if err != nil {
+		return models.HomeDataPost{}, err
+	}
+
+	HomeData.Posts.Categories = category
+	HomeData.Posts = post
+	HomeData.Comment = commentdetails
+	HomeData.PostLike = nbrlikes
+	HomeData.PostDislike = nbrdislikes
+	HomeData.User = *user
+
+	return HomeData, nil
 }

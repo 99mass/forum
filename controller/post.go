@@ -198,3 +198,29 @@ func GetPostsByUserAndCategory(db *sql.DB, userID uuid.UUID, categoryID uuid.UUI
 
 	return posts, nil
 }
+
+func GetPostsByTitle(db *sql.DB, title string) ([]models.Post, error) {
+	query := `
+        SELECT id, title, content
+        FROM posts
+        WHERE title LIKE ?;
+    `
+
+	rows, err := db.Query(query, "%"+title+"%")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var posts []models.Post
+	for rows.Next() {
+		var post models.Post
+		err := rows.Scan(&post.ID, &post.Title, &post.Content)
+		if err != nil {
+			return nil, err
+		}
+		posts = append(posts, post)
+	}
+
+	return posts, nil
+}

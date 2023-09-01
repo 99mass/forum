@@ -1,6 +1,6 @@
 FROM golang
 
-LABEL maintainer=""
+LABEL maintainer="Mouhamed DIOUF"
 
 COPY . /go/src/app
 
