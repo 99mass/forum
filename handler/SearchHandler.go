@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"fmt"
 	"forum/controller"
 	"forum/helper"
 	"forum/models"
@@ -29,7 +28,6 @@ func Search(db *sql.DB) http.HandlerFunc {
 			var postsDetails []models.HomeDataPost
 			for _, v := range posts {
 				v.Categories, err = controller.GetCategoriesByPost(db, v.ID)
-				fmt.Println(v.Categories)
 				if err != nil {
 					helper.ErrorPage(w, http.StatusBadRequest)
 					return
