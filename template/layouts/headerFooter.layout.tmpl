@@ -32,11 +32,11 @@
   <nav class="nav2">
     
     <form action="/search" method="post">
-      <input type="text" class="input" placeholder="search here" name="title">
+      <input list="title" type="text" class="input" placeholder="search for title here" name="title">
       <datalist id="title">
         {{range .Datas}}
         <option value="{{.Posts.Title}}">
-          <p>{{.Posts.Title}} - Title</p>
+          <p>{{.Posts.Title}}</p>
           {{end}}
       </datalist>
       <script>
@@ -59,7 +59,7 @@
     </script>
     <input class="button--submit" value="search" type="submit">
     </form>
-    
+
     {{template "Session" .}}
 
     </nav>
