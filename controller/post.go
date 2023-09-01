@@ -201,7 +201,7 @@ func GetPostsByUserAndCategory(db *sql.DB, userID uuid.UUID, categoryID uuid.UUI
 
 func GetPostsByTitle(db *sql.DB, title string) ([]models.Post, error) {
 	query := `
-        SELECT id, title, content
+        SELECT id, title, content, created_at
         FROM posts
         WHERE title LIKE ?;
     `
@@ -215,10 +215,12 @@ func GetPostsByTitle(db *sql.DB, title string) ([]models.Post, error) {
 	var posts []models.Post
 	for rows.Next() {
 		var post models.Post
-		err := rows.Scan(&post.ID, &post.Title, &post.Content)
+		err := rows.Scan(&post.ID, &post.Title, &post.Content, &post.CreatedAt)
 		if err != nil {
 			return nil, err
 		}
+		timeformated, _ := FormatCreatedAt(post.CreatedAt)
+		post.CreatedAt = timeformated
 		posts = append(posts, post)
 	}
 
