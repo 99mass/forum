@@ -60,6 +60,15 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 						PostsDetails[i].Comment[j].Route = "mypage"
 					}
 				}
+
+				//Set likes and dislikes
+				Datasliked, err := helper.SetLikesAndDislikes(user, PostsDetails, db)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusBadRequest)
+				}
+
+				PostsDetails = Datasliked
+
 				datas := new(models.DataMypage)
 				datas.Datas = PostsDetails
 				datas.Session = sessiondata
@@ -81,6 +90,14 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 						PostsDetails[i].Comment[j].Route = "mypage"
 					}
 				}
+				//Set likes and dislikes
+				Datasliked, err := helper.SetLikesAndDislikes(user, PostsDetails, db)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusBadRequest)
+				}
+
+				PostsDetails = Datasliked
+
 				datas := new(models.DataMypage)
 				datas.Datas = PostsDetails
 

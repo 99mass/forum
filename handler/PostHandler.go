@@ -30,6 +30,13 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
+			postsliked, err := helper.SetLikesAndDislikes(homeData.User, posts, db)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusBadRequest)
+			}
+
+			posts = postsliked
+
 			category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 			if err != nil {
 				helper.ErrorPage(w, http.StatusBadRequest)
@@ -65,11 +72,18 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 					helper.ErrorPage(w, http.StatusBadRequest)
 					return
 				}
+				postsliked, err := helper.SetLikesAndDislikes(homeData.User, posts, db)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusBadRequest)
+				}
+
+				posts = postsliked
 				category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 				if err != nil {
 					helper.ErrorPage(w, http.StatusBadRequest)
 					return
 				}
+
 				homeData.Category = category
 				homeData.Datas = posts
 				helper.RenderTemplate(w, "post", "posts", homeData)
@@ -85,6 +99,14 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 					helper.ErrorPage(w, http.StatusBadRequest)
 					return
 				}
+				//Set likes and dislikes
+				postsliked, err := helper.SetLikesAndDislikes(homeData.User, posts, db)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusBadRequest)
+				}
+
+				posts = postsliked
+
 				category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 				if err != nil {
 					helper.ErrorPage(w, http.StatusBadRequest)
@@ -114,6 +136,14 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
+			//Set likes and dislikes
+			postsliked, err := helper.SetLikesAndDislikes(homeData.User, posts, db)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusBadRequest)
+			}
+
+			posts = postsliked
+
 			category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 			if err != nil {
 				helper.ErrorPage(w, http.StatusBadRequest)

@@ -67,7 +67,9 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 			//ErrorPage(w, http.StatusInternalServerError)
 			return datas, err
 		}
+
 		datas.PostData = postData
+
 	}
 
 	//---Get the User-------//
@@ -89,34 +91,21 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 		}
 		datas.Session = sessiondata
 	}
-	//Set liked or not
-	//Get if liked
-	dataliked := models.Home{}
-	for _, post := range datas.Datas {
-		liked, err := IsPostliked(db, datas.User.ID, post.Posts.ID)
-		if err != nil {
-			return datas, err
-		}
-		//Get if disliked
-		disliked, errdis := IsPostDisliked(db, datas.User.ID, post.Posts.ID)
-		if errdis != nil {
-			return datas, errdis
-		}
-		//fmt.Println(liked)
-		if liked {
-			post.Liked = true
-			dataliked.Datas = append(dataliked.Datas, post)
-			continue
-		} else if disliked {
-			post.Disliked = true
-			dataliked.Datas = append(dataliked.Datas, post)
-			continue
-		} else {
-			dataliked.Datas = append(dataliked.Datas, post)
-		}
+	//Set likes and dislikes for One Poste
+	DataslikedONe, err := SetLikesAndDislikes(datas.User, []models.HomeDataPost{datas.PostData}, db)
+	if err != nil {
+		return datas, err
 	}
-	//fmt.Println(dataliked.Datas)
-	datas.Datas = dataliked.Datas
+	datas.PostData = DataslikedONe[0]
+	// fmt.Println(len(DataslikedOne))
+	
+	//Set likes and dislikes
+	Datasliked, err := SetLikesAndDislikes(datas.User, datas.Datas, db)
+	if err != nil {
+		return datas, err
+	}
+
+	datas.Datas = Datasliked
 
 	//---Get All Categories-------//
 	if Category {

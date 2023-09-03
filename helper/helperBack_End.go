@@ -34,24 +34,7 @@ func GetPostForHome(db *sql.DB) ([]models.HomeDataPost, error) {
 			return nil, err
 		}
 
-		// //Get if liked
-		// liked, err := IsPostliked(db, user.ID, post.ID)
-		// if err != nil {
-		// 	return nil, err
-		// }
-		// fmt.Println(liked)
-		// if liked {
-		// 	HomeData.Liked = true
-		// }
-		// //Get if disliked
-		// disliked, errdis := IsPostDisliked(db, user.ID, post.ID)
-		// if errdis != nil {
-		// 	return nil, errdis
-		// }
-		// if disliked {
-		// 	HomeData.Disliked = true
-		// }
-
+		
 		var commentdetails []models.CommentDetails
 		for _, com := range comments {
 			user, err := controller.GetUserByCommentID(db, com.ID)
@@ -498,4 +481,35 @@ func GetDetailPost(db *sql.DB, post models.Post) (models.HomeDataPost, error) {
 	HomeData.User = *user
 
 	return HomeData, nil
+}
+
+func SetLikesAndDislikes(User models.User, datas []models.HomeDataPost, db *sql.DB) ([]models.HomeDataPost, error) {
+	//Get if liked
+	dataliked := []models.HomeDataPost{}
+	
+	for _, post := range datas {
+		liked, err := IsPostliked(db, User.ID, post.Posts.ID)
+		if err != nil {
+			return datas, err
+		}
+		//Get if disliked
+		disliked, errdis := IsPostDisliked(db, User.ID, post.Posts.ID)
+		if errdis != nil {
+			return datas, errdis
+		}
+		//fmt.Println(liked)
+		if liked {
+			post.Liked = true
+			dataliked = append(dataliked, post)
+			continue
+		} else if disliked {
+			post.Disliked = true
+			dataliked = append(dataliked, post)
+			continue
+		} else {
+			dataliked = append(dataliked, post)
+		}
+	}
+	
+	return dataliked, nil
 }
