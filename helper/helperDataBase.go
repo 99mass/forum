@@ -169,3 +169,34 @@ func IsPostDisliked(db *sql.DB, UserId, PostId uuid.UUID) (bool, error) {
 	}
 	return true, nil
 }
+
+
+func IsCommentliked(db *sql.DB, UserId, CommentId uuid.UUID) (bool, error) {
+	var like models.CommentLike
+	query := `
+        SELECT id,user_id, comment_id
+        FROM comment_likes
+        WHERE user_id = ? AND comment_id = ?
+        LIMIT 1;
+    `
+	err := db.QueryRow(query, UserId, CommentId).Scan(&like.UserID, &like.CommentID)
+	if err == sql.ErrNoRows {
+		return false, nil
+	}
+	return true, nil
+}
+
+func IsCommentDisliked(db *sql.DB, UserId, CommentId uuid.UUID) (bool, error) {
+	var like models.CommentDislike
+	query := `
+        SELECT id,user_id, comment_id
+        FROM comment_dislikes
+        WHERE user_id = ? AND comment_id = ?
+        LIMIT 1;
+    `
+	err := db.QueryRow(query, UserId, CommentId).Scan(&like.UserID, &like.CommentID)
+	if err == sql.ErrNoRows {
+		return false, nil
+	}
+	return true, nil
+}

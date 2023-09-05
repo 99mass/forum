@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"fmt"
 	"forum/controller"
 	"forum/helper"
 	"forum/middlewares"
@@ -38,7 +37,6 @@ func Search(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, http.StatusBadRequest)
 				return
 			}
-			fmt.Println(v.CreatedAt)
 			post, err := helper.GetDetailPost(db, v)
 			if err != nil {
 				helper.ErrorPage(w, http.StatusBadRequest)

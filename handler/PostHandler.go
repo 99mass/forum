@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -207,7 +206,6 @@ func AddPostHandler(db *sql.DB) http.HandlerFunc {
 				cat.ID = catuuid
 				_postCategories = append(_postCategories, cat)
 			}
-			fmt.Println(_postCategories)
 
 			user, err := controller.GetUserBySessionId(session, db)
 			if err != nil {
@@ -377,7 +375,7 @@ func LikePoste(db *sql.DB) http.HandlerFunc {
 			return
 		}
 		route := r.FormValue("route")
-		fmt.Println(route)
+		//fmt.Println(route)
 		http.Redirect(w, r, "/"+route, http.StatusSeeOther)
 
 	}
@@ -423,7 +421,6 @@ func DislikePoste(db *sql.DB) http.HandlerFunc {
 			return
 		}
 		route := r.FormValue("route")
-		fmt.Println(route)
 		http.Redirect(w, r, "/"+route, http.StatusSeeOther)
 
 	}
@@ -454,6 +451,7 @@ func LikeComment(db *sql.DB) http.HandlerFunc {
 			}
 			User, errgetu := controller.GetUserBySessionId(sessionID, db)
 			if errgetu != nil {
+
 				http.Redirect(w, r, "/", http.StatusSeeOther)
 				return
 			}
@@ -468,7 +466,9 @@ func LikeComment(db *sql.DB) http.HandlerFunc {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
 		}
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		route := r.FormValue("route")
+
+		http.Redirect(w, r, "/"+route, http.StatusSeeOther)
 
 	}
 }
@@ -512,7 +512,9 @@ func DislikeComment(db *sql.DB) http.HandlerFunc {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
 		}
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		route := r.FormValue("route")
+
+		http.Redirect(w, r, "/"+route, http.StatusSeeOther)
 
 	}
 }

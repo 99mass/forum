@@ -196,7 +196,7 @@
             {{if .Liked}}
               <button type="submit"><i class="fa-solid fa-thumbs-up"  style="color: darkblue;"></i>{{.CommentLike}}</button>
             {{else}}  
-              <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}{{.Liked}}</button>
+              <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
             {{end}}
           </form>
           <form action="/dislikecomment" method="post">

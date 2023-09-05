@@ -34,7 +34,6 @@ func GetPostForHome(db *sql.DB) ([]models.HomeDataPost, error) {
 			return nil, err
 		}
 
-		
 		var commentdetails []models.CommentDetails
 		for _, com := range comments {
 			user, err := controller.GetUserByCommentID(db, com.ID)
@@ -486,7 +485,7 @@ func GetDetailPost(db *sql.DB, post models.Post) (models.HomeDataPost, error) {
 func SetLikesAndDislikes(User models.User, datas []models.HomeDataPost, db *sql.DB) ([]models.HomeDataPost, error) {
 	//Get if liked
 	dataliked := []models.HomeDataPost{}
-	
+
 	for _, post := range datas {
 		liked, err := IsPostliked(db, User.ID, post.Posts.ID)
 		if err != nil {
@@ -498,18 +497,30 @@ func SetLikesAndDislikes(User models.User, datas []models.HomeDataPost, db *sql.
 			return datas, errdis
 		}
 		//fmt.Println(liked)
-		if liked {
-			post.Liked = true
-			dataliked = append(dataliked, post)
-			continue
-		} else if disliked {
-			post.Disliked = true
-			dataliked = append(dataliked, post)
-			continue
-		} else {
-			dataliked = append(dataliked, post)
+		post.Liked = liked
+		post.Disliked = disliked
+		dataliked = append(dataliked, post)
+
+		for i, comment := range post.Comment {
+			liked, err := IsCommentliked(db, User.ID, comment.Comment.ID)
+			if err != nil {
+				return datas, err
+			}
+
+			disliked, err := IsCommentDisliked(db, User.ID, comment.Comment.ID)
+			if err != nil {
+				return datas, err
+			}
+
+			post.Comment[i].Liked = liked
+			post.Comment[i].Disliked = disliked
+			//fmt.Println("like:", post.Comment[i].Liked, "dislike:", post.Comment[i].Disliked,post.Comment[i].Comment.Content)
+
+			// comment.Liked = liked
+			// comment.Disliked = disliked
 		}
+
 	}
-	
+
 	return dataliked, nil
 }
