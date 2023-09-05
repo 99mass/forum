@@ -46,6 +46,13 @@ func Search(db *sql.DB) http.HandlerFunc {
 			postsDetails = append(postsDetails, post)
 		}
 		Datas.Datas = postsDetails
+		data, errlike := helper.SetLikesAndDislikes(Datas.User, Datas.Datas, db)
+		if errlike != nil {
+			helper.ErrorPage(w, http.StatusBadRequest)
+			return
+		}
+
+		Datas.Datas = data
 		helper.RenderTemplate(w, "index", "index", Datas)
 	}
 
