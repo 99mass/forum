@@ -24,7 +24,6 @@
 
   <!-- begin body -->
   <main class="container">
-
     <div class="container-2">
       <!-- block post and comment -->
       <!-- category list -->
@@ -102,25 +101,14 @@
           <h6>all comments</h6>
           <div class="content-comments">
             {{if len .PostData.Comment}}
+            {{if .Session}}
             {{range .PostData.Comment}}
-            <div><i class="fa-regular fa-comments"></i>{{.Comment.Content}}</div>
-            <div class="author-date2">
-              <div><span><i class="fa-solid fa-at"></i>author:</span>{{.User.Username}}</div>
-              <span class="bar">|</span>
-              <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>{{.Comment.CreatedAt}}</div>
-            </div>
-
-            <div class="like-dislik-content">
-              <form action="" method="post">
-                <input type="hidden" name="liked" value="">
-                <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
-              </form>
-              <form action="" method="post">
-                <input type="hidden" name="disliked" value="">
-                <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
-              </form>
-            </div>
-            <hr>
+            {{template "comment_with_session" .}}
+            {{end}}
+            {{else}}
+            {{range .PostData.Comment}}
+            {{template "comment_without_session" .}}
+            {{end}}
             {{end}}
             {{else}}
             <div class="alert1">
