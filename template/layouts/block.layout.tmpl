@@ -16,12 +16,12 @@
 {{end}}
 
 {{define "FilterForm" }}
-<form action="" method="post">
+<form action="/filter" method="post">
   <div class="select-opt1">
     <details>
       <summary>Choose the categories</summary>
       {{ range .Category}}
-      <div><input type="checkbox" name="category" value="{{.ID}}" /><label>{{.NameCategory}}</label></div>
+      <div><input type="checkbox" id="category" name="category" value="{{.ID}}" /><label>{{.NameCategory}}</label></div>
       {{end}}
     </details>
   </div>
@@ -29,8 +29,8 @@
       <label for="creation-date">created posts</label>
       <label class="label-min-max"><span>min-date</span> <span>max-date</span></label>
       <p class="content-date-filter">
-        <input type="date" value="2023-08-24">
-        <input type="date" value="2023-08-24">
+        <input type="date" name="date1" value="2023-08-24">
+        <input type="date" name="date2" value="2023-08-24">
       </p>    
   </div>
   <div>
