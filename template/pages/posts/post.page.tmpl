@@ -27,11 +27,18 @@
     <div class="container-2">
       <!-- block post and comment -->
       <!-- category list -->
-      <h3>
-        {{range .Category}}
-        {{.NameCategory}} <span>/</span>
-        {{end}}
-      </h3>
+      {{if len .Category}}
+        <h3>
+          {{range .Category}}
+          {{.NameCategory}} <span>/</span>
+          {{end}}
+        </h3>
+      {{end}}
+        <div  class="alert-likePost" style="width: 100%;">
+          <strong> <i class="fa-solid fa-triangle-exclamation" style="font-size: 22px;"></i></strong> You can't like or dislike while you're offline.<a href="/signin">click here</a> to connect.
+        </div> 
+     
+
       <div class="post-displaying">
         <div class="categorie-specifique">
           <!-- posts -->
@@ -45,14 +52,15 @@
             <span class="bar">|</span>
             <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>{{.PostData.Posts.CreatedAt}}</div>
           </div>
-
+          
           <div class="like-dislik-content">
+            {{ if .Session }}
             <form action="/likepost" method="post">
               <input type="hidden" id="post_id" name="post_id" value="{{.PostData.Posts.ID}}">
               <input type="hidden" name="route" id="route" value="{{.PostData.Route}}">
               {{if .PostData.Liked}}
-              <button type="submit"><i class="fa-solid fa-thumbs-up" id="like"
-                  style="color: darkblue;"></i>{{.PostData.PostLike}}</button>
+              <button type="submit"><i class="fa-solid fa-thumbs-up" 
+                  style="color: rgb(143, 101, 12);"></i>{{.PostData.PostLike}}</button>
               {{else}}
               <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.PostData.PostLike}}</button>
               {{end}}
@@ -61,14 +69,22 @@
               <input type="hidden" id="post_id" name="post_id" value="{{.PostData.Posts.ID}}">
               <input type="hidden" name="route" id="route" value="{{.PostData.Route}}">
               {{if .PostData.Disliked}}
-              <button type="submit"><i class="fa-solid fa-thumbs-down" id="dislike"
-                  style="color: darkred;"></i>{{.PostData.PostDislike}}</button>
+              <button type="submit"><i class="fa-solid fa-thumbs-down"
+                  style="color: rgb(143, 101, 12);;"></i>{{.PostData.PostDislike}}</button>
               {{else}}
               <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.PostData.PostDislike}}</button>
               {{end}}
-            </form>
-            
+            </form>   
+            {{else}}
+             <div>
+               <button title="you can't like while you're offline" class="like-deconnected" style="background: transparent;border: none;padding-right: 8px;"><i class="fa-regular fa-thumbs-up"></i>{{.PostData.PostLike}}</button>
+             </div>
+             <div>
+               <button title="you can't dislike while you're offline" class="like-deconnected" style="background: transparent;border: none;"><i class="fa-regular fa-thumbs-down"></i>{{.PostData.PostDislike}}</button>
+             </div>
+           {{end}}         
           </div>
+
 
           <!-- Formulaire de comment -->
           <div class="content-form-comment">
@@ -79,17 +95,17 @@
               <input type="hidden" name="user_id" id="user_id" value="{{.User.ID}}">
               <input type="hidden" name="post_id" id="post_id" value="{{.PostData.Posts.ID}}">
               <p class="error-post"
-                style="color: red;font-size: 12px;margin-top: 3px;font-weight: normal;text-transform: lowercase;"><i
-                  class="fa-solid fa-triangle-exclamation"
-                  style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem;color: red;"></i><small
-                  style="font-size: small;">{{.Error}}</small></p><br>
-              <button type="submit">comment</button>
+                   style="color: red;font-size: 12px;margin-top: 3px;font-weight: normal;text-transform: lowercase;">
+                  <i class="fa-solid fa-triangle-exclamation"
+                      style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem;color: red;"></i><small
+                      style="font-size: small;">{{.Error}}</small></p><br>
+                      <button type="submit" style="display: flex;"><i class="fa-solid fa-paper-plane"
+                        style="color: #221f51;"></i>comment</button>
 
               {{else}}
-              <p style="color: red;font-size: 12px;">Please log in to comment a post.</p><br>
+                <p style="color: red;font-size: 12px;"><i class="fa-solid fa-triangle-exclamation" style="color: red;width: fit-content;"></i>Please log in to comment a post.</p><br>
 
-              <button type="submit" disabled style="display: flex;"><i class="fa-solid fa-paper-plane"
-                  style="color: #221f51;"></i>comment</button>
+                <div  style="display: flex;background: var(--color-linear-gradient);color: #fff;padding: 8px 12px; width: fit-content;"><i class="fa-solid fa-paper-plane" style="color: #221f51;width: fit-content;"></i>comment</div>
               {{end}}
             </form>
           </div>
@@ -124,9 +140,21 @@
 
       <!--Les autres postes du même auteur- -->
       <div class="post-displaying2">
-        {{range .Datas}}
-        {{template "post" .}}
+        {{if len .Datas}}    <!-- If there is at least One post -->
+        {{if .Session}}    <!-- If the user is connected -->
+            {{range .Datas}} 
+              {{template "post" .}}
+            {{end}}
+        {{else}}           <!-- If the user is not connected -->
+            {{range .Datas}} 
+              {{template "post_disconected" .}}
+            {{end}}
         {{end}}
+        {{else}}              <!-- If there is no post -->     
+          <div class="alert1">
+            <strong>Info!</strong> no post found. be the first to create a post.
+          </div> 
+       {{end}}
       </div>
 
   </main>

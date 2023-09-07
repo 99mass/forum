@@ -21,10 +21,14 @@
    
 
       <div class="container-2">
+      {{if len .Category}}
         {{range .Category}}
-       <!-- block post and comment -->
-      <h3>{{.NameCategory}}</h3>
+         <h3>{{.NameCategory}}</h3>
+        {{end}}
       {{end}}
+      <div class="alert-likePost" style="width: 100%;">
+        <strong> <i class="fa-solid fa-triangle-exclamation" style="font-size: 22px;"></i></strong> You can't like or dislike while you're offline.<a href="/signin">click here</a> to connect.
+      </div> 
         <div class="post-displaying">         
           {{if len .Datas}}    <!-- If there is at least One post -->
           {{if .Session}}    <!-- If the user is connected -->
