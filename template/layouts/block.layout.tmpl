@@ -78,7 +78,11 @@
       <button type="submit" class="btn-submit-form">add post</button>
     {{ else }}
       <p style="color: red;font-size: 12px;">Please log in to submit a post.</p><br>
-      <button  class="disabled-btn">add post</button>
+      <!-- <button  class="disabled-btn"></button> style="width: fit-content; cursor: pointer; display: flex;background: var(--color-linear-gradient);color: #fff;" -->
+      <div class="like-deconnected"  style="padding: 0px;width: 100%;text-align: center;">
+        <i class="fa-solid fa-paper-plane" style="color: #221f51;width: fit-content;padding: 10px 10px; border: none;background: var(--color-linear-gradient);"></i>
+         <span style="padding: 0px;">add post</span>
+      </div> 
     {{ end }}
 </form>
 {{end}}
