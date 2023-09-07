@@ -201,7 +201,7 @@ func CheckFormAddPost(r *http.Request, db *sql.DB) error {
 	// Category not matched
 	for _, v := range _postCategorystring {
 		catuuid, err := uuid.FromString(v)
-		if !verifCategory(db, catuuid) || err != nil || catuuid == uuid.Nil {
+		if !VerifCategory(db, catuuid) || err != nil || catuuid == uuid.Nil {
 			return errors.New("one of the categories is not compliant")
 		}
 	}
@@ -209,10 +209,13 @@ func CheckFormAddPost(r *http.Request, db *sql.DB) error {
 	return nil
 }
 
-func verifCategory(db *sql.DB, v uuid.UUID) bool {
-
+func VerifCategory(db *sql.DB, v uuid.UUID) bool {
+	_,err := controller.GetCategoryByID(db,v)
+	if err != nil {
+		return false
+	}
 	return true
-} // no valide
+}
 
 func StringToUuid(r *http.Request, s string) (uuid.UUID, error) {
 	chaine := strings.TrimSpace(r.FormValue(s))
