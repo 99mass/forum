@@ -1,8 +1,3 @@
-*{
-    margin: 0;
-    padding:0;
-    box-sizing: border-box;
-}
 
 :root{
     --color-gray:gray;
@@ -37,11 +32,9 @@
 
 .post-displaying{
     width: 100%;
-    margin-left: 2rem;
-  display: grid;
-    grid-template-columns: repeat(1,1fr);
-    
-   
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(1,1fr);       
 }
  h3 ,h4{
     width: 100%;

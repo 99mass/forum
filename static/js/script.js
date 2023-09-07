@@ -8,7 +8,7 @@ const alertLikePost=document.querySelector('.alert-likePost');
 const likeDeconnected=document.querySelectorAll('.like-deconnected');
 const signin=document.querySelector('.signin');
 const register=document.querySelector('.register');
-// console.log(errorPost);
+
 window.addEventListener('load',()=>{
        let loc=window.location.href;
        if (signin && loc.includes('signin')) {
@@ -53,6 +53,17 @@ window.addEventListener('load',()=>{
             formUpdate.style.display = "none";
         });
     };
+    if (alertLikePost && likeDeconnected) {
+        for (let index = 0; index < likeDeconnected.length; index++) {
+            const btn = likeDeconnected[index];
+            btn.addEventListener("click",()=>{
+                window.scrollTo(0, 0);
+                alertLikePost.style.display='block';
+            })
+        }
+    }
+
+
 })
 
 if (alertLikePost && likeDeconnected) {
@@ -61,6 +72,20 @@ if (alertLikePost && likeDeconnected) {
         btn.addEventListener("click",()=>{
             window.scrollTo(0, 0);
             alertLikePost.style.display='block';
+            setTimeout(() => {
+                if (alertLikePost.style.display!=='none') {
+                        alertLikePost.style.display='none';                
+                }
+            }, 5000);
         })
     }
 }
+
+function myFunction() {
+    var x = document.getElementById("motdepasse");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  } 

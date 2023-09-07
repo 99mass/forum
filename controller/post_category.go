@@ -112,3 +112,29 @@ func GetCategoriesByPost(db *sql.DB, postID uuid.UUID) ([]models.Category, error
 
 	return categories, nil
 }
+
+// GetAllPostCategories retrieves all records from the PostCategory table.
+func GetAllPostCategories(db *sql.DB) ([]models.PostCategory, error) {
+    query := `
+        SELECT category_id, post_id
+        FROM posts_categories;
+    `
+
+    rows, err := db.Query(query)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var postCategories []models.PostCategory
+    for rows.Next() {
+        var pc models.PostCategory
+        err := rows.Scan(&pc.CategoryID, &pc.PostID)
+        if err != nil {
+            return nil, err
+        }
+        postCategories = append(postCategories, pc)
+    }
+
+    return postCategories, nil
+}
