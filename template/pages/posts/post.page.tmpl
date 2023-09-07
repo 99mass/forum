@@ -35,7 +35,7 @@
         </h3>
       {{end}}
         <div  class="alert-likePost" style="width: 100%;">
-          <strong> <i class="fa-solid fa-triangle-exclamation" style="font-size: 22px;"></i></strong> You can't like or dislike while you're offline.<a href="/signin">click here</a> to connect.
+          <strong> <i class="fa-solid fa-triangle-exclamation" style="font-size: 22px;"></i></strong> You can't like, dislike or comment while you're offline.<a href="/signin">click here</a> to connect.
         </div> 
      
 
@@ -105,7 +105,7 @@
               {{else}}
                 <p style="color: red;font-size: 12px;"><i class="fa-solid fa-triangle-exclamation" style="color: red;width: fit-content;"></i>Please log in to comment a post.</p><br>
 
-                <div  style="display: flex;background: var(--color-linear-gradient);color: #fff;padding: 8px 12px; width: fit-content;"><i class="fa-solid fa-paper-plane" style="color: #221f51;width: fit-content;"></i>comment</div>
+                <div class="like-deconnected" style="cursor: pointer; display: flex;background: var(--color-linear-gradient);color: #fff;padding: 8px 12px; width: fit-content;"><i class="fa-solid fa-paper-plane" style="color: #221f51;width: fit-content;"></i>comment</div>
               {{end}}
             </form>
           </div>
