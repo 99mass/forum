@@ -4,6 +4,7 @@ const  btnUpdate=document.querySelector('.btn-update');
 const formUpdate=document.querySelector('.form-update');
 const faxmark=document.querySelector('.faxmark');
 const errorPost=document.querySelector('.error-post');
+const errorPostFilter=document.querySelector('.error-post-filter');
 const alertLikePost=document.querySelector('.alert-likePost');
 const likeDeconnected=document.querySelectorAll('.like-deconnected');
 const signin=document.querySelector('.signin');
@@ -29,7 +30,7 @@ window.addEventListener('load',()=>{
                 childsErroPost[0].style.display="none";
             }
         }
-
+ 
         contentLink.style.display="none";
         faBars.addEventListener("click", () => {
             

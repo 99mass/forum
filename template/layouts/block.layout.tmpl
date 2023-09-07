@@ -17,6 +17,14 @@
 
 {{define "FilterForm" }}
 <form action="/filter" method="post">
+  <div style="border: none;display: flex;justify-content: center;">
+    <p class="error-post-filter" style="border: none; text-align: left;font-size: small;text-transform: lowercase;margin-left: 0rem;color: red;">
+        <i class="fa-solid fa-triangle-exclamation" style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem;"></i>
+        <span style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem ;" >{{.Error}}</span>
+     </p>
+</div>
+
+
   <div class="select-opt1">
     <details>
       <summary>Choose the categories</summary>

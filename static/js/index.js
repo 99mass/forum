@@ -37,6 +37,17 @@ window.onload = () => {
             filterForm.style.display = "none";
         }
     });
+    if (errorPostFilter) {
+        let childsErroPost=errorPostFilter.children
+        if (childsErroPost[1].textContent.trim()=="") {
+            childsErroPost[0].style.display="none";
+        }else{
+            filterForm.style.display = "block";
+            btnFilter.innerHTML="<i class='fa-solid fa-xmark'></i> Fermer"
+        }        
+    }
+
+
     if (disabledBtn) {
         disabledBtn.setAttribute("disabled", '');
     }
