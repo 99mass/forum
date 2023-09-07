@@ -31,7 +31,7 @@
   </nav>
   <nav class="nav2">
     
-    <form action="/search" method="post">
+    <form action="/search" method="post" class="search-bar-form">
       <input list="title" type="text" class="input" placeholder="search for title here" name="title">
       <datalist id="title">
         {{range .Datas}}
@@ -72,7 +72,7 @@
       {{end}}
      {{template "Session" .}}
                 
-        <form action="" method="post" class="drop-daown">
+        <form action="" method="post" class="drop-daown search-bar-form">
           <input type="search" class="input" placeholder="search here">
           <input class="button--submit" value="search" type="submit">
         </form>

@@ -12,7 +12,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <title>Account</title>
+  <title>forum/profile</title>
+  <style>        
+      header .nav1 .search-bar-form,
+      header .nav2 .search-bar-form{
+        display: none;
+      }
+  </style>
 </head>
 
 <body>
@@ -27,11 +33,11 @@
       <legend><i class="fa-solid fa-address-card"></i>informations personnel</legend>
       <div><span>User-name:</span><span>{{.User.Username}}</span></div>
       <div><span>E-mail:</span><span>{{.User.Email }}</span></div>
-      <button class="btn-update">update profil</button>
+      <!-- <button class="btn-update">update profil</button> -->
     </fieldset>
 
     <!-- form update -->
-    <form action="" method="post" class="form-update">
+    <!-- <form action="" method="post" class="form-update">
       <span class="faxmark"><i class="fa-solid fa-xmark"></i></span>
       <div>
         <label for="userName">User-name</label>
@@ -50,7 +56,7 @@
         <input type="password" value="" placeholder="ex: Ma@290">
       </div>
       <button type="submit">update</button>
-    </form>
+    </form> -->
 
     <div class="categorie-block">
       <table>
