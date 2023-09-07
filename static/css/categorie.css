@@ -186,6 +186,13 @@ h4{
   .content-comments::-webkit-scrollbar-thumb:hover {
     background: var(--header-color);
   } 
+  .separ-comment:last-of-type{
+    display: none;
+  }
+  .separ-comment{
+      margin-bottom: 15px;
+      opacity: 0.5;
+  }
 
 /* Medias query */
 

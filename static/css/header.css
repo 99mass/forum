@@ -65,6 +65,7 @@ header .nav2 a {
 }
 header .nav2 form input,
 header .nav3 form input{
+  background: transparent;
     padding: 5px;
     border: none;
     outline: none;
@@ -75,7 +76,11 @@ header .nav2 form .input,
 header .nav3 form .input{
   border-bottom: 2px solid;
 }
-
+header .nav2 form .input::placeholder,
+header .nav3 form .input::placeholder{
+  color: #fff;
+  margin-right:  1rem;
+}
 header .nav2 form .button--submit,
 header .nav3 form .button--submit{
   padding-left: 15px;
@@ -187,8 +192,7 @@ footer *{
      header .nav3 a {
         margin-bottom: 10px;
      }
-     
-   
+  
   }
   @media screen and (max-width:375px) {
       header .nav3  .content-link  form{

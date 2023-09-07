@@ -32,7 +32,8 @@
   <nav class="nav2">
     
     <form action="/search" method="post" class="search-bar-form">
-      <input list="title" type="text" class="input" placeholder="search for title here" name="title">
+      <i class="fa-solid fa-magnifying-glass" style="margin-right: -5px;"></i>
+      <input list="title" type="text" class="input" placeholder="search here" name="title">
       <datalist id="title">
         {{range .Datas}}
         <option value="{{.Posts.Title}}">
@@ -73,6 +74,7 @@
      {{template "Session" .}}
                 
         <form action="" method="post" class="drop-daown search-bar-form">
+          <i class="fa-solid fa-magnifying-glass"></i>
           <input type="search" class="input" placeholder="search here">
           <input class="button--submit" value="search" type="submit">
         </form>

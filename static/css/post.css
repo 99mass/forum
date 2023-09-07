@@ -223,7 +223,13 @@ h4{
     color: var(--color-white);
   }
 
-
+  .separ-comment:last-of-type{
+    display: none;
+  }
+  .separ-comment{
+      margin-bottom: 15px;
+      opacity: 0.5;
+  }
 /* medias querys */
 @media screen and (max-width:1024px) {
     .container .container-1 .filter-form{
