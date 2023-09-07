@@ -54,9 +54,9 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 				if err != nil {
 					helper.ErrorPage(w, http.StatusBadRequest)
 				}
-				for i, _ := range PostsDetails {
+				for i := range PostsDetails {
 					PostsDetails[i].Route = "mypage"
-					for j, _ := range PostsDetails[i].Comment {
+					for j := range PostsDetails[i].Comment {
 						PostsDetails[i].Comment[j].Route = "mypage"
 					}
 				}
@@ -83,10 +83,10 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 					return
 				}
 				//fmt.Println(PostsDetails)
-				for i, _ := range PostsDetails {
+				for i := range PostsDetails {
 					PostsDetails[i].Route = "mypage"
 					//fmt.Println(PostsDetails[i].Route)
-					for j, _ := range PostsDetails[i].Comment {
+					for j := range PostsDetails[i].Comment {
 						PostsDetails[i].Comment[j].Route = "mypage"
 					}
 				}
