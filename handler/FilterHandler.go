@@ -78,7 +78,13 @@ func Filter(db *sql.DB) http.HandlerFunc {
 		} else {
 			likemin, err = strconv.Atoi(likemi)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusBadRequest)
+				Datas,err := helper.GetDataTemplate(db,r,true,false,true,false,true)
+				if err != nil{
+					helper.ErrorPage(w,http.StatusInternalServerError)
+					return
+				}
+				Datas.Error = "give us an int"
+				helper.RenderTemplate(w,"index","index",Datas)
 				return
 			}
 		}
@@ -87,20 +93,64 @@ func Filter(db *sql.DB) http.HandlerFunc {
 		} else {
 			likemax, err = strconv.Atoi(likema)
 			if err != nil {
-				helper.ErrorPage(w, http.StatusBadRequest)
+				Datas,err := helper.GetDataTemplate(db,r,true,false,true,false,true)
+				if err != nil{
+					helper.ErrorPage(w,http.StatusInternalServerError)
+					return
+				}
+				Datas.Error = "give us an int"
+				helper.RenderTemplate(w,"index","index",Datas)
 				return
 			}
 		}
 
 		if likemax < 0 || likemin < 0 {
-			helper.ErrorPage(w, http.StatusBadRequest)
-			return
+			Datas,err := helper.GetDataTemplate(db,r,true,false,true,false,true)
+				if err != nil{
+					helper.ErrorPage(w,http.StatusInternalServerError)
+					return
+				}
+				Datas.Error = "give positive int for filtering by the like"
+				helper.RenderTemplate(w,"index","index",Datas)
+				return
 		}
-
+		if date1 == "" {
+			date1 = "2023-08-01"
+		}
+		if date2 == "" {
+			date2 = "2025-08-01"
+		}
+		date,err := CompareDate(date1,date2)
+		if err != nil {
+			Datas,err := helper.GetDataTemplate(db,r,true,false,true,false,true)
+				if err != nil{
+					helper.ErrorPage(w,http.StatusInternalServerError)
+					return
+				}
+				Datas.Error = "date format is incorrect"
+				helper.RenderTemplate(w,"index","index",Datas)
+				return
+		}
+		if !date {
+			Datas,err := helper.GetDataTemplate(db,r,true,false,true,false,true)
+				if err != nil{
+					helper.ErrorPage(w,http.StatusInternalServerError)
+					return
+				}
+				Datas.Error = "the min value can't be over than the max value"
+				helper.RenderTemplate(w,"index","index",Datas)
+				return
+		}
 		filterPosts, err = GetFilteredPosts(db, filterPosts, date1, date2)
 		if err != nil {
-			helper.ErrorPage(w, http.StatusBadRequest)
-			return
+			Datas,err := helper.GetDataTemplate(db,r,true,false,true,false,true)
+				if err != nil{
+					helper.ErrorPage(w,http.StatusInternalServerError)
+					return
+				}
+				Datas.Error = "format date given is incorrect"
+				helper.RenderTemplate(w,"index","index",Datas)
+				return
 		}
 		Posts, err := helper.GetPostForFilter(db, filterPosts)
 		if err != nil {
