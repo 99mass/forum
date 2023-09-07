@@ -4,6 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon"
+    href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2p0T-r4pTdjFEnObJS8xSM9FHJPTLbqA8Ew&usqp=CAU"
+    type="image/x-icon">
   <link rel="stylesheet" href="/static/css/header.css">
   <link rel="stylesheet" href="/static/css/post.css">
   <!-- cdn font awsome -->
@@ -21,15 +24,14 @@
 
   <!-- begin body -->
   <main class="container">
-
     <div class="container-2">
-       <!-- block post and comment -->
-       <!-- category list -->
+      <!-- block post and comment -->
+      <!-- category list -->
       <h3>
-      {{range .Category}}     
-         {{.NameCategory}} <span>/</span>
-      {{end}}
-    </h3>
+        {{range .Category}}
+        {{.NameCategory}} <span>/</span>
+        {{end}}
+      </h3>
       <div class="post-displaying">
         <div class="categorie-specifique">
           <!-- posts -->
@@ -45,73 +47,82 @@
           </div>
 
           <div class="like-dislik-content">
-            <form action="" method="post">
-              <input type="hidden" name="liked" value="">
+            <form action="/likepost" method="post">
+              <input type="hidden" id="post_id" name="post_id" value="{{.PostData.Posts.ID}}">
+              <input type="hidden" name="route" id="route" value="{{.PostData.Route}}">
+              {{if .PostData.Liked}}
+              <button type="submit"><i class="fa-solid fa-thumbs-up" id="like"
+                  style="color: darkblue;"></i>{{.PostData.PostLike}}</button>
+              {{else}}
               <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.PostData.PostLike}}</button>
+              {{end}}
             </form>
-
-            <form action="" method="post">
-              <input type="hidden" name="disliked" value="">
+            <form action="/dislikepost" method="post">
+              <input type="hidden" id="post_id" name="post_id" value="{{.PostData.Posts.ID}}">
+              <input type="hidden" name="route" id="route" value="{{.PostData.Route}}">
+              {{if .PostData.Disliked}}
+              <button type="submit"><i class="fa-solid fa-thumbs-down" id="dislike"
+                  style="color: darkred;"></i>{{.PostData.PostDislike}}</button>
+              {{else}}
               <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.PostData.PostDislike}}</button>
+              {{end}}
             </form>
+            
           </div>
+
           <!-- Formulaire de comment -->
-          <div class="content-form-comment">            
+          <div class="content-form-comment">
             <form action="/post" method="post">
               <div> <label for="">comment here:</label></div>
-              <textarea name="content" id="content" cols="30" rows="6" maxlength="500"
-                placeholder="put something here... maximum 500 characters"></textarea>
+              <textarea name="content" id="content" cols="30" rows="6" placeholder="put something here..."></textarea>
               {{if .Session}}
               <input type="hidden" name="user_id" id="user_id" value="{{.User.ID}}">
               <input type="hidden" name="post_id" id="post_id" value="{{.PostData.Posts.ID}}">
+              <p class="error-post"
+                style="color: red;font-size: 12px;margin-top: 3px;font-weight: normal;text-transform: lowercase;"><i
+                  class="fa-solid fa-triangle-exclamation"
+                  style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem;color: red;"></i><small
+                  style="font-size: small;">{{.Error}}</small></p><br>
               <button type="submit">comment</button>
+
               {{else}}
               <p style="color: red;font-size: 12px;">Please log in to comment a post.</p><br>
-              <button type="submit" disabled style="display: flex;"><i class="fa-solid fa-paper-plane" style="color: #221f51;"></i>comment</button>
+
+              <button type="submit" disabled style="display: flex;"><i class="fa-solid fa-paper-plane"
+                  style="color: #221f51;"></i>comment</button>
               {{end}}
             </form>
           </div>
         </div>
 
-        
-            <div class="categorie-specifique">
-              <!-- comment -->                    
-              <h6>all comments</h6>
-                <div class="content-comments">
-                  {{if len .PostData.Comment}}
-                      {{range .PostData.Comment}}
-                      <div><i class="fa-regular fa-comments"></i>{{.Comment.Content}}</div>
-                      <div class="author-date2">
-                        <div><span><i class="fa-solid fa-at"></i>author:</span>{{.User.Username}}</div>
-                        <span class="bar">|</span>
-                        <div><span><i class="fa-solid fa-calendar-days"></i>date:</span>{{.Comment.CreatedAt}}</div>
-                      </div>
 
-                      <div class="like-dislik-content">
-                        <form action="" method="post">
-                          <input type="hidden" name="liked" value="">
-                          <button type="submit"><i class="fa-regular fa-thumbs-up"></i>{{.CommentLike}}</button>
-                        </form>
-                        <form action="" method="post">
-                          <input type="hidden" name="disliked" value="">
-                          <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.CommentDislike}}</button>
-                        </form>
-                      </div>
-                      <hr>            
-                      {{end}}
-                  {{else}}
-                      <div class="alert1">
-                        <strong>Info!</strong> no comment found. be the first to comment this post.
-                      </div> 
-                  {{end}}
-                </div>
+        <div class="categorie-specifique">
+          <!-- comment -->
+          <h6>all comments</h6>
+          <div class="content-comments">
+            {{if len .PostData.Comment}}
+            {{if .Session}}
+            {{range .PostData.Comment}}
+            {{template "comment_with_session" .}}
+            {{end}}
+            {{else}}
+            {{range .PostData.Comment}}
+            {{template "comment_without_session" .}}
+            {{end}}
+            {{end}}
+            {{else}}
+            <div class="alert1">
+              <strong>Info!</strong> no comment found. be the first to comment this post.
             </div>
-       
+            {{end}}
+          </div>
+        </div>
+
       </div>
 
       <h4>other post by @{{.PostData.User.Username}}</h4>
 
-      <!--debut  a supprimer- -->
+      <!--Les autres postes du même auteur- -->
       <div class="post-displaying2">
         {{range .Datas}}
         {{template "post" .}}

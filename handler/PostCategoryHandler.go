@@ -31,9 +31,15 @@ func GetPostCategory(db *sql.DB) http.HandlerFunc {
 
 				helper.ErrorPage(w, http.StatusInternalServerError)
 			}
+			homeData.Datas = posts
+			datas, errlike := helper.SetLikesAndDislikes(homeData.User, homeData.Datas, db)
+			if errlike != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+			}
+			homeData.Datas = datas
 
 			homeData.Category = append(homeData.Category, category)
-			homeData.Datas = posts
+
 			helper.RenderTemplate(w, "categorie", "categories", homeData)
 		} else {
 			helper.ErrorPage(w, http.StatusBadRequest)

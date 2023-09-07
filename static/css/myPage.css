@@ -63,11 +63,13 @@
    font-size: 20px !important;
 }
 .container .container-1 .filter-form{
-    width: 90%;
+    width: 105%;
+    /* margin-left: -10%; */
     height: auto;
     background-color: #fff;
     margin-top: 0rem;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    z-index: 1;
 }
 
 
@@ -233,6 +235,9 @@
     outline: none;
 }
 /* the checkbox */
+.container .container-2 .bloc-add-post form .select-opt{
+    margin-top: -3rem;
+}
 .container .container-2 .bloc-add-post form .select-opt,
 .container .container-2 .bloc-add-post form .select-opt details,
 .container .container-2 .bloc-add-post form .select-opt details  input,
@@ -251,7 +256,8 @@
     margin-left: 1rem;
 }
 .container .container-2 .bloc-add-post form .select-opt details summary {
-    width: 67%;
+    width: 69%;
+    margin-left: -4px;
 }
 .container .container-2 .bloc-add-post form .select-opt{
     padding-left: 24%;
@@ -444,11 +450,7 @@
     display: none;
 }
 
-.mypage{
-    background: var(--color-linear-gradient);
-    color: var(--color-white);
-    padding: 7px 15px;
-}
+
 
 /* ************************************* */
 .pagination {
@@ -479,6 +481,13 @@
     background-color:  aqua;
     cursor: pointer;
    }
+   header .nav1 .mypage{
+    border:1px  solid var(--header-color); 
+    padding: 7px 15px;
+}
+header .nav1 .mypage:hover{
+    border: none;
+}
 
 /* medias querys */
 @media screen and (max-width:1024px) {

@@ -42,6 +42,14 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 			}
 			nul := uuid.UUID{}
 			if datas.User.ID != nul {
+				sess, err := controller.GetSessionIDForUser(db, datas.User.ID)
+				if err == nil {
+					err := controller.DeleteSession(db, sess)
+					if err != nil {
+						helper.ErrorPage(w, http.StatusInternalServerError)
+						return
+					}
+				}
 				helper.AddSession(w, datas.User.ID, db)
 				// Redirect to home
 				http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -82,6 +90,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			if !ok {
 				homeData.ErrorAuth = ErrAuth
 				helper.RenderTemplate(w, "register", "auth", homeData)
+				homeData.ErrorAuth = models.ErrorAuth{}
 				return
 			}
 

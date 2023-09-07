@@ -79,6 +79,7 @@
 .container .container-1 .filter-form form  .content-date-filter input:last-of-type{
     margin-left: 5px;
 }
+
 .container .container-1 .filter-form form .select-opt1 details summary{
     padding: 0.5rem;
     background-color: transparent;
@@ -210,6 +211,7 @@
     width: 50%;
     margin-bottom: 1rem;
     padding: 1rem;
+   
     background-color: transparent;
     border: 1px solid var(--header-color);
     text-transform: none;
@@ -218,6 +220,12 @@
 }
 
 /* the checkbox */
+.container .container-2 .bloc-add-post form .select-opt{
+    margin-top: -2rem;
+}
+.container .container-2 .bloc-add-post form .select-opt details{
+    padding-top: 0rem;
+}
 .container .container-2 .bloc-add-post form .select-opt,
 .container .container-2 .bloc-add-post form .select-opt details,
 .container .container-2 .bloc-add-post form .select-opt details  input,
@@ -235,7 +243,8 @@
     margin-left: 1rem;
 }
 .container .container-2 .bloc-add-post form .select-opt details summary {
-    width: 67%;
+    width: 68%;
+    margin-left: -4px;
 }
 .container .container-2 .bloc-add-post form .select-opt{
     padding-left: 24%;
@@ -466,7 +475,7 @@
 
 /* like and dislike colors */
 
-.fa-solid {
+/* .fa-solid {
     font-size: 50px;
     cursor: pointer;
     user-select: none;
@@ -482,13 +491,15 @@
   }
   #dislike:hover {
     color: darkred;
-  }
+  } */
   /* end */
 
   header .nav1 .home{
-    background: var(--color-linear-gradient);
-    color: var(--color-white);
+    border:1px  solid var(--header-color);   
     padding: 7px 15px;
+}
+header .nav1 .home:hover{
+    border: none;
 }
 /* medias querys */
 @media screen and (max-width:1024px) {

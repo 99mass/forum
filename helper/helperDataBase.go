@@ -67,7 +67,9 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 			//ErrorPage(w, http.StatusInternalServerError)
 			return datas, err
 		}
+
 		datas.PostData = postData
+
 	}
 
 	//---Get the User-------//
@@ -89,34 +91,21 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 		}
 		datas.Session = sessiondata
 	}
-	//Set liked or not
-	//Get if liked
-	dataliked := models.Home{}
-	for _, post := range datas.Datas {
-		liked, err := IsPostliked(db, datas.User.ID, post.Posts.ID)
-		if err != nil {
-			return datas, err
-		}
-		//Get if disliked
-		disliked, errdis := IsPostDisliked(db, datas.User.ID, post.Posts.ID)
-		if errdis != nil {
-			return datas, errdis
-		}
-		//fmt.Println(liked)
-		if liked {
-			post.Liked = true
-			dataliked.Datas = append(dataliked.Datas, post)
-			continue
-		} else if disliked {
-			post.Disliked = true
-			dataliked.Datas = append(dataliked.Datas, post)
-			continue
-		} else {
-			dataliked.Datas = append(dataliked.Datas, post)
-		}
+	//Set likes and dislikes for One Poste
+	DataslikedONe, err := SetLikesAndDislikes(datas.User, []models.HomeDataPost{datas.PostData}, db)
+	if err != nil {
+		return datas, err
 	}
-	//fmt.Println(dataliked.Datas)
-	datas.Datas = dataliked.Datas
+	datas.PostData = DataslikedONe[0]
+	// fmt.Println(len(DataslikedOne))
+	
+	//Set likes and dislikes
+	Datasliked, err := SetLikesAndDislikes(datas.User, datas.Datas, db)
+	if err != nil {
+		return datas, err
+	}
+
+	datas.Datas = Datasliked
 
 	//---Get All Categories-------//
 	if Category {
@@ -135,23 +124,10 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 		password := r.FormValue("motdepasse")
 		password = strings.TrimSpace(password)
 
-		// okEmail, errE := CheckEmail(email)
-		// if !okEmail {
-		// 	datas.ErrorAuth.EmailError = errE.Error()
-		// 	//RenderTemplate(w, "signin", "auth", datas)
-		// 	return datas, errE
-		// } else {
-		// 	datas.ErrorAuth.EmailError = ""
-		// }
-		//Check if the error has to be handled
 		userID, toConnect := VerifUser(db, email, password)
 
 		if toConnect {
 			datas.User.ID = userID
-			// Create a session
-			//AddSession(w, userID, db)
-			// Redirect to home
-			//http.Redirect(w, r, "/", http.StatusSeeOther)
 			return datas, nil
 		} else {
 			datas.ErrorAuth.GeneralError = "Incorrect email address or password"
@@ -188,6 +164,37 @@ func IsPostDisliked(db *sql.DB, UserId, PostId uuid.UUID) (bool, error) {
         LIMIT 1;
     `
 	err := db.QueryRow(query, UserId, PostId).Scan(&dislike.UserID, &dislike.PostID)
+	if err == sql.ErrNoRows {
+		return false, nil
+	}
+	return true, nil
+}
+
+
+func IsCommentliked(db *sql.DB, UserId, CommentId uuid.UUID) (bool, error) {
+	var like models.CommentLike
+	query := `
+        SELECT id,user_id, comment_id
+        FROM comment_likes
+        WHERE user_id = ? AND comment_id = ?
+        LIMIT 1;
+    `
+	err := db.QueryRow(query, UserId, CommentId).Scan(&like.UserID, &like.CommentID)
+	if err == sql.ErrNoRows {
+		return false, nil
+	}
+	return true, nil
+}
+
+func IsCommentDisliked(db *sql.DB, UserId, CommentId uuid.UUID) (bool, error) {
+	var like models.CommentDislike
+	query := `
+        SELECT id,user_id, comment_id
+        FROM comment_dislikes
+        WHERE user_id = ? AND comment_id = ?
+        LIMIT 1;
+    `
+	err := db.QueryRow(query, UserId, CommentId).Scan(&like.UserID, &like.CommentID)
 	if err == sql.ErrNoRows {
 		return false, nil
 	}

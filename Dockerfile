@@ -1,6 +1,6 @@
 FROM golang
 
-LABEL maintainer=""
+LABEL maintainer="Forum Team"
 
 COPY . /go/src/app
 

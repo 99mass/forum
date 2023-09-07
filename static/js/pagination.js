@@ -27,9 +27,7 @@ if (postDisplaying.length > 10) {
         const pa = document.querySelector(`.page${i}`);
 
         pa.addEventListener("click", () => {
-
-        });
-        pa.addEventListener("click", () => {
+            window.scrollTo(0, 0);
             pages.forEach(page => page.classList.remove("actives"));
             pa.classList.add("actives");
 
@@ -41,6 +39,7 @@ if (postDisplaying.length > 10) {
                     categorieBloc.style.display = "block";
                 }
             }
+           
         });
     }
 

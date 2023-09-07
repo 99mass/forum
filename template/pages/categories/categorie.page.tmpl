@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2p0T-r4pTdjFEnObJS8xSM9FHJPTLbqA8Ew&usqp=CAU" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/header.css">
     <link rel="stylesheet" href="/static/css/categorie.css">
     <!-- cdn font awsome -->
@@ -25,10 +26,22 @@
       <h3>{{.NameCategory}}</h3>
       {{end}}
         <div class="post-displaying">         
+          {{if len .Datas}}    <!-- If there is at least One post -->
+          {{if .Session}}    <!-- If the user is connected -->
+            {{range .Datas}} 
+              {{template "post" .}}
+            {{end}}
+          {{else}}           <!-- If the user is not connected -->
           {{range .Datas}} 
-          {{template "post" .}}
+            {{template "post_disconected" .}}
+            {{end}}
+          {{end}}
+        {{else}}              <!-- If there is no post -->     
+            <div class="alert1">
+              <strong>Info!</strong> no post found. be the first to create a post.
+            </div> 
         {{end}}
-          </div>
+        </div>
   
       <!-- pagination -->
       {{template "pagination"}}

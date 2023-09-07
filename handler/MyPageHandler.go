@@ -54,6 +54,20 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 				if err != nil {
 					helper.ErrorPage(w, http.StatusBadRequest)
 				}
+				for i, _ := range PostsDetails {
+					PostsDetails[i].Route = "mypage"
+					for j, _ := range PostsDetails[i].Comment {
+						PostsDetails[i].Comment[j].Route = "mypage"
+					}
+				}
+
+				//Set likes and dislikes
+				Datasliked, err := helper.SetLikesAndDislikes(user, PostsDetails, db)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusBadRequest)
+				}
+
+				PostsDetails = Datasliked
 
 				datas := new(models.DataMypage)
 				datas.Datas = PostsDetails
@@ -68,35 +82,24 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 					helper.ErrorPage(w, http.StatusInternalServerError)
 					return
 				}
+				//fmt.Println(PostsDetails)
+				for i, _ := range PostsDetails {
+					PostsDetails[i].Route = "mypage"
+					//fmt.Println(PostsDetails[i].Route)
+					for j, _ := range PostsDetails[i].Comment {
+						PostsDetails[i].Comment[j].Route = "mypage"
+					}
+				}
+				//Set likes and dislikes
+				Datasliked, err := helper.SetLikesAndDislikes(user, PostsDetails, db)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusBadRequest)
+				}
+
+				PostsDetails = Datasliked
+
 				datas := new(models.DataMypage)
 				datas.Datas = PostsDetails
-
-				// dataliked := models.Home{}
-				// for _, post := range datas.Datas {
-				// 	liked, err := helper.IsPostliked(db, datas.User.ID, post.Posts.ID)
-				// 	if err != nil {
-				// 		return }
-				// 	//Get if disliked
-				// 	disliked, errdis := helper.IsPostDisliked(db, datas.User.ID, post.Posts.ID)
-				// 	if errdis != nil {
-				// 		return
-				// 	}
-				// 	//fmt.Println(liked)
-				// 	if liked {
-				// 		post.Liked = true
-				// 		dataliked.Datas = append(dataliked.Datas, post)
-				// 		continue
-				// 	} else if disliked {
-				// 		post.Disliked = true
-				// 		dataliked.Datas = append(dataliked.Datas, post)
-				// 		continue
-				// 	} else {
-				// 		dataliked.Datas = append(dataliked.Datas, post)
-				// 	}
-				// }
-				// //fmt.Println(dataliked.Datas)
-				// fmt.Println(datas.Datas)
-				// datas.Datas = dataliked.Datas
 
 				datas.Session = sessiondata
 				datas.User = user

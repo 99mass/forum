@@ -3,7 +3,6 @@ package controller
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/gofrs/uuid"
@@ -67,7 +66,7 @@ func GetCommentLikesCount(db *sql.DB, postID uuid.UUID, commentID uuid.UUID) (in
 	return count, nil
 }
 
-//Create a Like of Post
+// Create a Like of Post
 func CreatePostLike(db *sql.DB, like models.PostLike) (uuid.UUID, error) {
 	_, errlike := GetPostLikeByUserID(db, like)
 	if errlike == nil {
@@ -100,7 +99,7 @@ func CreatePostLike(db *sql.DB, like models.PostLike) (uuid.UUID, error) {
 	return newUUID, nil
 }
 
-//Create a like of comment
+// Create a like of comment
 func CreateCommentLike(db *sql.DB, like models.CommentLike) (uuid.UUID, error) {
 
 	_, errlike := GetCommentLikeByUserID(db, like)
@@ -108,7 +107,7 @@ func CreateCommentLike(db *sql.DB, like models.CommentLike) (uuid.UUID, error) {
 		return uuid.UUID{}, errlike
 	}
 	dislike := models.CommentDislike{
-		UserID: like.UserID,
+		UserID:    like.UserID,
 		CommentID: like.CommentID,
 	}
 	disl, errdislike := GetCommentDislikeByUserID(db, dislike)
@@ -184,10 +183,9 @@ func GetPostLikeByUserID(db *sql.DB, like models.PostLike) (models.PostLike, err
     `
 
 	err := db.QueryRow(query, like.UserID, like.PostID).Scan(&like.ID, &like.UserID, &like.PostID, &like.CreatedAt)
-	fmt.Println("check if row")
 	if err != nil {
 		if err == sql.ErrNoRows {
-			fmt.Println("no like")
+
 			return models.PostLike{}, errors.New("like de publication non trouvé")
 		}
 		return models.PostLike{}, err
@@ -206,7 +204,6 @@ func GetCommentLikeByUserID(db *sql.DB, like models.CommentLike) (models.Comment
 	err := db.QueryRow(query, like.UserID, like.CommentID).Scan(&like.ID, &like.UserID, &like.CommentID, &like.CreatedAt)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			fmt.Println("no like")
 			return models.CommentLike{}, errors.New("like de commentaire non trouvé")
 		}
 		return models.CommentLike{}, err

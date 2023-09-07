@@ -20,6 +20,14 @@ func Index(db *sql.DB) http.HandlerFunc {
 
 		homeData, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
 
+		PostsDetails := homeData.Datas
+		// for i, _ := range PostsDetails {
+		// 	PostsDetails[i].Route = ""
+		// 	for j, _ := range PostsDetails[i].Comment {
+		// 		PostsDetails[i].Comment[j].Route = ""
+		// 	}
+		// }
+		homeData.Datas = PostsDetails
 		if err != nil {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
