@@ -30,6 +30,17 @@ func Filter(db *sql.DB) http.HandlerFunc {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
 		}
+		if len(Categorystring) == 0 {
+
+			Datas, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
+				return
+			}
+			Datas.ErrorFilter = "no category selected"
+			helper.RenderTemplate(w, "index", "index", Datas)
+			return
+		}
 
 		if Categorystring != nil {
 
