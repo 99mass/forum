@@ -75,10 +75,13 @@
       placeholder="put the content here"></textarea>
   </div>
     {{ if .Session }}
-      <button type="submit" class="btn-submit-form">add post</button>
+      <button type="submit" class="btn-submit-form"> <i class="fa-solid fa-paper-plane" style="width: fit-content;color: #221f51;margin-right: 4px;"></i>add post</button>
     {{ else }}
-      <p style="color: red;font-size: 12px;">Please log in to submit a post.</p><br>
-      <button  class="disabled-btn">add post</button>
+      <p style="color: red;font-size: 12px;"><i class="fa-solid fa-triangle-exclamation" style="color: red;width: fit-content;margin-right: 4px;"></i>Please log in to submit a post.</p><br>
+    <div class="like-deconnected sub-post"  style=" padding: 0px;width: 100%;display: flex;justify-content: center; color: #fff;">
+        <i class="fa-solid fa-paper-plane" style="cursor: pointer;padding: 12px 5rem;padding-right: 3px; color: #221f51;width: fit-content;  border: none;background: var(--color-linear-gradient);"></i>
+         <span style="cursor: pointer;padding: 12px 5rem;padding-left: 1px; width: fit-content;background: var(--color-linear-gradient);border: none;">add post</span>
+      </div> 
     {{ end }}
 </form>
 {{end}}
@@ -262,6 +265,7 @@
   <form action="/likecomment" method="post">
     <input type="hidden" id="comment_id" name="comment_id" value="{{.Comment.ID}}">
     <input type="hidden" name="route" id="route" value="{{.Route}}">
+    
     {{if .Liked}}
       <button type="submit"><i class="fa-solid fa-thumbs-up"  style="color:  rgb(143, 101, 12);"></i>{{.CommentLike}}</button>
     {{else}}  
