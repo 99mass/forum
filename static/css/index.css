@@ -21,6 +21,7 @@
     padding: 1rem;
     padding-right: 1rem;
     z-index: 1;
+    
 }
 .container *{
    font-size: var(  --fontSize16);
@@ -299,6 +300,7 @@
    padding: 1rem;
    margin-bottom: 3rem;
    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+   background-color: #fff;
 }
 .categorie-name-content {
     padding-bottom: 1rem;
