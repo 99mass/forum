@@ -68,9 +68,7 @@ func Filter(db *sql.DB) http.HandlerFunc {
 			filterPosts = posts
 		}
 
-		for _, v := range filterPosts {
-			fmt.Println(v.Title)
-		}
+		
 
 		date1 := r.FormValue("date1")
 		fmt.Println("Date:", date1)
@@ -79,11 +77,17 @@ func Filter(db *sql.DB) http.HandlerFunc {
 
 		filterPosts, err = GetFilteredPosts(db, filterPosts, date1, date2)
 		if err != nil {
-			fmt.Println(err)
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
 		}
-		fmt.Println(filterPosts)
+		Posts,err := helper.GetPostForFilter(db,filterPosts)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusInternalServerError)
+			return
+		}
+		for _, v := range Posts {
+			fmt.Println(v.PostLike)
+		}
 	}
 
 }

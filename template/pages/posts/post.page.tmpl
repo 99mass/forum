@@ -69,8 +69,8 @@
               <input type="hidden" id="post_id" name="post_id" value="{{.PostData.Posts.ID}}">
               <input type="hidden" name="route" id="route" value="{{.PostData.Route}}">
               {{if .PostData.Disliked}}
-              <button type="submit"><i class="fa-solid fa-thumbs-down"
-                  style="color: rgb(143, 101, 12);;"></i>{{.PostData.PostDislike}}</button>
+              <button type="submit"><i class="fa-solid fa-thumbs-down" id="dislike"
+                  style="color: rgb(143, 101, 12);"></i>{{.PostData.PostDislike}}</button>
               {{else}}
               <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.PostData.PostDislike}}</button>
               {{end}}
@@ -92,6 +92,7 @@
               <div> <label for="">comment here:</label></div>
               <textarea name="content" id="content" cols="30" rows="6" placeholder="put something here..."></textarea>
               {{if .Session}}
+              
               <input type="hidden" name="user_id" id="user_id" value="{{.User.ID}}">
               <input type="hidden" name="post_id" id="post_id" value="{{.PostData.Posts.ID}}">
               <p class="error-post"

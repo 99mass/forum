@@ -265,6 +265,7 @@
   <form action="/likecomment" method="post">
     <input type="hidden" id="comment_id" name="comment_id" value="{{.Comment.ID}}">
     <input type="hidden" name="route" id="route" value="{{.Route}}">
+    
     {{if .Liked}}
       <button type="submit"><i class="fa-solid fa-thumbs-up"  style="color:  rgb(143, 101, 12);"></i>{{.CommentLike}}</button>
     {{else}}  
