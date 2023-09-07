@@ -200,9 +200,8 @@ func CheckFormAddPost(r *http.Request, db *sql.DB) error {
 	}
 	// Category not matched
 	for _, v := range _postCategorystring {
-		catuuid, _ := uuid.FromString(v)
-
-		if !verifCategory(db, catuuid) {
+		catuuid, err := uuid.FromString(v)
+		if !verifCategory(db, catuuid) || err != nil || catuuid == uuid.Nil {
 			return errors.New("one of the categories is not compliant")
 		}
 	}
@@ -526,7 +525,7 @@ func SetLikesAndDislikes(User models.User, datas []models.HomeDataPost, db *sql.
 	return dataliked, nil
 }
 
-func GetPostForFilter(db *sql.DB,post []models.Post) ([]models.HomeDataPost, error) {
+func GetPostForFilter(db *sql.DB, post []models.Post) ([]models.HomeDataPost, error) {
 	var HomeDatas []models.HomeDataPost
 	for _, post := range post {
 		var HomeData models.HomeDataPost
