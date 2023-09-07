@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -69,52 +68,58 @@ func Filter(db *sql.DB) http.HandlerFunc {
 			filterPosts = posts
 		}
 
-		
-
 		date1 := r.FormValue("date1")
 		date2 := r.FormValue("date2")
 		likemi := r.FormValue("likemin")
-		likema:= r.FormValue("likemax")
-		likemin,err := strconv.Atoi(likemi)
-		if err != nil {
-			helper.ErrorPage(w,http.StatusBadRequest)
-			return
-		}
-		likemax,err := strconv.Atoi(likema)
-		if err != nil {
-			helper.ErrorPage(w,http.StatusBadRequest)
-			return
-		}
-
-
-		date, err := CompareDate(date1, date2)
-		if err != nil {
-			fmt.Println("Error:", err)
+		likema := r.FormValue("likemax")
+		var likemin, likemax int
+		if likemi == "" {
+			likemin = 0
 		} else {
-			if !date {
-				fmt.Println("minDate is after the Maxdate.")
+			likemin, err = strconv.Atoi(likemi)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusBadRequest)
+				return
 			}
+		}
+		if likema == "" {
+			likemax = 1000
+		} else {
+			likemax, err = strconv.Atoi(likema)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusBadRequest)
+				return
+			}
+		}
+
+		if likemax < 0 || likemin < 0 {
+			helper.ErrorPage(w, http.StatusBadRequest)
+			return
 		}
 
 		filterPosts, err = GetFilteredPosts(db, filterPosts, date1, date2)
 		if err != nil {
-			helper.ErrorPage(w, http.StatusInternalServerError)
+			helper.ErrorPage(w, http.StatusBadRequest)
 			return
 		}
-		Posts,err := helper.GetPostForFilter(db,filterPosts)
+		Posts, err := helper.GetPostForFilter(db, filterPosts)
 		if err != nil {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
 		}
 		var PostsFiltered []models.HomeDataPost
 		for _, v := range Posts {
-			if v.PostLike >= likemin && v.PostLike <= likemax{
+			if v.PostLike >= likemin && v.PostLike <= likemax {
 				PostsFiltered = append(PostsFiltered, v)
 			}
 		}
-		for _,v := range PostsFiltered{
-			fmt.Println(v.PostLike)
+		Datas, err := helper.GetDataTemplate(db, r, true, false, false, false, true)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusInternalServerError)
+			return
 		}
+		Datas.Datas = PostsFiltered
+		helper.RenderTemplate(w, "index", "index", Datas)
 	}
 
 }
