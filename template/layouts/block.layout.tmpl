@@ -21,7 +21,7 @@
     <details>
       <summary>Choose the categories</summary>
       {{ range .Category}}
-      <div><input type="checkbox" id="category" name="category" value="{{.ID}}" /><label>{{.NameCategory}}</label></div>
+      <div><input type="checkbox" name="category" value="{{.ID}}" /><label>{{.NameCategory}}</label></div>
       {{end}}
     </details>
   </div>
