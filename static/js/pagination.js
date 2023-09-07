@@ -1,6 +1,6 @@
 const postDisplaying = document.querySelector(".post-displaying").children;
 const pagination = document.querySelector('.pagination');
-const paginationCompt = Math.ceil(postDisplaying.length / 10); // Utilisez Math.ceil pour arrondir à la hausse
+const paginationCompt = Math.ceil(postDisplaying.length / 10); 
 
 
 
@@ -11,7 +11,7 @@ for (let j = 1; j <= paginationCompt; j++) {
     a.classList = `page page${j}`;
     pagination.appendChild(a);
 }
-if (paginationCompt <= 1) { // Modifié la condition ici
+if (paginationCompt <= 1) { 
     pagination.style.display = "none";
     
 }

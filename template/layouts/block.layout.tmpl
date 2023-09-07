@@ -21,7 +21,7 @@
     <details>
       <summary>Choose the categories</summary>
       {{ range .Category}}
-      <div><input type="checkbox" id="category" name="category" value="{{.ID}}" /><label>{{.NameCategory}}</label></div>
+      <div><input type="checkbox" name="category" value="{{.ID}}" /><label>{{.NameCategory}}</label></div>
       {{end}}
     </details>
   </div>
@@ -154,7 +154,7 @@
       {{if .Liked}}
         <button type="submit"><i class="fa-solid fa-thumbs-up"id="like" style="color: rgb(143, 101, 12);"></i>{{.PostLike}}</button>
       {{else}}  
-        <button type="submit"><i class="fa-regular fa-thumbs-up" ></i>{{.PostLike}}</button>
+        <button ><i class="fa-regular fa-thumbs-up" ></i>{{.PostLike}}</button>
       {{end}}
     </form>
     <form action="/dislikepost" method="post">
@@ -163,7 +163,7 @@
       {{if .Disliked}}
       <button type="submit"><i class="fa-solid fa-thumbs-down"id="dislike" style="color: rgb(143, 101, 12);"></i>{{.PostDislike}}</button>
       {{else}}
-      <button type="submit"><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}}</button>
+      <button ><i class="fa-regular fa-thumbs-down"></i>{{.PostDislike}}</button>
       {{end}}
     </form>
   </div>
@@ -173,7 +173,7 @@
     <form action="/post" method="GET" class="comment-btn">
       
       <input type="hidden" name="post_id" id="post_id" value="{{.Posts.ID}} ">
-      <button type="submit"><i class="fa-solid fa-pen-to-square " style="color: #2a1f51;"></i>comment here</button>
+      <button type="submit"><i class="fa-solid fa-pen-to-square " style="color:rgb(143, 101, 12);"></i>comment here</button>
       
     </form>
     
@@ -232,7 +232,7 @@
   <div class="comment ">
     <form action="/post" method="GET" class="comment-btn">
       <input type="hidden" name="post_id" id="post_id" value="{{.Posts.ID}} ">
-      <button type="submit" ><i class="fa-solid fa-pen-to-square " style="color: #2a1f51;"></i>comment here</button>
+      <button type="submit" ><i class="fa-solid fa-pen-to-square " style="color: rgb(143, 101, 12);"></i>comment here</button>
     </form>
   </div>
 
