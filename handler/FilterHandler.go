@@ -11,12 +11,18 @@ import (
 
 	"forum/controller"
 	"forum/helper"
+	"forum/middlewares"
 	"forum/models"
 )
 
 func Filter(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
+		ok, errorPage := middlewares.CheckRequest(r, "/filter", "post")
+		if !ok {
+			helper.ErrorPage(w, errorPage)
+			return
+		}
 		err := r.ParseForm()
 		if err != nil {
 			helper.ErrorPage(w, http.StatusBadRequest)
