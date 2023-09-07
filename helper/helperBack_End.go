@@ -4,13 +4,14 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"forum/controller"
-	"forum/models"
 	"net/http"
 	"strings"
 
 	"github.com/gofrs/uuid"
 	"golang.org/x/crypto/bcrypt"
+
+	"forum/controller"
+	"forum/models"
 )
 
 func Debug(str string) {
