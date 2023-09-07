@@ -3,13 +3,15 @@ package handler
 import (
 	"database/sql"
 	"fmt"
+	"net/http"
+	"strings"
+	"time"
+
+	"github.com/gofrs/uuid"
+
 	"forum/controller"
 	"forum/helper"
 	"forum/models"
-	"net/http"
-	"strings"
-
-	"github.com/gofrs/uuid"
 )
 
 func Filter(db *sql.DB) http.HandlerFunc {
@@ -71,11 +73,20 @@ func Filter(db *sql.DB) http.HandlerFunc {
 		}
 
 		date1 := r.FormValue("date1")
-		fmt.Println(date1)
+		fmt.Println("Date:", date1)
+		date2 := r.FormValue("date2")
+		fmt.Println("Date2:", date2)
+
+		filterPosts, err = GetFilteredPosts(db, filterPosts, date1, date2)
+		if err != nil {
+			fmt.Println(err)
+			helper.ErrorPage(w, http.StatusInternalServerError)
+			return
+		}
+		fmt.Println(filterPosts)
 	}
 
 }
-
 
 // RemoveDuplicates removes duplicate elements from a slice of uuid.UUID values.
 func RemoveDuplicates(input []uuid.UUID) []uuid.UUID {
@@ -90,4 +101,36 @@ func RemoveDuplicates(input []uuid.UUID) []uuid.UUID {
 	}
 
 	return result
+}
+
+func GetFilteredPosts(db *sql.DB, posts []models.Post, minDate, maxDate string) ([]models.Post, error) {
+	var filteredPosts []models.Post
+
+	for _, post := range posts {
+
+		createdAt, err := time.Parse("2006-01-02 15:04:05", post.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
+
+		minDateTime, err := time.Parse("2006-01-02", minDate)
+		if err != nil {
+			return nil, err
+		}
+
+		maxDateTime, err := time.Parse("2006-01-02", maxDate)
+		if err != nil {
+			return nil, err
+		}
+
+		// Si aucune heure n'est fournie, ajustez les heures à minuit et 23:59:59
+		minDateTime = minDateTime.Add(time.Hour * time.Duration(0))
+		maxDateTime = maxDateTime.Add(time.Hour*time.Duration(23) + time.Minute*time.Duration(59) + time.Second*time.Duration(59))
+
+		if createdAt.After(minDateTime) && createdAt.Before(maxDateTime) {
+			filteredPosts = append(filteredPosts, post)
+		}
+	}
+
+	return filteredPosts, nil
 }
