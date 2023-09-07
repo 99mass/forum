@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -71,9 +72,20 @@ func Filter(db *sql.DB) http.HandlerFunc {
 		
 
 		date1 := r.FormValue("date1")
-		fmt.Println("Date:", date1)
 		date2 := r.FormValue("date2")
-		fmt.Println("Date2:", date2)
+		likemi := r.FormValue("likemin")
+		likema:= r.FormValue("likemax")
+		likemin,err := strconv.Atoi(likemi)
+		if err != nil {
+			helper.ErrorPage(w,http.StatusBadRequest)
+			return
+		}
+		likemax,err := strconv.Atoi(likema)
+		if err != nil {
+			helper.ErrorPage(w,http.StatusBadRequest)
+			return
+		}
+
 
 		filterPosts, err = GetFilteredPosts(db, filterPosts, date1, date2)
 		if err != nil {
@@ -85,7 +97,13 @@ func Filter(db *sql.DB) http.HandlerFunc {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
 		}
+		var PostsFiltered []models.HomeDataPost
 		for _, v := range Posts {
+			if v.PostLike >= likemin && v.PostLike <= likemax{
+				PostsFiltered = append(PostsFiltered, v)
+			}
+		}
+		for _,v := range PostsFiltered{
 			fmt.Println(v.PostLike)
 		}
 	}
