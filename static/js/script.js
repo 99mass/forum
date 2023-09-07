@@ -30,7 +30,15 @@ window.addEventListener('load',()=>{
                 childsErroPost[0].style.display="none";
             }
         }
- 
+        if (errorPostFilter) {
+            let childsErroPos=errorPostFilter.children
+            if (childsErroPos[1].textContent.trim()=="") {
+                childsErroPos[0].style.display="none";
+            }else{
+                filterForm.style.display = "block";
+                btnFilter.innerHTML="<i class='fa-solid fa-xmark'></i> Fermer"
+            }        
+        }
         contentLink.style.display="none";
         faBars.addEventListener("click", () => {
             
