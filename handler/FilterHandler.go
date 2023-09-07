@@ -77,6 +77,15 @@ func Filter(db *sql.DB) http.HandlerFunc {
 		date2 := r.FormValue("date2")
 		fmt.Println("Date2:", date2)
 
+		date, err := CompareDate(date1, date2)
+		if err != nil {
+			fmt.Println("Error:", err)
+		} else {
+			if !date {
+				fmt.Println("minDate is after the Maxdate.")
+			}
+		}
+
 		filterPosts, err = GetFilteredPosts(db, filterPosts, date1, date2)
 		if err != nil {
 			fmt.Println(err)
@@ -133,4 +142,20 @@ func GetFilteredPosts(db *sql.DB, posts []models.Post, minDate, maxDate string) 
 	}
 
 	return filteredPosts, nil
+}
+
+func CompareDate(minDate, maxDate string) (bool, error) {
+	// Analyser les dates
+	minTime, err := time.Parse("2006-01-02", minDate)
+	if err != nil {
+		return false, err
+	}
+
+	maxTime, err := time.Parse("2006-01-02", maxDate)
+	if err != nil {
+		return false, err
+	}
+
+	// Comparer les dates
+	return minTime.Before(maxTime), nil
 }
