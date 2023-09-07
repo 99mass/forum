@@ -21,7 +21,7 @@
     <details>
       <summary>Choose the categories</summary>
       {{ range .Category}}
-      <div><input type="checkbox" id="category" name="category" value="{{.ID}}" /><label>{{.NameCategory}}</label></div>
+      <div><input type="checkbox" name="category" value="{{.ID}}" /><label>{{.NameCategory}}</label></div>
       {{end}}
     </details>
   </div>
@@ -75,13 +75,12 @@
       placeholder="put the content here"></textarea>
   </div>
     {{ if .Session }}
-      <button type="submit" class="btn-submit-form">add post</button>
+      <button type="submit" class="btn-submit-form"> <i class="fa-solid fa-paper-plane" style="width: fit-content;color: #221f51;margin-right: 4px;"></i>add post</button>
     {{ else }}
-      <p style="color: red;font-size: 12px;">Please log in to submit a post.</p><br>
-      <!-- <button  class="disabled-btn"></button> style="width: fit-content; cursor: pointer; display: flex;background: var(--color-linear-gradient);color: #fff;" -->
-      <div class="like-deconnected"  style="padding: 0px;width: 100%;text-align: center;">
-        <i class="fa-solid fa-paper-plane" style="color: #221f51;width: fit-content;padding: 10px 10px; border: none;background: var(--color-linear-gradient);"></i>
-         <span style="padding: 0px;">add post</span>
+      <p style="color: red;font-size: 12px;"><i class="fa-solid fa-triangle-exclamation" style="color: red;width: fit-content;margin-right: 4px;"></i>Please log in to submit a post.</p><br>
+    <div class="like-deconnected sub-post"  style=" padding: 0px;width: 100%;display: flex;justify-content: center; color: #fff;">
+        <i class="fa-solid fa-paper-plane" style="cursor: pointer;padding: 12px 5rem;padding-right: 3px; color: #221f51;width: fit-content;  border: none;background: var(--color-linear-gradient);"></i>
+         <span style="cursor: pointer;padding: 12px 5rem;padding-left: 1px; width: fit-content;background: var(--color-linear-gradient);border: none;">add post</span>
       </div> 
     {{ end }}
 </form>
@@ -152,6 +151,7 @@
   <!-- like and dislike -->
   <div class="like-dislik-content">
     <form action="/likepost" method="post">
+      
       <input type="hidden" id="post_id" name="post_id" value="{{.Posts.ID}}">
       <input type="hidden" name="route" id="route" value="{{.Route}}">
       {{if .Liked}}
