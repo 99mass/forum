@@ -11,12 +11,18 @@ import (
 
 	"forum/controller"
 	"forum/helper"
+	"forum/middlewares"
 	"forum/models"
 )
 
 func Filter(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
+		ok, errorPage := middlewares.CheckRequest(r, "/filter", "post")
+		if !ok {
+			helper.ErrorPage(w, errorPage)
+			return
+		}
 		err := r.ParseForm()
 		if err != nil {
 			helper.ErrorPage(w, http.StatusBadRequest)
@@ -28,17 +34,6 @@ func Filter(db *sql.DB) http.HandlerFunc {
 		Categorystring := r.Form["category"]
 		if err != nil {
 			helper.ErrorPage(w, http.StatusInternalServerError)
-			return
-		}
-		if len(Categorystring) == 0 {
-
-			Datas, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
-			if err != nil {
-				helper.ErrorPage(w, http.StatusInternalServerError)
-				return
-			}
-			Datas.ErrorFilter = "no category selected"
-			helper.RenderTemplate(w, "index", "index", Datas)
 			return
 		}
 
