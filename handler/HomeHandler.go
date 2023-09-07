@@ -2,9 +2,10 @@ package handler
 
 import (
 	"database/sql"
+	"net/http"
+
 	"forum/helper"
 	"forum/middlewares"
-	"net/http"
 )
 
 func Index(db *sql.DB) http.HandlerFunc {

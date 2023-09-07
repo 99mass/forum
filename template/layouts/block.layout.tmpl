@@ -138,6 +138,7 @@
   <!-- like and dislike -->
   <div class="like-dislik-content">
     <form action="/likepost" method="post">
+      
       <input type="hidden" id="post_id" name="post_id" value="{{.Posts.ID}}">
       {{if .Liked}}
         <button type="submit"><i class="fa-solid fa-thumbs-up"id="like"></i>{{.PostLike}}</button>
