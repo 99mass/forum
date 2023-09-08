@@ -13,6 +13,9 @@
     --color-linear-gradient1:linear-gradient(to right,#77530a,#eab958,#77530a,#77530a,#d6aa51,#77530a);
 
 }
+body{
+  background-color:  #edede9;;
+}
 .alert1 {
     padding:20px;
     font-size: large;
@@ -38,13 +41,15 @@ header{
     justify-content: space-between;
     padding: 0px 20px;
     border-bottom: 1px solid #e5e7eb;
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
+    background-color: #0d1b2a;
     box-shadow: 0px 0px 8px;
    z-index: 10;
    
 }
 header *{
-    color: var(--header-color);
+    /* color: var(--header-color); */
+    color: #fff;
     font-size: var(--fontSize18);
 }
 
@@ -60,6 +65,7 @@ header .nav2 a {
 }
 header .nav2 form input,
 header .nav3 form input{
+  background: transparent;
     padding: 5px;
     border: none;
     outline: none;
@@ -70,7 +76,11 @@ header .nav2 form .input,
 header .nav3 form .input{
   border-bottom: 2px solid;
 }
-
+header .nav2 form .input::placeholder,
+header .nav3 form .input::placeholder{
+  color: #fff;
+  margin-right:  1rem;
+}
 header .nav2 form .button--submit,
 header .nav3 form .button--submit{
   padding-left: 15px;
@@ -132,8 +142,12 @@ footer{
     align-items: center;
     padding: 0px 20px;
     border-top: 1px solid #e5e7eb;
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
+    background-color: #0d1b2a;
     box-shadow: 0px 0px 2px;
+}
+footer *{
+  color: var(--color-white);
 }
   footer span a{
     color: var(--header-color);
@@ -178,8 +192,7 @@ footer{
      header .nav3 a {
         margin-bottom: 10px;
      }
-     
-   
+  
   }
   @media screen and (max-width:375px) {
       header .nav3  .content-link  form{

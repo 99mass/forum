@@ -119,14 +119,17 @@
           <div class="content-comments">
             {{if len .PostData.Comment}}
             {{if .Session}}
-            {{range .PostData.Comment}}
-            {{template "comment_with_session" .}}
-            {{end}}
+                {{range .PostData.Comment}}
+                  {{template "comment_with_session" .}}
+                  <hr style="opacity: 0.5;">
+                {{end}}
+            
             {{else}}
-            {{range .PostData.Comment}}
-            {{template "comment_without_session" .}}
-            {{end}}
-            {{end}}
+              {{range .PostData.Comment}}
+                  {{template "comment_without_session" .}}
+                  <hr style="opacity: 0.5;">
+                  {{end}}
+              {{end}}
             {{else}}
             <div class="alert1">
               <strong>Info!</strong> no comment found. be the first to comment this post.

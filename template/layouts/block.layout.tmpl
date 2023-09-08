@@ -17,6 +17,56 @@
 
 {{define "FilterForm" }}
 <form action="/filter" method="post">
+ 
+      <div style="border: none;display: flex;justify-content: center;">
+        <p class="error-post-filter" style="border: none; text-align: left;font-size: small;text-transform: lowercase;margin-left: 0rem;color: red;">
+            <i class="fa-solid fa-triangle-exclamation" style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem;"></i>
+            <span style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem ;" >{{.ErrorFilter}}</span>
+        </p>
+      </div>
+
+
+  <div class="select-opt1">
+    <details>
+      <summary>Choose the categories</summary>
+      {{ range .Category}}
+      <div><input type="checkbox" name="category" value="{{.ID}}" /><label>{{.NameCategory}}</label></div>
+      {{end}}
+    </details>
+  </div>
+  <div>
+      <label for="creation-date">created posts</label>
+      <label class="label-min-max"><span>min-date</span> <span>max-date</span></label>
+      <p class="content-date-filter">
+        <input type="date" name="date1" value="2023-08-01">
+        <input type="date" name="date2" value="2025-08-01">
+      </p>    
+  </div>
+  <div>
+    <div>
+      <label>liked posts</label><br>
+      <label class="label-min-max"><span>min-value</span> <span>max-value</span></label>
+      <div class="liked-post-content">
+        <input type="number" name="likemin" min="0" placeholder="0" value="0">
+        <input type="number" name="likemax" min="0" placeholder="1000" value="1000">
+      </div>
+    </div>
+  </div>
+  <button type="submit">filter</button>
+</form>
+{{end}}
+
+{{define "FilterFormMyPage" }}
+<form action="/filter" method="post">
+ 
+      <div style="border: none;display: flex;justify-content: center;">
+        <p class="error-post-filter" style="border: none; text-align: left;font-size: small;text-transform: lowercase;margin-left: 0rem;color: red;">
+            <i class="fa-solid fa-triangle-exclamation" style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem;"></i>
+            <span style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem ;" ></span>
+        </p>
+      </div>
+
+
   <div class="select-opt1">
     <details>
       <summary>Choose the categories</summary>
@@ -188,6 +238,7 @@
     <div class="content-comments">
       {{range .Comment}}
         {{template "comment_with_session" .}}
+        <hr class="separ-comment">
       {{end}}
     </div>
   {{end}}
@@ -246,7 +297,9 @@
   <div class="content-comments">
     {{range .Comment}}
       {{template "comment_without_session" .}}
+      <hr class="separ-comment">
     {{end}}
+    
   </div>
   {{end}}
  
@@ -282,6 +335,7 @@
     {{end}}
   </form>
 </div>
+
 {{end}}
 
 {{define "comment_without_session"}} 

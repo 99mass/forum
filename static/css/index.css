@@ -15,12 +15,12 @@
     width: 85%;
     margin-left: 10%;
     margin-right: 5%;
-   
     display: flex;
     justify-content: space-between;
     padding: 1rem;
     padding-right: 1rem;
     z-index: 1;
+    
 }
 .container *{
    font-size: var(  --fontSize16);
@@ -31,11 +31,14 @@
    height: fit-content;
   display: flex;
   flex-direction: column;
+ box-sizing: border-box;
 }
 
 .container .container-1 .btn-filter{
-   width: 90%;
+   /* width: 90%; */
+   /* width: fit-content; */
    padding: 8px 0rem;
+   width: 11rem;
    cursor: pointer;
    background: var(--color-linear-gradient);
    color: var(--color-white);
@@ -43,16 +46,20 @@
    box-shadow: 4px 4px 2px var(--color-gray);
    text-transform: none;
    box-sizing: border-box;
+   position: fixed;
 }
 .container .container-1 .btn-filter i{
    font-size: 20px !important;
 }
 .container .container-1 .filter-form{
-    width: 100%;
+    /* width: 100%; */
+    position: fixed;
+    width: 18rem;
     height: auto;
-    margin-top: 0rem;
+    margin-top: 2.3rem;
     background-color: #fff;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    z-index: 10;
 }
 .container .container-1 .filter-form form{
     display: flex;
@@ -146,6 +153,7 @@
 }
 .container .container-2{
     width: 78%;
+    padding-left:2rem;
     box-sizing: border-box;
 }
 .container .container-2 .categori-menu{
@@ -154,7 +162,6 @@
     overflow: hidden;
     overflow-x: scroll;
     padding-bottom: 1rem;
-    
 
 }
 
@@ -299,6 +306,7 @@
    padding: 1rem;
    margin-bottom: 3rem;
    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+   background-color: #fff;
 }
 .categorie-name-content {
     padding-bottom: 1rem;
@@ -308,6 +316,13 @@
 }
 .categorie-name-content span:last-of-type{
     color: var(--header-color);
+}
+.separ-comment:last-of-type{
+  display: none;
+}
+.separ-comment{
+    margin-bottom: 15px;
+    opacity: 0.5;
 }
 .title{
     font-size: 22px;
@@ -478,9 +493,18 @@ header .nav1 .home:hover{
         z-index: 1;
         
      }
+     .container{
+        width: 95%;
+        margin-left: 2%;
+        justify-content: space-between;        
+    }
    
 }
 @media screen and (max-width:768px) {
+    .alert-likePost{
+        width: 100%;
+       }
+     
     .container{
         width: 100%;
         margin-left: 0px;
@@ -489,18 +513,19 @@ header .nav1 .home:hover{
         padding-top: 0rem;
     }
     .container .container-1{
-        width: 15rem;
-        border: none;
-        height: fit-content;
-        margin-bottom: 2rem;
+       margin-top: 0rem;
+        margin-bottom: 5rem;
      }
      .container .container-1 .filter-form{
-        width: 18rem;
+        width: 19rem;
      }
      .container .container-2{
         width: 100%;
+        padding-left: 0rem;
     }
-   
+    .container .container-2 .categori-menu{
+        width: 100%;
+    }
     .post-displaying{
         width: 100%;
         display: grid;
@@ -519,7 +544,9 @@ header .nav1 .home:hover{
     }
 }
 @media screen and (max-width:500px) {
-
+    .container .container-1 .filter-form{
+        width: 20rem;
+     }
     .container .container-2 .bloc-add-post form div *{
         width: 94%;
     }

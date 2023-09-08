@@ -40,7 +40,8 @@
     flex-direction: column;
 }
 .container .container-1 .btn-filter{
-   width: 90%;
+   /* width: 90%; */
+   width: 11rem;
    padding: 8px 0rem;
    cursor: pointer;
    background: var(--color-linear-gradient);
@@ -49,16 +50,17 @@
    box-shadow: 4px 4px 2px var(--color-gray);
    text-transform: capitalize;
    box-sizing: border-box;
+   position: fixed;
 }
 .container .container-1 .btn-filter i{
    font-size: 20px !important;
 }
 .container .container-1 .filter-form{
-    width: 105%;
-    /* margin-left: -10%; */
+    position: fixed;
+    width: 17rem;
     height: auto;
+    margin-top: 2.3rem;
     background-color: #fff;
-    margin-top: 0rem;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
     z-index: 1;
 }
@@ -154,6 +156,7 @@
 }
 .container .container-2{
     width: 78%;
+    padding-left: 0.5rem;
     box-sizing: border-box;
 }
 .container .container-2 .categori-menu{
@@ -291,6 +294,7 @@
     /* grid-template-columns: repeat(2,1fr); */
     grid-template-columns: repeat(1,1fr);
     gap: 150;
+   
 }
  h3 {
     width: 100%;
@@ -309,6 +313,7 @@
    /* margin-bottom: 2rem; */
    margin-bottom: 3rem;
    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+   background-color: #fff;
 }
 .categorie-name-content {
     padding-bottom: 1rem;
@@ -440,7 +445,13 @@
 .categorie-specifique hr:last-of-type{
     display: none;
 }
-
+.separ-comment:last-of-type{
+    display: none;
+  }
+  .separ-comment{
+      margin-bottom: 15px;
+      opacity: 0.5;
+  }
 
 
 /* ************************************* */
@@ -490,6 +501,15 @@ header .nav1 .mypage:hover{
         background: gainsboro;
         color: var(--header-color);
     }
+    .container{
+        width: 95%;
+        margin-left: 2%;
+
+        justify-content: space-between;        
+    }
+    .container .container-2 {
+        padding-left:2rem;
+    }
     .container .container-1 .filter-form{
         width: 18rem;
         z-index: 1;
@@ -515,13 +535,14 @@ header .nav1 .mypage:hover{
         width: 15rem;
         border: none;
         height: fit-content;
-        margin-bottom: 2rem;
+        margin-bottom: 5rem;
      }
      .container .container-1 .filter-form{
         width: 18rem;
      }
      .container .container-2{
         width: 100%;
+        padding-left: 0rem;
     }
 
     .post-displaying{

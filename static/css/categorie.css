@@ -68,6 +68,7 @@ h4{
    padding: 1rem;
    margin-bottom: 2rem;
    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+   background-color: #fff;
 }
 
 .categorie-specifique  .like-dislik-content
@@ -185,6 +186,13 @@ h4{
   .content-comments::-webkit-scrollbar-thumb:hover {
     background: var(--header-color);
   } 
+  .separ-comment:last-of-type{
+    display: none;
+  }
+  .separ-comment{
+      margin-bottom: 15px;
+      opacity: 0.5;
+  }
 
 /* Medias query */
 

@@ -37,6 +37,8 @@ window.onload = () => {
             filterForm.style.display = "none";
         }
     });
+
+
     if (disabledBtn) {
         disabledBtn.setAttribute("disabled", '');
     }

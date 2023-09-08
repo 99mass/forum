@@ -60,6 +60,7 @@ h4{
    flex-direction: column;
    padding: 1rem;
    margin-bottom: 2rem;
+   background-color: #fff;
    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
@@ -222,7 +223,13 @@ h4{
     color: var(--color-white);
   }
 
-
+  .separ-comment:last-of-type{
+    display: none;
+  }
+  .separ-comment{
+      margin-bottom: 15px;
+      opacity: 0.5;
+  }
 /* medias querys */
 @media screen and (max-width:1024px) {
     .container .container-1 .filter-form{

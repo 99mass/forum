@@ -11,12 +11,18 @@ import (
 
 	"forum/controller"
 	"forum/helper"
+	"forum/middlewares"
 	"forum/models"
 )
 
 func Filter(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
+		ok, errorPage := middlewares.CheckRequest(r, "/filter", "post")
+		if !ok {
+			helper.ErrorPage(w, errorPage)
+			return
+		}
 		err := r.ParseForm()
 		if err != nil {
 			helper.ErrorPage(w, http.StatusBadRequest)
@@ -36,7 +42,17 @@ func Filter(db *sql.DB) http.HandlerFunc {
 			for _, v := range Categorystring {
 				v = strings.TrimSpace(v)
 				var cat models.Category
-				catuuid, _ := uuid.FromString(v)
+				catuuid, err := uuid.FromString(v)
+				if !helper.VerifCategory(db, catuuid) || err != nil || catuuid == uuid.Nil {
+					Datas, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
+					if err != nil {
+						helper.ErrorPage(w, http.StatusInternalServerError)
+						return
+					}
+					Datas.ErrorFilter = "one of the categories is not compliant"
+					helper.RenderTemplate(w, "index", "index", Datas)
+					return
+				}
 				cat.ID = catuuid
 				category = append(category, cat)
 			}
@@ -78,13 +94,13 @@ func Filter(db *sql.DB) http.HandlerFunc {
 		} else {
 			likemin, err = strconv.Atoi(likemi)
 			if err != nil {
-				Datas,err := helper.GetDataTemplate(db,r,true,false,true,false,true)
-				if err != nil{
-					helper.ErrorPage(w,http.StatusInternalServerError)
+				Datas, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusInternalServerError)
 					return
 				}
-				Datas.Error = "give us an int"
-				helper.RenderTemplate(w,"index","index",Datas)
+				Datas.ErrorFilter = "give us an int"
+				helper.RenderTemplate(w, "index", "index", Datas)
 				return
 			}
 		}
@@ -93,26 +109,26 @@ func Filter(db *sql.DB) http.HandlerFunc {
 		} else {
 			likemax, err = strconv.Atoi(likema)
 			if err != nil {
-				Datas,err := helper.GetDataTemplate(db,r,true,false,true,false,true)
-				if err != nil{
-					helper.ErrorPage(w,http.StatusInternalServerError)
+				Datas, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
+				if err != nil {
+					helper.ErrorPage(w, http.StatusInternalServerError)
 					return
 				}
-				Datas.Error = "give us an int"
-				helper.RenderTemplate(w,"index","index",Datas)
+				Datas.ErrorFilter = "give us an int"
+				helper.RenderTemplate(w, "index", "index", Datas)
 				return
 			}
 		}
 
 		if likemax < 0 || likemin < 0 {
-			Datas,err := helper.GetDataTemplate(db,r,true,false,true,false,true)
-				if err != nil{
-					helper.ErrorPage(w,http.StatusInternalServerError)
-					return
-				}
-				Datas.Error = "give positive int for filtering by the like"
-				helper.RenderTemplate(w,"index","index",Datas)
+			Datas, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
+			}
+			Datas.ErrorFilter = "give positive int for filtering by the like"
+			helper.RenderTemplate(w, "index", "index", Datas)
+			return
 		}
 		if date1 == "" {
 			date1 = "2023-08-01"
@@ -120,37 +136,37 @@ func Filter(db *sql.DB) http.HandlerFunc {
 		if date2 == "" {
 			date2 = "2025-08-01"
 		}
-		date,err := CompareDate(date1,date2)
+		date, err := CompareDate(date1, date2)
 		if err != nil {
-			Datas,err := helper.GetDataTemplate(db,r,true,false,true,false,true)
-				if err != nil{
-					helper.ErrorPage(w,http.StatusInternalServerError)
-					return
-				}
-				Datas.Error = "date format is incorrect"
-				helper.RenderTemplate(w,"index","index",Datas)
+			Datas, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
+			}
+			Datas.ErrorFilter = "date format is incorrect"
+			helper.RenderTemplate(w, "index", "index", Datas)
+			return
 		}
 		if !date {
-			Datas,err := helper.GetDataTemplate(db,r,true,false,true,false,true)
-				if err != nil{
-					helper.ErrorPage(w,http.StatusInternalServerError)
-					return
-				}
-				Datas.Error = "the min value can't be over than the max value"
-				helper.RenderTemplate(w,"index","index",Datas)
+			Datas, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
+			}
+			Datas.ErrorFilter = "the min value can't be over than the max value"
+			helper.RenderTemplate(w, "index", "index", Datas)
+			return
 		}
 		filterPosts, err = GetFilteredPosts(db, filterPosts, date1, date2)
 		if err != nil {
-			Datas,err := helper.GetDataTemplate(db,r,true,false,true,false,true)
-				if err != nil{
-					helper.ErrorPage(w,http.StatusInternalServerError)
-					return
-				}
-				Datas.Error = "format date given is incorrect"
-				helper.RenderTemplate(w,"index","index",Datas)
+			Datas, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
+			if err != nil {
+				helper.ErrorPage(w, http.StatusInternalServerError)
 				return
+			}
+			Datas.ErrorFilter = "format date given is incorrect"
+			helper.RenderTemplate(w, "index", "index", Datas)
+			return
 		}
 		Posts, err := helper.GetPostForFilter(db, filterPosts)
 		if err != nil {
