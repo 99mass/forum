@@ -14,7 +14,7 @@
 
 }
 body{
-  background-color:  #edede9;;
+  background-color:  #edede9;
 }
 .alert1 {
     padding:20px;
@@ -153,7 +153,9 @@ footer *{
     color: var(--header-color);
     text-decoration: none;
   }
-
+.tirer:first-of-type{
+  display: none;
+}
 
   /* Medias query */
 
