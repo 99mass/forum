@@ -18,14 +18,12 @@
 {{define "FilterForm" }}
 <form action="/filter" method="post">
  
-      <div style="border: none;display: flex;justify-content: center;">
-        <p class="error-post-filter" style="border: none; text-align: left;font-size: small;text-transform: lowercase;margin-left: 0rem;color: red;">
-            <i class="fa-solid fa-triangle-exclamation" style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem;"></i>
-            <span style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem ;" >{{.ErrorFilter}}</span>
-        </p>
-      </div>
-
-
+  <div style="border: none;display: flex;justify-content: center;">
+    <p class="error-post-filter" style="border: none; text-align: left;font-size: small;text-transform: lowercase;margin-left: 0rem;color: red;">
+        <i class="fa-solid fa-triangle-exclamation" style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem;"></i>
+        <span style="border: none;width: fit-content;height: fit-content;font-size: small;padding: 0rem ;" >{{.ErrorFilter}}</span>
+    </p>
+  </div>
   <div class="select-opt1">
     <details>
       <summary>Choose the categories</summary>
@@ -163,10 +161,10 @@
       placeholder="put the content here"></textarea>
   </div>
     {{ if .Session }}
-      <button type="submit" class="btn-submit-form">add post</button>
+      <button type="submit" class="btn-submit-form"><i class="fa-solid fa-paper-plane" style="width: fit-content;color: #221f51;margin-right: 4px;"></i>add post</button>
     {{ else }}
       <p style="color: red;font-size: 12px;">Please log in to submit a post.</p><br>
-      <button  class="disabled-btn">add post</button>
+      <button  class="disabled-btn"><i class="fa-solid fa-paper-plane" style="width: fit-content;color: #221f51;margin-right: 4px;"></i>add post</button>
     {{ end }}
 </form>
 {{end}}
@@ -181,7 +179,7 @@
 
     <span>
       {{range .Posts.Categories}}
-      - {{.NameCategory}}
+      <span class="tirer">-</span>{{.NameCategory}}
       {{end}}
     </span>
 
@@ -224,9 +222,8 @@
   <div class="comment ">
     
     <form action="/post" method="GET" class="comment-btn">
-      
       <input type="hidden" name="post_id" id="post_id" value="{{.Posts.ID}} ">
-      <button type="submit"><i class="fa-solid fa-pen-to-square " style="color:rgb(143, 101, 12);"></i>comment here</button>
+      <button type="submit"><i class="fa-solid fa-pen-to-square " style="color: #221f51;"></i>comment here</button>
       
     </form>
     
@@ -255,7 +252,7 @@
 
     <span>
       {{range .Posts.Categories}}
-      - {{.NameCategory}}
+      <span class="tirer">-</span>{{.NameCategory}}
       {{end}}
     </span>
 

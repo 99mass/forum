@@ -28,10 +28,11 @@
   <main class="container">
     <!-- filter form -->
     <div class="container-1">
-      <button class="btn-filter"><i class="fa-solid fa-filter"></i> filter</button>
+      <button class="btn-filter"><i class="fa-solid fa-filter" ></i> Filter</button>
       <div class="filter-form">
         {{template "FilterForm" .}}
       </div>
+      <button class="btn-like btn-filter " style="margin-top: 6rem;"><i class="fa-solid fa-heart" style="margin-right: 5px;color: brown;"></i>Post-Liked</button>
     </div>
 
     <div class="container-2">
@@ -47,7 +48,8 @@
         <strong> <i class="fa-solid fa-triangle-exclamation" style="font-size: 22px;"></i></strong> You can't like, dislike  or add post while you're offline.<a href="/signin">click here</a> to connect.
       </div> 
       <!-- block post and comment -->
-      <div class="post-displaying"> 
+      
+      <div class="post-displaying post-displaying-default"> 
         {{if len .Datas}}    <!-- If there is at least One post -->
           {{if .Session}}    <!-- If the user is connected -->
             {{range .Datas}} 
@@ -63,6 +65,22 @@
               <strong>Info!</strong> no post found. be the first to create a post.
             </div> 
         {{end}}
+      </div>
+
+      <!-- post liked -->
+      <div class="post-displaying post-displaying-postliked"> 
+        {{if len .Datas}}    <!-- If there is at least One post -->
+          {{if .Session}}    <!-- If the user is connected -->
+            {{range .Datas}} 
+              {{if .Liked}}
+                {{template "post" .}}
+              {{end}}
+            {{end}}
+          {{end}}
+        {{end}}              <!-- If there is no post -->     
+        <div class="alert1 alert-post-liked">
+          <strong>Info!</strong> no post found. you have liked any post yet.
+        </div> 
       </div>
 
       <!-- pagination -->
