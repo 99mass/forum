@@ -49,14 +49,14 @@ type PostDislike struct {
 }
 
 type Home struct {
-	Session    bool
-	Category   []Category
-	Datas      []HomeDataPost
-	User       User
-	ErrorAuth  ErrorAuth
-	PostData   HomeDataPost
-	DataProfil DataMyProfil
-	Error      string
+	Session     bool
+	Category    []Category
+	Datas       []HomeDataPost
+	User        User
+	ErrorAuth   ErrorAuth
+	PostData    HomeDataPost
+	DataProfil  DataMyProfil
+	Error       string
 	ErrorFilter string
 }
 type HomeDataPost struct {

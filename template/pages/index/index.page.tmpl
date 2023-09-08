@@ -64,6 +64,20 @@
             </div> 
         {{end}}
       </div>
+      <div class="post-displaying post-displaying-postliked"> 
+        {{if len .Datas}}    <!-- If there is at least One post -->
+          {{if .Session}}    <!-- If the user is connected -->
+            {{range .Datas}} 
+              {{if .Liked}}
+                {{template "post" .}}
+              {{end}}
+            {{end}}
+          {{end}}
+        {{end}}              <!-- If there is no post -->     
+        <!-- <div class="alert1">
+          <strong>Info!</strong> no post found. be the first to create a post.
+        </div>  -->
+      </div>
 
       <!-- pagination -->
       {{template "pagination"}}
