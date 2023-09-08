@@ -520,7 +520,8 @@ header .nav1 .home:hover{
         width: 19rem;
      }
      .container .container-1  .btn-like{
-
+        margin-left: 12rem;
+        top: 3.4rem;
      }
      .container .container-2{
         width: 100%;
@@ -560,6 +561,15 @@ header .nav1 .home:hover{
         padding-left: 0%;
         margin-bottom: 0px;
     }
+}
+@media screen and (max-width:500px) {
+    .container .container-1   .btn-filter,
+    .container .container-1  .btn-like{
+       width: 8rem;
+    }
+    .container .container-1  .btn-like{
+        margin-left: 9.2rem;
+     }
 }
 @media screen and (max-width:345px) {
     .container .container-1 .filter-form{
