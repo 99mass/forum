@@ -190,11 +190,8 @@ footer *{
         display: flex;
         flex-direction: column;
      }
-    
-     header .nav3  .content-link  *{
-        display: flex;
-        flex-direction: column;
-     }
+  
+     header .nav3  .content-link  a,
      header .nav3  .content-link  form{
       display: flex;
       flex-direction: row;

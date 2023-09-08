@@ -1,10 +1,10 @@
 {{ define "Session"}}
 {{ if .Session }}
-<a href="/profil" class="drop-daown profil">{{.User.Username}} </a>
-<a href="/signout" class="drop-daown signout">sign out</a>
+<a href="/profil" class="drop-daown profil"><i class="fa-regular fa-user" style="font-size: 22px;margin-right: 4px;color: var(--header-color);"></i>{{.User.Username}} </a>
+<a href="/signout" class="drop-daown signout"><i class="fa-solid fa-right-from-bracket" style="font-size: 22px;margin-right: 4px;color: var(--header-color);"></i>sign out</a>
 {{else}}
-<a href="/register" class="drop-daown register">register</a>
-<a href="/signin" class="drop-daown signin">sign in</a>
+<a href="/register" class="drop-daown register"><i class="fa-solid fa-registered" style="font-size: 22px;margin-right: 4px;color: var(--header-color);"></i>register</a>
+<a href="/signin" class="drop-daown signin"><i class="fa-solid fa-right-to-bracket" style="font-size: 22px;margin-right: 4px;color: var(--header-color);"></i>sign in</a>
 {{end}}
 {{end}}
 
@@ -23,9 +23,9 @@
 
   <header>
     <nav class="nav1">
-      <a href="/" class="home">Home</a>
+      <a href="/" class="home" ><i class="fa-solid fa-house" style="font-size: 22px;margin-right: 4px;color: var(--header-color);"></i>Home</a>
        {{ if .Session }}
-          <a href="/mypage" class="mypage">my page</a>
+          <a href="/mypage" class="mypage"><i class="fa-solid fa-receipt" style="font-size: 22px;margin-right: 4px;color: var(--header-color);"></i>my page</a>
       {{end}}
 
   </nav>
@@ -67,9 +67,9 @@
     <nav class="nav3">
       <div class="btn-fabars drop-daown"><span>forum</span><i class="fa-solid fa-bars"></i></div>
       <div class="content-link">
-      <a href="/" class="home">Home</a>
+      <a href="/" class="home"><i class="fa-solid fa-house" style="font-size: 22px;margin-right: 4px;color: var(--header-color);"></i>Home</a>
              {{ if .Session }}
-          <a href="/mypage" class="mypage">my page</a>
+          <a href="/mypage" class="mypage"><i class="fa-solid fa-receipt" style="font-size: 22px;margin-right: 4px;color: var(--header-color);"></i>my page</a>
       {{end}}
      {{template "Session" .}}
                 
