@@ -161,10 +161,10 @@
       placeholder="put the content here"></textarea>
   </div>
     {{ if .Session }}
-      <button type="submit" class="btn-submit-form">add post</button>
+      <button type="submit" class="btn-submit-form"><i class="fa-solid fa-paper-plane" style="width: fit-content;color: #221f51;margin-right: 4px;"></i>add post</button>
     {{ else }}
       <p style="color: red;font-size: 12px;">Please log in to submit a post.</p><br>
-      <button  class="disabled-btn">add post</button>
+      <button  class="disabled-btn"><i class="fa-solid fa-paper-plane" style="width: fit-content;color: #221f51;margin-right: 4px;"></i>add post</button>
     {{ end }}
 </form>
 {{end}}
