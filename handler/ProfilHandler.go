@@ -12,7 +12,7 @@ func GetProfil(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var dataProfil models.DataMyProfil
 		catMap := map[string]int{}
-		datas, err := helper.GetDataTemplate(db, r, true, false, false, false, true)
+		datas, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
 
 		if err != nil {
 			helper.ErrorPage(w, http.StatusBadRequest)
