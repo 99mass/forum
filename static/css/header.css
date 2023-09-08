@@ -170,6 +170,10 @@ footer *{
        display: none;
        
     }
+    header .nav3 .profil{
+      border: none;
+      padding: 3px 0px;
+  }
     .fa-magnifying-glass{
       margin-top: 0.5rem;
     }
