@@ -19,10 +19,10 @@ RUN go mod download
 COPY . .
 
 #Compile the application
-RUN go build -o main .
+RUN go build -o forum
 
 #Expose application listening port
 EXPOSE 8080
 
 #Application start command
-CMD ["./main"]
+CMD ["./forum"]
