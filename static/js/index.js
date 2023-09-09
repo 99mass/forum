@@ -13,7 +13,8 @@ const postDisplayingDefault=document.querySelector('.post-displaying-default');
 const alertPostLiked=document.querySelector('.alert-post-liked');
 
 window.onload = () => {
-    if (btnFilter && postDisplayingPostliked) {
+    // 
+    if (btnFilter && postDisplayingPostliked && btnLike) {
         postDisplayingPostliked.style.display='none';
         btnLike.addEventListener('click',()=>{
             if (postDisplayingPostliked.style.display==='none') {
@@ -33,6 +34,8 @@ window.onload = () => {
             }
            
         });
+    }else{
+        alertPostLiked.style.display='none';
     }
     
     
