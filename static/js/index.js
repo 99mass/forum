@@ -35,7 +35,10 @@ window.onload = () => {
            
         });
     }else{
-        alertPostLiked.style.display='none';
+        if (alertPostLiked) {
+            alertPostLiked.style.display='none';
+        }
+        
     }
     
     
