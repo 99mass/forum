@@ -40,8 +40,20 @@ To set up and run the Groupie Trackers project, follow these steps:
 
 ``` bash
     go run . --port=<PORT>
-```
-3. Open the website in your browser:
+
+3. Run the project from the Dockerfile
+
+    a. Create a docker image from the Dockerfile
+
+    ``` bash
+        docker build -t forum-app .
+    ```
+    b. Run a container from this image
+
+    ``` bash
+       docker run -p 8080:8080 forum-app
+    ```
+4. Open the website in your browser:
  ```
   http://localhost:<PORT>
 ```

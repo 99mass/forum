@@ -1,13 +1,28 @@
-FROM golang
+#Use base image with golang latest version
+FROM golang:latest
 
-LABEL maintainer="Forum Team"
+LABEL VERSION="latest"
+LABEL DESCRIPTION="FORUM APP"
+LABEL AUTHORS="@osamb - @mouhametadiouf - @dalassan - @alo - @ssambadi"
 
-COPY . /go/src/app
+#Define the working directory
+WORKDIR /forumApp
 
-WORKDIR /go/src/app
+#Copy the go.mod and go.sum files into the container
+COPY go.mod .
+COPY go.sum .
 
-# RUN go mod init 
+#Download go dependencies
+RUN go mod download
 
+#Copy source code to container
+COPY . .
+
+#Compile the application
+RUN go build -o main .
+
+#Expose application listening port
 EXPOSE 8080
 
-CMD go run . 
+#Application start command
+CMD ["./main"]
