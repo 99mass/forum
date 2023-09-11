@@ -127,7 +127,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			}
 			helper.RenderTemplate(w, "register", "auth", homeData)
 		default:
-			helper.ErrorPage(w, 404)
+			helper.ErrorPage(w, http.StatusMethodNotAllowed)
 			return
 		}
 	}
