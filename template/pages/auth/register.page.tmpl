@@ -37,9 +37,18 @@
             <div><span  class="start">* </span><span  class="messageErro">{{.ErrorAuth.EmailError}}</span></div> 
             <input type="email" id="email" name="email" class="inputForm" placeholder="Email" required>
             <div><span  class="start">* </span><span  class="messageErro">{{.ErrorAuth.PasswordError}}</span></div>
-            <input type="password" id="password" name="password" class="inputForm" placeholder="Password" required>             
+            <div>
+                <input type="password" id="password" name="password" class="inputForm" placeholder="Password" required>  
+                <span class="show2"><i class="fa-regular fa-eye-slash"></i></span>           
+
+            </div>
+            <div>
             <input type="password" id="password_validation" name="password_validation" class="inputForm"
                 placeholder=" Confirm Password" required>
+                <span class="show2"><i class="fa-regular fa-eye-slash"></i></span>           
+
+            </div>
+
             <input type="submit" class="submitForm" name="submit" value="Create">
       
         </form>
@@ -50,6 +59,9 @@
     <!-- end footer -->
 
     <script src="/static/js/script.js"></script>
+    <script>
+        
+    </script>
 </body>
 
 </html>
