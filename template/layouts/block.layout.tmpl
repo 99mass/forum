@@ -1,8 +1,9 @@
 
 {{define "categorieMenuMyPage"}}
 <div class="categori-menu">
-  <form action="/mypage" method="post">
-  <input type="hidden" name="categorie" value="">
+  <form action="/mypage" method="GET">
+    
+  
     <input type="submit" value="All" class="all">
   </form>
   <span style="display: none;" class="category-id">{{.CategoryID}}</span>
