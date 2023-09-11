@@ -9,24 +9,6 @@ import (
 	"github.com/gofrs/uuid"
 )
 
-// func CreateCategory(db *sql.DB, category models.Category) (uuid.UUID, error) {
-// 	query := `
-//         INSERT INTO categories (id, name_category)
-//         VALUES (?, ?);
-//     `
-
-// 	newUUID, err := uuid.NewV4()
-// 	if err != nil {
-// 		return uuid.UUID{}, err
-// 	}
-
-// 	_, err = db.Exec(query, newUUID.String(), category.NameCategory)
-// 	if err != nil {
-// 		return uuid.UUID{}, err
-// 	}
-
-//		return newUUID, nil
-//	}
 func CreateCategory(db *sql.DB, category models.Category) (uuid.UUID, error) {
 	// Vérifiez d'abord si la catégorie existe déjà
 	query := `
