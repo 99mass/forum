@@ -102,8 +102,3 @@ if (alertLikePost && likeDeconnected) {
 
 
 }
-
-// function myFunction() {
-    
-   
-//   } 
