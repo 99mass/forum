@@ -161,7 +161,9 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			homeData.Category = category
 			homeData.Datas = posts
 			helper.RenderTemplate(w, "post", "posts", homeData)
-
+		default:
+			helper.ErrorPage(w, http.StatusMethodNotAllowed)
+			return
 		}
 
 	}
