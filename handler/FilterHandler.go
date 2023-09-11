@@ -43,10 +43,23 @@ func FilterMyPage(db *sql.DB) http.HandlerFunc {
 		DataMyPage.User = Datas.User
 		userID := Datas.User.ID
 
-		PostUser, err := helper.GetPostsForOneUser(db, userID)
+		PostUsers, err := helper.GetPostsForOneUser(db, userID)
 		if err != nil {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
+		}
+		//Set likes and dislikes
+		PostUser, err := helper.SetLikesAndDislikes(Datas.User, PostUsers, db)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusBadRequest)
+		}
+		//Set Routes
+		for i := range PostUser {
+			PostUser[i].Route = "mypage"
+			//fmt.Println(PostUser[i].Route)
+			for j := range PostUser[i].Comment {
+				PostUser[i].Comment[j].Route = "mypage"
+			}
 		}
 
 		if Categorystring != nil {
@@ -163,8 +176,21 @@ func FilterMyPage(db *sql.DB) http.HandlerFunc {
 				PostsFiltered = append(PostsFiltered, v)
 			}
 		}
+		//Set likes and dislikes
+		Datasliked, err := helper.SetLikesAndDislikes(Datas.User, PostsFiltered, db)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusBadRequest)
+		}
+		//Set Routes
+		for i := range Datasliked {
+			Datasliked[i].Route = "mypage"
+			//fmt.Println(Datasliked[i].Route)
+			for j := range Datasliked[i].Comment {
+				Datasliked[i].Comment[j].Route = "mypage"
+			}
+		}
 
-		DataMyPage.Datas = PostsFiltered
+		DataMyPage.Datas = Datasliked
 
 		helper.RenderTemplate(w, "mypage", "mypages", DataMyPage)
 	}
@@ -349,7 +375,14 @@ func Filter(db *sql.DB) http.HandlerFunc {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
 		}
-		Datas.Datas = PostsFiltered
+
+		//Set likes and dislikes
+		Datasliked, err := helper.SetLikesAndDislikes(Datas.User, PostsFiltered, db)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusBadRequest)
+		}
+
+		Datas.Datas = Datasliked
 		helper.RenderTemplate(w, "index", "index", Datas)
 	}
 
