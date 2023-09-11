@@ -23,12 +23,14 @@ body{
 .SignIn-Registre{
    display: inline-block;
    padding: 25px 8px;
-   width: 25%;
+   width: 30%;
    border-radius: 10px;
    margin-top: 200px;
    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
    background-color: #ffff;
 }
+
+
 .SignIn-Registre h1{
    text-transform: capitalize;
    color: var(--color-h1);
@@ -59,7 +61,7 @@ form{
 
 
 .inputForm{
-   padding: 10px; border: none;
+   padding: 10px ; border: none;
    border-radius: 5px;
   
    border: 1px solid var(--color-back);
@@ -100,11 +102,7 @@ body footer{
    margin-top: 17rem;
 }
 
-/* header  .signin,
-header  .register{
-   border:1px  solid var(--header-color); 
-   padding: 7px 15px;
-} */
+
 
 header .signin:hover,
 header  .register:hover{
@@ -127,24 +125,10 @@ header  .register:hover{
 /* message login */
 
 .message11{
-   position: absolute;
-   left: 300px;
-   top:300px;
    padding: 40px 0px;
    margin-right: 10px;
 }
-/* .message{
-width: 20rem;
-position: absolute;
-top: 50%;
-flex-wrap: wrap;
-} */
-/* #ass{
 
-position: relative;
-left: 150px;
-
-} */
 .message11 h1{
 margin-bottom: 10px;
 }
@@ -167,63 +151,12 @@ transform: translateY(-20px)
 
 
 
-@media screen and (max-width:1255px) {
-
-.message11{
-width: 13rem;
-position: absolute;
-   left: 50px;
-   top:300px;
-   padding: 40px 0px;
-   margin-right: 10px
-}
 
 
-}
-@media screen and (max-width:1786px) {
-
-.message11{
-width: 19rem;
-position: absolute;
-   left: 150px;
-   top:300px;
-  
-}
-.message11 p{
-size: 30px;
-}
-}
-@media screen and (max-width:1216px) {
-
-.message11{
-width: 19rem;
-position: absolute;
-   left: 50px;
-   top:300px;
-   padding: 40px 0px;
-   margin-right: 10px
-}
-
-
-}
-
-@media only screen and (max-width: 1023px){
-.message11{
-/* position: absolute;
-   left: 350px;
-   top:100px;
-   padding: 40px 0px;
-   margin-right: 10px;
-height: 496px;
-margin: 0 40px;
-width: auto; text-align: center; */
-display: none;
-}
-}
 /* end */
 @media screen and (max-width:1024px) {
    .SignIn-Registre{
-     margin-top:370px;
+     margin-top:300px;
       padding: 25px 2px;
       width: 45%;
    }

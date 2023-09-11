@@ -156,7 +156,7 @@
      position: fixed;
       top: 50%;
       flex-wrap: wrap;
-      padding-right: 1.5rem;
+      padding-right: 2.5rem;
   }
   .container .container-1  .message h1{
     margin-bottom: 10px;
@@ -524,17 +524,21 @@ header .nav1 .home:hover{
 @media screen and (max-width:1250px) {
 
     .container .container-1  .message{
-        width: 13rem;
+        width: 16rem;
     }
     .container .container-1  .message h1  span{
         font-size: 20px;
     }
     .container .container-1  .message p{
-        width: 95%;
+        width: 100%;
+        padding-right: 0.5rem;
     }
 
 }
 @media screen and (max-width:1024px) {
+    .container .container-1  .message{
+        width: 15rem;
+    }
     .container .container-1 .filter-form{
         width: 18rem;
         z-index: 1;
@@ -545,7 +549,7 @@ header .nav1 .home:hover{
         margin-left: 2%;
         justify-content: space-between;        
     }
-
+   
 }
 @media screen and (max-width:768px) {
     .alert-likePost{
