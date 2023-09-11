@@ -21,9 +21,8 @@ body{
 
 
 .SignIn-Registre{
-   display: inline-block;
    padding: 25px 8px;
-   width: 30%;
+   width: 400px;
    border-radius: 10px;
    margin-top: 200px;
    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
@@ -38,7 +37,9 @@ body{
    
 }
 form{
+
    padding-bottom: 2rem;
+   width: 90%;
 }
 .submitForm{
    cursor: pointer;
@@ -46,7 +47,7 @@ form{
   padding: 10px 0px;
   margin-top: 15px;
    color: white;
-   width: 100%;
+   width: 50%;
    font-size: 17px;
    text-align: center;
    border: none;
@@ -75,7 +76,6 @@ form{
    flex-direction: column;
    align-items: center; 
    justify-content: center; 
-   max-width: 300px; 
    margin: 0 auto; 
 }
 .monform div{
@@ -123,29 +123,40 @@ header  .register:hover{
 }
 
 /* message login */
-
-.message11{
+#ass{
+   position: relative;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+}
+.mes{
+   position: relative;
+   top: 6rem;
+}
+.mes{
    padding: 40px 0px;
    margin-right: 10px;
 }
-
-.message11 h1{
+.mes p{
+  color:  var(--header-color-ssmabdi);
+}
+.mes h1{
 margin-bottom: 10px;
 }
-.message11 h1  span{
-font-family: 'Alfa Slab One'; 
-display: inline-block;
-font-size: 30px;
-text-transform: uppercase;
-animation: anim 1s infinite;
-animation-delay: calc(.1s * var(--i));
+.mes h1  span{
+   font-family: 'Alfa Slab One'; 
+   display: inline-block;
+   font-size: 30px;
+   text-transform: uppercase;
+   animation: anim 1s infinite;
+   animation-delay: calc(.1s * var(--i));
 }
 @keyframes anim {
 0%,40%,100% {
-transform: translateY(0)
+   transform: translateY(0)
 }
 20% {
-transform: translateY(-20px)
+   transform: translateY(-20px)
 }
 }
 
@@ -153,7 +164,7 @@ transform: translateY(-20px)
 
 
 
-/* end */
+/*Medias query end */
 @media screen and (max-width:1024px) {
    .SignIn-Registre{
      margin-top:300px;
@@ -162,14 +173,26 @@ transform: translateY(-20px)
    }
 }
 @media screen and (max-width:768px) {
+   #ass{
+      position: relative;
+      display: block;
+      justify-items: center;
+      justify-content: center;
+  }
    .SignIn-Registre{
       padding: 25px 5px;
+      margin-top: 8rem;
       width: 60%;
+      position: relative;
+      margin-left: 20%;
    }
+  
+ 
 }
 @media screen and (max-width:500px) {
    .SignIn-Registre{
       padding: 25px 5px;
       width: 85%;
+      margin-left: 10%;
    }
 }

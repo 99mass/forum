@@ -23,36 +23,52 @@
     </style>
 </head>
 
-<body>
+
     <!-- begin header -->
       {{template "header" . }}
     <!-- end header -->
+    <div id="ass">
+        <div class="mes" >
+            <h1 style="color: #0d1b2a">          
+                        
+            <span style="--i:13">F</span>
+            <span style="--i:14">O</span>
+            <span style="--i:15">R</span>
+            <span style="--i:16">U</span>
+            <span style="--i:17">M</span>
+        
+            </h1>
+            <p style="line-height: 1.5em; margin-top: 4px; font-size: 20px;">
+                With Forum, share and stay <br> in touch 
+                contact with those around you.                             
+            </p>        
+        </div>
+        <div class="SignIn-Registre">
+            <h1>Registre</h1>
+            <form class="monform" action="" method="post">
+             <div><span class="start">*</span><span  class="messageErro">{{.ErrorAuth.UserNameError}}</span></div> 
+                <input type="text" id="username" name="username" class="inputForm" placeholder="username" required>
 
-    <div class="SignIn-Registre">
-        <h1>Registre</h1>
-        <form class="monform" action="" method="post">
-          <div><span class="start">*</span><span  class="messageErro">{{.ErrorAuth.UserNameError}}</span></div> 
-            <input type="text" id="username" name="username" class="inputForm" placeholder="username" required>
+                <div><span  class="start">* </span><span  class="messageErro">{{.ErrorAuth.EmailError}}</span></div> 
+                <input type="email" id="email" name="email" class="inputForm" placeholder="Email" required>
+                <div><span  class="start">* </span><span  class="messageErro">{{.ErrorAuth.PasswordError}}</span></div>
+                <div>
+                    <input type="password" id="password" name="password" class="inputForm" placeholder="Password" required>  
+                    <span class="show2"><i class="fa-regular fa-eye-slash"></i></span>           
 
-            <div><span  class="start">* </span><span  class="messageErro">{{.ErrorAuth.EmailError}}</span></div> 
-            <input type="email" id="email" name="email" class="inputForm" placeholder="Email" required>
-            <div><span  class="start">* </span><span  class="messageErro">{{.ErrorAuth.PasswordError}}</span></div>
-            <div>
-                <input type="password" id="password" name="password" class="inputForm" placeholder="Password" required>  
-                <span class="show2"><i class="fa-regular fa-eye-slash"></i></span>           
+                </div>
+                <div>
+                <input type="password" id="password_validation" name="password_validation" class="inputForm"
+                    placeholder=" Confirm Password" required>
+                    <span class="show2"><i class="fa-regular fa-eye-slash"></i></span>           
 
-            </div>
-            <div>
-            <input type="password" id="password_validation" name="password_validation" class="inputForm"
-                placeholder=" Confirm Password" required>
-                <span class="show2"><i class="fa-regular fa-eye-slash"></i></span>           
+                </div>
 
-            </div>
-
-            <input type="submit" class="submitForm" name="submit" value="Create">
-      
-        </form>
-       <span class="linka">I have an Account</span> &nbsp;   <a href="/signin" class="link">Sign in</a>
+                <input type="submit" class="submitForm" name="submit" value="Create">
+        
+            </form>
+        <span class="linka">I have an Account</span> &nbsp;   <a href="/signin" class="link">Sign in</a>
+        </div>
     </div>
     <!--begin footer -->
         {{template "footer"}}
