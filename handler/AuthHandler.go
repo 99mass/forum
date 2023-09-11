@@ -62,6 +62,9 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 			} else {
 				helper.RenderTemplate(w, "signin", "auth", datas)
 			}
+		default:
+			helper.ErrorPage(w, http.StatusMethodNotAllowed)
+			return
 		}
 	}
 }
@@ -124,7 +127,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			}
 			helper.RenderTemplate(w, "register", "auth", homeData)
 		default:
-			helper.ErrorPage(w, 404)
+			helper.ErrorPage(w, http.StatusMethodNotAllowed)
 			return
 		}
 	}
