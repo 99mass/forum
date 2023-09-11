@@ -41,9 +41,9 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			}
 
 			posts = postsliked
-			for i, _ := range posts {
+			for i := range posts {
 				posts[i].Route = "post?post_id=" + postid
-				for j, _ := range posts[i].Comment {
+				for j := range posts[i].Comment {
 					posts[i].Comment[j].Route = "post?post_id=" + postid
 				}
 			}
@@ -93,9 +93,9 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				}
 
 				posts = postsliked
-				for i, _ := range posts {
+				for i := range posts {
 					posts[i].Route = "post"
-					for j, _ := range posts[i].Comment {
+					for j := range posts[i].Comment {
 						posts[i].Comment[j].Route = "post"
 					}
 				}
