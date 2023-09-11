@@ -20,6 +20,7 @@
             header .nav2 .search-bar-form{
                 display: none;
             }
+           
     </style>
 </head>
 
@@ -28,7 +29,7 @@
     {{template "header"}}
     <!-- end header -->
 
-    <div class="SignIn-Registre">
+    <!-- <div class="SignIn-Registre">
         <h1>Sign in</h1>
         <form class="monform" action="" method="post">
             <div><span class="start">*</span><span class="messageErro">{{.ErrorAuth.GeneralError}}</span></div>
@@ -36,13 +37,54 @@
             <input  type="text" id="email" name="email" class="inputForm" placeholder="Email or Username" required>
             <div>
                 <input type="password" id="motdepasse" name="motdepasse" class="inputForm" placeholder="Password" required>
-                <!-- An element to toggle between password visibility -->
+                <!-- An element to toggle between password visibility 
                 <span class="show"><i class="fa-regular fa-eye-slash"></i></span>
            </div>
             <input type="submit" id="submit" class="submitForm" value="Sign in">
         </form>        
         <span class="linka">I don't have an Account</span> &nbsp;   <a href="/register" class="link">Register</a>
+    </div> -->
+  
+    <div id="ass">
+        <div class="SignIn-Registre">
+            <h1>Sign in</h1>
+            <form class="monform" action="" method="post">
+                <div><span class="start">*</span><span class="messageErro">{{.ErrorAuth.GeneralError}}</span></div>
+                
+                <input  type="text" id="email" name="email" class="inputForm" placeholder="Email or Username" required>
+                <div>
+                  <input type="password" id="motdepasse" name="motdepasse" class="inputForm" placeholder="Password" required>
+                  <!-- <!-- An element to toggle between password visibilit -->
+                  <span class="show"><i class="fa-regular fa-eye-slash"></i></span>
+             </div>
+                <input type="submit" id="submit" class="submitForm" value="Sign in">
+            </form>        
+            <span class="linka">I don't have an Account</span> &nbsp;   <a href="/register" class="link">Register</a>
+        </div>
+        <div class="message11" >
+            <h1 style="color: #0d1b2a">          
+                          
+              <span style="--i:13">F</span>
+              <span style="--i:14">O</span>
+              <span style="--i:15">R</span>
+              <span style="--i:16">U</span>
+              <span style="--i:17">M</span>
+          
+            </h1>
+            <p style="line-height: 1.5em; margin-top: 4px; font-size: 20px;">
+                With Forum, share and stay <br> in touch 
+                contact with those around you.                             
+            </p>        
+          </div>
     </div>
+        
+        
+
+   
+    
+       
+    
+       
 
 
     <!--begin footer -->
