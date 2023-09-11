@@ -156,6 +156,7 @@
      position: fixed;
       top: 50%;
       flex-wrap: wrap;
+      padding-right: 1.5rem;
   }
   .container .container-1  .message h1{
     margin-bottom: 10px;

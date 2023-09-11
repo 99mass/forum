@@ -2,15 +2,22 @@ package handler
 
 import (
 	"database/sql"
-	"forum/controller"
-	"forum/helper"
 	"net/http"
 
 	"github.com/gofrs/uuid"
+
+	"forum/controller"
+	"forum/helper"
+	"forum/middlewares"
 )
 
 func GetPostCategory(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		ok, pageError := middlewares.CheckRequest(r, "/category", "get")
+		if !ok {
+			helper.ErrorPage(w, pageError)
+			return
+		}
 		categoryID, err := helper.StringToUuid(r, "categorie")
 		if err != nil {
 			helper.ErrorPage(w, http.StatusBadRequest)
