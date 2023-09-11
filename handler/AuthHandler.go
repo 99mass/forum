@@ -2,15 +2,16 @@ package handler
 
 import (
 	"database/sql"
-	"forum/controller"
-	"forum/helper"
-	"forum/middlewares"
-	"forum/models"
 	"net/http"
 	"strings"
 	"time"
 
 	"github.com/gofrs/uuid"
+
+	"forum/controller"
+	"forum/helper"
+	"forum/middlewares"
+	"forum/models"
 )
 
 func SinginHandler(db *sql.DB) http.HandlerFunc {
@@ -33,6 +34,11 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 			helper.RenderTemplate(w, "signin", "auth", homeData)
 
 		case http.MethodPost:
+			ok, pageError := middlewares.CheckRequest(r, "/signin", "post")
+			if !ok {
+				helper.ErrorPage(w, pageError)
+				return
+			}
 
 			datas, err := helper.GetDataTemplate(db, r, false, false, false, true, false)
 
@@ -56,6 +62,9 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 			} else {
 				helper.RenderTemplate(w, "signin", "auth", datas)
 			}
+		default:
+			helper.ErrorPage(w, http.StatusMethodNotAllowed)
+			return
 		}
 	}
 }
@@ -118,7 +127,7 @@ func RegisterHandler(db *sql.DB) http.HandlerFunc {
 			}
 			helper.RenderTemplate(w, "register", "auth", homeData)
 		default:
-			helper.ErrorPage(w, 404)
+			helper.ErrorPage(w, http.StatusMethodNotAllowed)
 			return
 		}
 	}

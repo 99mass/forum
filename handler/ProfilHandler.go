@@ -2,9 +2,11 @@ package handler
 
 import (
 	"database/sql"
-	"forum/helper"
-	"forum/models"
 	"net/http"
+
+	"forum/helper"
+	"forum/middlewares"
+	"forum/models"
 )
 
 func GetProfil(db *sql.DB) http.HandlerFunc {
@@ -12,6 +14,11 @@ func GetProfil(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var dataProfil models.DataMyProfil
 		catMap := map[string]int{}
+		ok, pageError := middlewares.CheckRequest(r, "/profil", "get")
+		if !ok {
+			helper.ErrorPage(w, pageError)
+			return
+		}
 		datas, err := helper.GetDataTemplate(db, r, true, false, true, false, true)
 
 		if err != nil {

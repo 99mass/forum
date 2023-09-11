@@ -71,6 +71,50 @@ window.addEventListener('load',()=>{
             })
         }
     }
+    const show=document.querySelector('.show');
+    var x = document.getElementById("motdepasse");
+   if (show) {
+    show.addEventListener('click',()=>{
+        if (x.type === "password") {
+            x.type = "text";
+            show.innerHTML="<i class='fa-regular fa-eye' style='color:gray'></i>";
+          } else {
+            x.type = "password";
+            show.innerHTML="<i class='fa-regular fa-eye-slash'></i>";
+          }
+    })
+   }
+
+
+    const show2=document.querySelectorAll('.show2');
+    var y = document.getElementById("password");
+   var z=document.getElementById("password_validation");
+        if(show2){
+        show2[0].addEventListener('click',()=>{
+            if (y.type === "password") {
+                y.type = "text";
+                
+        show2[0].innerHTML="<i class='fa-regular fa-eye' style='color:gray'></i>";
+              } else {
+                y.type = "password";
+                
+        show2[0].innerHTML="<i class='fa-regular fa-eye-slash'></i>";
+              }
+        })
+
+
+        show2[1].addEventListener('click',()=>{
+            if (z.type === "password") {
+                z.type = "text";
+                
+        show2[1].innerHTML="<i class='fa-regular fa-eye' style='color:gray'></i>";
+              } else {
+                z.type = "password";
+                
+        show2[1].innerHTML="<i class='fa-regular fa-eye-slash'></i>";
+              }
+        })
+        }
 
 
 })
@@ -88,13 +132,11 @@ if (alertLikePost && likeDeconnected) {
             }, 5000);
         })
     }
+
+
 }
 
-function myFunction() {
-    var x = document.getElementById("motdepasse");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
-  } 
+// function myFunction() {
+    
+   
+//   } 
