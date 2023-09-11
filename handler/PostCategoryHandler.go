@@ -13,7 +13,7 @@ import (
 
 func GetPostCategory(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		ok, pageError := middlewares.CheckRequest(r, "/category", "post")
+		ok, pageError := middlewares.CheckRequest(r, "/category", "get")
 		if !ok {
 			helper.ErrorPage(w, pageError)
 			return

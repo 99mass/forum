@@ -8,7 +8,7 @@ import (
 )
 
 func SignOutHandler(w http.ResponseWriter, r *http.Request) {
-	ok, pageError := middlewares.CheckRequest(r, "/signout", "post")
+	ok, pageError := middlewares.CheckRequest(r, "/signout", "get")
 	if !ok {
 		helper.ErrorPage(w, pageError)
 		return
