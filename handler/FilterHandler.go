@@ -56,6 +56,7 @@ func FilterMyPage(db *sql.DB) http.HandlerFunc {
 				var cat models.Category
 				catuuid, err := uuid.FromString(v)
 				if !helper.VerifCategory(db, catuuid) || err != nil || catuuid == uuid.Nil {
+					DataMyPage.Datas = PostUser
 					DataMyPage.ErrorFilter = "one of the categories is not compliant"
 					helper.RenderTemplate(w, "mypage", "mypages", DataMyPage)
 					return
@@ -99,6 +100,7 @@ func FilterMyPage(db *sql.DB) http.HandlerFunc {
 		} else {
 			likemin, err = strconv.Atoi(likemi)
 			if err != nil {
+				DataMyPage.Datas = PostUser
 				Datas.ErrorFilter = "give us an int"
 				helper.RenderTemplate(w, "mypage", "mypages", DataMyPage)
 				return
@@ -109,6 +111,7 @@ func FilterMyPage(db *sql.DB) http.HandlerFunc {
 		} else {
 			likemax, err = strconv.Atoi(likema)
 			if err != nil {
+				DataMyPage.Datas = PostUser
 				DataMyPage.ErrorFilter = "give us an int"
 				helper.RenderTemplate(w, "mypage", "mypages", DataMyPage)
 				return
@@ -116,11 +119,13 @@ func FilterMyPage(db *sql.DB) http.HandlerFunc {
 		}
 
 		if likemax < 0 || likemin < 0 {
+			DataMyPage.Datas = PostUser
 			DataMyPage.ErrorFilter = "give positive int for filtering by the like"
 			helper.RenderTemplate(w, "mypage", "mypages", DataMyPage)
 			return
 		}
 		if likemin > likemax {
+			DataMyPage.Datas = PostUser
 			DataMyPage.ErrorFilter = "the min value can't be over than the max value"
 			helper.RenderTemplate(w, "mypage", "mypages", DataMyPage)
 			return
@@ -133,17 +138,20 @@ func FilterMyPage(db *sql.DB) http.HandlerFunc {
 		}
 		date, err := CompareDate(date1, date2)
 		if err != nil {
+			DataMyPage.Datas = PostUser
 			DataMyPage.ErrorFilter = "date format is incorrect"
 			helper.RenderTemplate(w, "mypage", "mypages", DataMyPage)
 			return
 		}
 		if !date {
+			DataMyPage.Datas = PostUser
 			DataMyPage.ErrorFilter = "the min value can't be over than the max value"
 			helper.RenderTemplate(w, "mypage", "mypages", DataMyPage)
 			return
 		}
 		filterPosts, err = GetFilteredPostsMyPage(db, filterPosts, date1, date2)
 		if err != nil {
+			DataMyPage.Datas = PostUser
 			DataMyPage.ErrorFilter = "format date given is incorrect"
 			helper.RenderTemplate(w, "mypage", "mypages", DataMyPage)
 			return
