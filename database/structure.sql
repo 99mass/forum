@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS sessions (
 -- Create the categories table
 CREATE TABLE IF NOT EXISTS categories (
     id TEXT PRIMARY KEY NOT NULL,
-    name_category TEXT NOT NULL,
+    name_category TEXT NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
