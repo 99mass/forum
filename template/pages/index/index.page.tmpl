@@ -14,7 +14,6 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <title>forum/home</title>
- 
 
 </head>
 
@@ -26,13 +25,19 @@
 
   <!-- begin body -->
   <main class="container">
+    
     <!-- filter form -->
     <div class="container-1">
       <button class="btn-filter"><i class="fa-solid fa-filter" ></i> Filter</button>
       <div class="filter-form">
         {{template "FilterForm" .}}
       </div>
-      <button class="btn-like btn-filter " style="margin-top: 6rem;"><i class="fa-solid fa-heart" style="margin-right: 5px;color: brown;"></i>Post-Liked</button>
+      
+      {{if .Session}} 
+         <button class="btn-like btn-filter " style="margin-top: 6rem;"><i class="fa-solid fa-heart" style="margin-right: 5px;color: brown;"></i>Post-Liked</button>
+      {{else}}
+        {{template "messageForumPageIndex"}}
+      {{end}}
     </div>
 
     <div class="container-2">

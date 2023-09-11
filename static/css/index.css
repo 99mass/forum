@@ -151,6 +151,37 @@
     text-transform: none;
     cursor: pointer;
 }
+.container .container-1  .message{
+    width: 20rem;
+     position: fixed;
+      top: 50%;
+      flex-wrap: wrap;
+  }
+  .container .container-1  .message h1{
+    margin-bottom: 10px;
+  }
+  .container .container-1  .message h1  span{
+    font-family: 'Alfa Slab One'; 
+    display: inline-block;
+    font-size: 30px;
+    text-transform: uppercase;
+    animation: anim 1s infinite;
+    animation-delay: calc(.1s * var(--i));
+  }
+  .container .container-1  .message p a{
+    text-decoration: none;
+    font-size: 20px;
+    color: #8b5615;
+  }
+
+  @keyframes anim {
+  0%,40%,100% {
+    transform: translateY(0)
+  }
+  20% {
+    transform: translateY(-20px)
+  }
+}
 .container .container-2{
     width: 78%;
     padding-left:2rem;
@@ -391,6 +422,8 @@
     overflow-y: scroll;
     height: 13rem;
     padding-right: 0.5rem;
+    padding: 1rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
  /* width */
  .content-comments::-webkit-scrollbar {
@@ -487,6 +520,19 @@ header .nav1 .home:hover{
     border: none;
 }
 /* medias querys */
+@media screen and (max-width:1250px) {
+
+    .container .container-1  .message{
+        width: 13rem;
+    }
+    .container .container-1  .message h1  span{
+        font-size: 20px;
+    }
+    .container .container-1  .message p{
+        width: 95%;
+    }
+
+}
 @media screen and (max-width:1024px) {
     .container .container-1 .filter-form{
         width: 18rem;
@@ -498,7 +544,7 @@ header .nav1 .home:hover{
         margin-left: 2%;
         justify-content: space-between;        
     }
-   
+
 }
 @media screen and (max-width:768px) {
     .alert-likePost{
@@ -522,6 +568,9 @@ header .nav1 .home:hover{
      .container .container-1  .btn-like{
         margin-left: 12rem;
         top: 3.4rem;
+     }
+     .container .container-1  .message{
+        display: none;
      }
      .container .container-2{
         width: 100%;
@@ -570,16 +619,24 @@ header .nav1 .home:hover{
     .container .container-1  .btn-like{
         margin-left: 9.2rem;
      }
-}
-@media screen and (max-width:345px) {
-    .container .container-1 .filter-form{
-        width: 17rem;
-     }
-    .categorie-specifique  .author-date {
+     .categorie-specifique  .author-date,
+     .categorie-specifique .author-date2 {
         display: grid;
         grid-template-columns: repeat(1,1fr);
+        justify-items: flex-end;
+    }
+    .categorie-specifique .author-date2 {
+        padding: 1rem 0.5rem;
     }
     .bar{
         display: none;
     }
+    
+}
+
+@media screen and (max-width:345px) {
+    .container .container-1 .filter-form{
+        width: 17rem;
+     }
+
 }

@@ -367,7 +367,8 @@
 .content-comments{
     overflow-y: scroll;
     height: 13rem;
-    padding-right: 0.5rem;
+    padding: 1rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
  /* width */
  .content-comments::-webkit-scrollbar {
@@ -574,13 +575,16 @@ header .nav1 .mypage:hover{
         padding-left: 0%;
         margin-bottom: 0px;
     }
-}
-@media screen and (max-width:345px) {
-    .categorie-specifique  .author-date {
-        display: grid;
-        grid-template-columns: repeat(1,1fr);
-    }
-    .bar{
-        display: none;
-    }
+    .categorie-specifique  .author-date,
+    .categorie-specifique .author-date2 {
+       display: grid;
+       grid-template-columns: repeat(1,1fr);
+       justify-items: flex-end;
+   }
+   .categorie-specifique .author-date2 {
+       padding: 1rem 0.5rem;
+   }
+   .bar{
+       display: none;
+   }
 }
