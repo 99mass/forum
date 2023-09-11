@@ -24,4 +24,5 @@ func Route(db *sql.DB) {
 	http.HandleFunc("/dislikecomment", handler.DislikeComment(db))
 	http.HandleFunc("/search",handler.Search(db))
 	http.HandleFunc("/filter",handler.Filter(db))
+	http.HandleFunc("/filtermypage",handler.FilterMyPage(db))
 }
