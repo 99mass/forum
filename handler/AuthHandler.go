@@ -62,6 +62,9 @@ func SinginHandler(db *sql.DB) http.HandlerFunc {
 			} else {
 				helper.RenderTemplate(w, "signin", "auth", datas)
 			}
+		default:
+			helper.ErrorPage(w, http.StatusMethodNotAllowed)
+			return
 		}
 	}
 }
