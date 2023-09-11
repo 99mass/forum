@@ -24,6 +24,7 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				helper.ErrorPage(w, pageError)
 				return
 			}
+			postid := r.FormValue("post_id")
 			homeData, err := helper.GetDataTemplate(db, r, true, true, false, false, false)
 			if err != nil {
 				helper.ErrorPage(w, http.StatusBadRequest)
@@ -40,7 +41,12 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			}
 
 			posts = postsliked
-
+			for i, _ := range posts {
+				posts[i].Route = "post?post_id=" + postid
+				for j, _ := range posts[i].Comment {
+					posts[i].Comment[j].Route = "post?post_id=" + postid
+				}
+			}
 			category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 			if err != nil {
 				helper.ErrorPage(w, http.StatusBadRequest)
@@ -48,7 +54,7 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			}
 			homeData.Category = category
 			homeData.Datas = posts
-
+			homeData.PostData.Route = "post?post_id=" + postid
 			helper.RenderTemplate(w, "post", "posts", homeData)
 		case http.MethodPost:
 			ok, pageError := middlewares.CheckRequest(r, "/post", "post")
@@ -87,6 +93,12 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 				}
 
 				posts = postsliked
+				for i, _ := range posts {
+					posts[i].Route = "post"
+					for j, _ := range posts[i].Comment {
+						posts[i].Comment[j].Route = "post"
+					}
+				}
 				category, err := controller.GetCategoriesByPost(db, homeData.PostData.Posts.ID)
 				if err != nil {
 					helper.ErrorPage(w, http.StatusBadRequest)
@@ -161,7 +173,9 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 			homeData.Category = category
 			homeData.Datas = posts
 			helper.RenderTemplate(w, "post", "posts", homeData)
-
+		default:
+			helper.ErrorPage(w, http.StatusMethodNotAllowed)
+			return
 		}
 
 	}
