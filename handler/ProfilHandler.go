@@ -14,7 +14,7 @@ func GetProfil(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var dataProfil models.DataMyProfil
 		catMap := map[string]int{}
-		ok, pageError := middlewares.CheckRequest(r, "/profil", "post")
+		ok, pageError := middlewares.CheckRequest(r, "/profil", "get")
 		if !ok {
 			helper.ErrorPage(w, pageError)
 			return

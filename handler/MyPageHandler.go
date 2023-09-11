@@ -18,7 +18,7 @@ func GetMypage(db *sql.DB) http.HandlerFunc {
 		// Check if the user is connected
 		var sessiondata bool
 
-		ok, pageError := middlewares.CheckRequest(r, "/mypage", "post")
+		ok, pageError := middlewares.CheckRequest(r, "/mypage", "get")
 			if !ok {
 				helper.ErrorPage(w, pageError)
 				return
