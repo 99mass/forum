@@ -35,7 +35,8 @@
       
       {{if .Session}} 
          <button class="btn-like btn-filter " style="margin-top: 6rem;"><i class="fa-solid fa-heart" style="margin-right: 5px;color: brown;"></i>Post-Liked</button>
-      {{else}}
+         {{template "messageForumPageIndexConnected"}}
+         {{else}}
         {{template "messageForumPageIndex"}}
       {{end}}
     </div>
