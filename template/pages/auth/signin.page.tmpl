@@ -20,6 +20,100 @@
             header .nav2 .search-bar-form{
                 display: none;
             }
+            .message11{
+                position: absolute;
+                left: 300px;
+                top:300px;
+                padding: 40px 0px;
+                margin-right: 10px;
+            }
+            /* .message{
+    width: 20rem;
+     position: absolute;
+      top: 50%;
+      flex-wrap: wrap;
+  } */
+  /* #ass{
+   
+   position: relative;
+   left: 150px;
+    
+  } */
+    .message11 h1{
+    margin-bottom: 10px;
+  }
+   .message11 h1  span{
+    font-family: 'Alfa Slab One'; 
+    display: inline-block;
+    font-size: 30px;
+    text-transform: uppercase;
+    animation: anim 1s infinite;
+    animation-delay: calc(.1s * var(--i));
+  }
+   @keyframes anim {
+  0%,40%,100% {
+    transform: translateY(0)
+  }
+  20% {
+    transform: translateY(-20px)
+  }
+}
+
+ 
+
+@media screen and (max-width:1255px) {
+
+.message11{
+   width: 13rem;
+   position: absolute;
+                left: 50px;
+                top:300px;
+                padding: 40px 0px;
+                margin-right: 10px
+}
+
+
+}
+@media screen and (max-width:1786px) {
+
+.message11{
+   width: 19rem;
+   position: absolute;
+                left: 150px;
+                top:300px;
+               
+}
+.message11 p{
+    size: 30px;
+}
+}
+@media screen and (max-width:1216px) {
+
+    .message11{
+   width: 19rem;
+   position: absolute;
+                left: 50px;
+                top:300px;
+                padding: 40px 0px;
+                margin-right: 10px
+}
+
+
+}
+
+@media only screen and (max-width: 1023px){
+.message11{
+    /* position: absolute;
+                left: 350px;
+                top:100px;
+                padding: 40px 0px;
+                margin-right: 10px;
+  height: 496px;
+  margin: 0 40px;
+  width: auto; text-align: center; */
+  display: none;
+}
+}
     </style>
 </head>
 
@@ -27,20 +121,45 @@
     <!-- begin header -->
     {{template "header"}}
     <!-- end header -->
-
-    <div class="SignIn-Registre">
-        <h1>Sign in</h1>
-        <form class="monform" action="" method="post">
-            <div><span class="start">*</span><span class="messageErro">{{.ErrorAuth.GeneralError}}</span></div>
-            
-            <input  type="text" id="email" name="email" class="inputForm" placeholder="Email or Username" required>
-            <input type="password" id="motdepasse" name="motdepasse" class="inputForm" placeholder="Password" required>
-            <!-- An element to toggle between password visibility -->
-            <div><input type="checkbox" onclick="myFunction()"> &nbsp;<p style="color: black;">Show Password</p></div>
-            <input type="submit" id="submit" class="submitForm" value="Sign in">
-        </form>        
-        <span class="linka">I don't have an Account</span> &nbsp;   <a href="/register" class="link">Register</a>
+  
+    <div id="ass">
+        <div class="SignIn-Registre">
+            <h1>Sign in</h1>
+            <form class="monform" action="" method="post">
+                <div><span class="start">*</span><span class="messageErro">{{.ErrorAuth.GeneralError}}</span></div>
+                
+                <input  type="text" id="email" name="email" class="inputForm" placeholder="Email or Username" required>
+                <input type="password" id="motdepasse" name="motdepasse" class="inputForm" placeholder="Password" required>
+                <!-- An element to toggle between password visibility -->
+                <div><input type="checkbox" onclick="myFunction()"> &nbsp;<p style="color: black;">Show Password</p></div>
+                <input type="submit" id="submit" class="submitForm" value="Sign in">
+            </form>        
+            <span class="linka">I don't have an Account</span> &nbsp;   <a href="/register" class="link">Register</a>
+        </div>
+        <div class="message11" >
+            <h1 style="color: #0d1b2a">          
+                          
+              <span style="--i:13">F</span>
+              <span style="--i:14">O</span>
+              <span style="--i:15">R</span>
+              <span style="--i:16">U</span>
+              <span style="--i:17">M</span>
+          
+            </h1>
+            <p style="line-height: 1.5em; margin-top: 4px; font-size: 20px;">
+                With Forum, share and stay <br> in touch 
+                contact with those around you.                             
+            </p>        
+          </div>
     </div>
+        
+        
+
+   
+    
+       
+    
+       
 
 
     <!--begin footer -->

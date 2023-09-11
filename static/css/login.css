@@ -114,6 +114,7 @@ header  .register:hover{
 
 @media screen and (max-width:1024px) {
    .SignIn-Registre{
+     margin-top:370px;
       padding: 25px 2px;
       width: 45%;
    }
