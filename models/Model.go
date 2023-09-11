@@ -121,6 +121,7 @@ type DataMypage struct {
 	Category   []Category
 	CategoryID uuid.UUID
 	Error      string
+	ErrorFilter string
 }
 
 type DataMyProfil struct {
