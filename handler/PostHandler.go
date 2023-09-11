@@ -19,6 +19,11 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 
 		switch r.Method {
 		case http.MethodGet:
+			ok, pageError := middlewares.CheckRequest(r, "/post", "get")
+			if !ok {
+				helper.ErrorPage(w, pageError)
+				return
+			}
 			homeData, err := helper.GetDataTemplate(db, r, true, true, false, false, false)
 			if err != nil {
 				helper.ErrorPage(w, http.StatusBadRequest)
@@ -46,6 +51,11 @@ func GetOnePost(db *sql.DB) http.HandlerFunc {
 
 			helper.RenderTemplate(w, "post", "posts", homeData)
 		case http.MethodPost:
+			ok, pageError := middlewares.CheckRequest(r, "/post", "post")
+			if !ok {
+				helper.ErrorPage(w, pageError)
+				return
+			}
 			var comment models.Comment
 
 			postID, errP := helper.StringToUuid(r, "post_id")

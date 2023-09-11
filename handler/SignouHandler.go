@@ -1,14 +1,19 @@
 package handler
 
 import (
-	"forum/helper"
 	"net/http"
+
+	"forum/helper"
+	"forum/middlewares"
 )
 
-
 func SignOutHandler(w http.ResponseWriter, r *http.Request) {
-
-	helper.DeleteSession(w,r)
+	ok, pageError := middlewares.CheckRequest(r, "/signout", "post")
+	if !ok {
+		helper.ErrorPage(w, pageError)
+		return
+	}
+	helper.DeleteSession(w, r)
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
