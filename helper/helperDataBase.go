@@ -50,6 +50,7 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 			//ErrorPage(w, http.StatusInternalServerError)
 			return datas, err
 		}
+
 		datas.Datas = posts
 	}
 
@@ -67,7 +68,11 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 			//ErrorPage(w, http.StatusInternalServerError)
 			return datas, err
 		}
-		postid:= r.FormValue("post_id")
+		postid := r.FormValue("post_id")
+		for i := range postData.Comment {
+			postData.Comment[i].Route = "post?post_id=" + postid
+		}
+
 		for i := range postData.Comment {
 			postData.Comment[i].Route = "post?post_id=" + postid
 		}
@@ -102,7 +107,7 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 	}
 	datas.PostData = DataslikedONe[0]
 	// fmt.Println(len(DataslikedOne))
-	
+
 	//Set likes and dislikes
 	Datasliked, err := SetLikesAndDislikes(datas.User, datas.Datas, db)
 	if err != nil {
@@ -173,7 +178,6 @@ func IsPostDisliked(db *sql.DB, UserId, PostId uuid.UUID) (bool, error) {
 	}
 	return true, nil
 }
-
 
 func IsCommentliked(db *sql.DB, UserId, CommentId uuid.UUID) (bool, error) {
 	var like models.CommentLike

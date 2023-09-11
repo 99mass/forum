@@ -71,7 +71,18 @@ window.addEventListener('load',()=>{
             })
         }
     }
-
+    const show=document.querySelector('.show');
+    var x = document.getElementById("motdepasse");
+    console.log(show);
+    show.addEventListener('click',()=>{
+        if (x.type === "password") {
+            x.type = "text";
+            show.innerHTML="<i class='fa-regular fa-eye' style='color:gray'></i>";
+          } else {
+            x.type = "password";
+            show.innerHTML="<i class='fa-regular fa-eye-slash'></i>";
+          }
+    })
 
 })
 
@@ -88,13 +99,11 @@ if (alertLikePost && likeDeconnected) {
             }, 5000);
         })
     }
+
+
 }
 
-function myFunction() {
-    var x = document.getElementById("motdepasse");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
-  } 
+// function myFunction() {
+    
+   
+//   } 

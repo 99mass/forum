@@ -34,9 +34,11 @@
             <div><span class="start">*</span><span class="messageErro">{{.ErrorAuth.GeneralError}}</span></div>
             
             <input  type="text" id="email" name="email" class="inputForm" placeholder="Email or Username" required>
-            <input type="password" id="motdepasse" name="motdepasse" class="inputForm" placeholder="Password" required>
-            <!-- An element to toggle between password visibility -->
-            <div><input type="checkbox" onclick="myFunction()"> &nbsp;<p style="color: black;">Show Password</p></div>
+            <div>
+                <input type="password" id="motdepasse" name="motdepasse" class="inputForm" placeholder="Password" required>
+                <!-- An element to toggle between password visibility -->
+                <span class="show"><i class="fa-regular fa-eye-slash"></i></span>
+           </div>
             <input type="submit" id="submit" class="submitForm" value="Sign in">
         </form>        
         <span class="linka">I don't have an Account</span> &nbsp;   <a href="/register" class="link">Register</a>
