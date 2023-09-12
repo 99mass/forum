@@ -30,7 +30,9 @@ window.onload = () => {
                 postDisplayingDefault.style.display='block';
                 postDisplayingPostliked.style.display='none';
                 btnLike.innerHTML="<i class='fa-solid fa-heart' style='margin-right: 5px;color: brown;'></i>Post-Liked";
-                pagination.style.display='flex';
+                if (postDisplaying.length > 10) {
+                  pagination.style.display='flex';
+                }
             }
            
         });
