@@ -9,11 +9,16 @@
     --color-linear-gradient:linear-gradient(to right,#77530a,#ffd277,#77530a,#77530a,#ffd277,#77530a);
 }
 main{
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
     padding: 0px 2%;
+    margin-top: 11rem;
+
 }
 .info-personnel{
-  margin: 12rem 2%;
-  margin-bottom: 0%;
+  /* margin: 0rem 2%; */
+  /* margin-bottom: 0%; */
   padding: 2rem 5%;
   width: 30%;
   height: fit-content;
@@ -100,9 +105,9 @@ form button{
 .categorie-block{
     width: 50%;
     height: fit-content;
-    float: right;
+    /* float: right; */
     padding-bottom: 20px;
-    margin-top: -10rem;
+    /* margin-top: -10rem; */
     box-shadow: 2px 2px 2px 2px var(--color-gray);
     background-color: #fff;
     z-index: -1;
@@ -138,8 +143,9 @@ td{
 }
 .post-block{
     position: relative;
-    top: 10rem;
-    width: 100%;
+    top: 5rem;
+    width: 96%;
+    margin: 0px 2%;
     height: fit-content;
     box-shadow: 2px 2px 2px 2px var(--color-gray);
     background-color: #fff;
@@ -165,27 +171,22 @@ header .profil:hover{
 
 @media screen and (max-width:768px) {
     main{
-        padding: 0px 5px;
+        /* padding: 0px px; */
+        display: block;
     }
     .info-personnel{
-      width: 93.5%;
+      width: 95%;
     }
     .info-personnel div span{
         font-size: 14px;
     }
     .categorie-block{
         width: 96%;
-        height: fit-content;
-        float: none;
         position: relative;
-        top: 13rem;
+        top: 3rem;
     }
     .post-block{
-        position: relative;
-        top: 16rem;
-        width: 100%;
-        width: fit-content;
-        
+        width: 93%;
     }
   
     .post-block thead *{
@@ -199,13 +200,6 @@ header .profil:hover{
 
     }
    body footer{
-        margin-top: 25rem;
+        margin-top: 20rem;
     }
-}
-@media screen and (max-width:425px) {
-    main form{
-        width: 80%;
-
-    }
-
 }
