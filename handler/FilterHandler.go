@@ -262,7 +262,7 @@ func Filter(db *sql.DB) http.HandlerFunc {
 
 		}
 
-		if filterPosts == nil {
+		if filterPosts == nil && Categorystring == nil {
 			filterPosts = posts
 		}
 
