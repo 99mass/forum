@@ -1,64 +1,92 @@
-# Forum
+Web Forum Project README
 
+Welcome to the Web Forum Project! This project aims to create a web forum where users can communicate, interact with posts and comments, and filter content. Below you'll find all the necessary information to understand, set up, and contribute to this project.
+Objectives
 
+This project's main objectives are as follows:
 
-## Features
+    Communication: Users can create posts and comments, associating categories with posts.
+    Authentication: Users can register, log in, and have their own sessions using cookies.
+    Likes and Dislikes: Registered users can like or dislike posts and comments.
+    Filter: Users can filter posts by categories, created posts, and liked posts.
+    SQLite: The project uses SQLite for data storage, including users, posts, comments, etc.
 
-### Band Information
+Getting Started
 
+To get started with this project, follow these steps:
+Prerequisites
 
-### Concert Locations
+    Install Go (Go programming language).
+    Install Docker for containerization.
 
+Installation
 
-### Concert Dates
+    Clone the project repository:
 
+    bash
 
-### Data Visualization
+git clone https://github.com/yourusername/web-forum.git
+cd web-forum
 
-### Client-Server Communication
+Build and run the Docker container:
 
+bash
 
-### Error Handling
+    docker-compose up --build
 
-## Technologies Used
+    Access the forum in your web browser at http://localhost:8080.
 
-- Backend: Go programming language (Golang)
-- Frontend: HTML, CSS, JavaScript (or any preferred frontend framework)
+User Registration and Authentication
 
+    Users can register with their email, username, and password.
+    Email addresses must be unique; duplicates are not allowed.
+    Passwords are securely encrypted before storage.
 
-## Getting Started
+Communication
 
-To set up and run the Groupie Trackers project, follow these steps:
+    Registered users can create posts and comments.
+    Posts can be associated with one or more categories.
+    Posts and comments are visible to all users, registered or not.
 
-1. Clone the repository:
+Likes and Dislikes
 
-``` shel
-    git clone https://learn.zone01dakar.sn/git/mouhametadiouf/forum.git
-```
+    Only registered users can like or dislike posts and comments.
+    The number of likes and dislikes is visible to all users.
 
-2. Run the project:
+Filtering
 
-``` bash
-    go run . --port=<PORT>
+    Users can filter posts by categories, created posts, and liked posts.
+    Filtering by categories functions as subforums, focusing on specific topics.
 
-3. Run the project from the Dockerfile
+Development Guidelines
 
-    a. Create a docker image from the Dockerfile
+    The codebase must follow best practices and coding standards.
+    Handle website errors and HTTP status codes gracefully.
+    Include unit tests where applicable.
 
-    ``` bash
-        docker build -t forum-app .
-    ```
-    b. Run a container from this image
+Dependencies
 
-    ``` bash
-       docker run -p 8080:8080 forum-app
-    ```
-4. Open the website in your browser:
- ```
-  http://localhost:<PORT>
-```
+This project utilizes the following Go packages and libraries:
 
-## License & Copyright
-**[OmarSamb](https://learn.zone01dakar.sn/git/osamb)** <br>
-**[MouhametAliounediouf](https://learn.zone01dakar.sn/git/mouhametadiouf)**<br>
-**[AlassaneDiop](https://learn.zone01dakar.sn/git/dalassane)**
+    All standard Go packages
+    sqlite3: SQLite database management
+    bcrypt: Password encryption
+    UUID: Universally unique identifier (for a bonus task)
+
+Contributing
+
+We welcome contributions to this project. To contribute, please follow these steps:
+
+    Fork the repository.
+    Create a feature branch: git checkout -b feature/your-feature-name.
+    Make your changes and commit them.
+    Push to your fork and submit a pull request.
+
+License
+
+This project is licensed under the MIT License.
+Acknowledgments
+
+Thank you for contributing to this project and helping us create a functional web forum!
+
+If you have any questions or need assistance, please feel free to reach out to us. Happy coding!
