@@ -10,33 +10,6 @@ import (
 	"forum/models"
 )
 
-// func DislikePost(db *sql.DB, userID uuid.UUID, postID uuid.UUID) error {
-// 	query := `
-//     DELETE FROM post_likes
-//     WHERE user_id = ? AND post_id = ?;
-//     `
-
-// 	_, err := db.Exec(query, userID, postID)
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	return nil
-// }
-
-// func DislikeComment(db *sql.DB, userID uuid.UUID, postID uuid.UUID, commentID uuid.UUID) error {
-// 	query := `
-//     DELETE FROM post_likes
-//     WHERE user_id = ? AND post_id = ? AND comment_id = ?;
-//     `
-
-// 	_, err := db.Exec(query, userID, postID, commentID)
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	return nil
-// }
 
 func GetPostDislikesCount(db *sql.DB, postID uuid.UUID) (int, error) {
 	query := `
