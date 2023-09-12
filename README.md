@@ -30,11 +30,17 @@ To get started with this project, follow these steps:
 
 * Build and run the Docker container:
 
-    bash
+    -bash
 
-    >docker build -t forum-app .
+        > docker build -t forum-app .
 
-    >docker run -p 8080:8080 forum-app
+        > docker run -p 8080:8080 forum-app
+
+    -use the script to run the Docker container
+
+        > chmod +x docker_run.sh
+
+        > ./docker_run.sh
 
     Access the forum in your web browser at http://localhost:8080.
 
