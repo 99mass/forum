@@ -3,6 +3,7 @@ package controller
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"time"
 
 	"forum/models"
@@ -55,6 +56,7 @@ func GetPostByID(db *sql.DB, postID uuid.UUID) (models.Post, error) {
 	err := db.QueryRow(query, postID).Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.CreatedAt)
 	if err != nil {
 		if err == sql.ErrNoRows {
+			fmt.Println("Erreur post")
 			return models.Post{}, errors.New("publication non trouvée")
 		}
 		return models.Post{}, err

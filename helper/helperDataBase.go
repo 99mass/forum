@@ -66,7 +66,7 @@ func GetDataTemplate(db *sql.DB, r *http.Request, User, Post, Posts, ErrAuth, Ca
 		postData, errPD := GetPostDetails(db, ID)
 		if errPD != nil {
 			//ErrorPage(w, http.StatusInternalServerError)
-			return datas, err
+			return datas, errPD
 		}
 		postid := r.FormValue("post_id")
 		for i := range postData.Comment {

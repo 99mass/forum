@@ -210,7 +210,7 @@ func CheckFormAddPost(r *http.Request, db *sql.DB) error {
 }
 
 func VerifCategory(db *sql.DB, v uuid.UUID) bool {
-	_,err := controller.GetCategoryByID(db,v)
+	_, err := controller.GetCategoryByID(db, v)
 	if err != nil {
 		return false
 	}
