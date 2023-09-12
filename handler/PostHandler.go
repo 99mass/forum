@@ -390,10 +390,20 @@ func LikePoste(db *sql.DB) http.HandlerFunc {
 			like.UserID = User.ID
 		}
 
-		postID, _ := helper.StringToUuid(r, "post_id")
+		postID, err := helper.StringToUuid(r, "post_id")
+		if err != nil {
+			helper.ErrorPage(w, http.StatusBadRequest)
+			return
+		}
+
+		_, err = controller.GetPostByID(db, postID)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusBadRequest)
+			return
+		}
 
 		like.PostID = postID
-		_, err := controller.CreatePostLike(db, like)
+		_, err = controller.CreatePostLike(db, like)
 		if err != nil {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
@@ -436,10 +446,20 @@ func DislikePoste(db *sql.DB) http.HandlerFunc {
 			dislike.UserID = User.ID
 		}
 
-		postID, _ := helper.StringToUuid(r, "post_id")
+		postID, err := helper.StringToUuid(r, "post_id")
+		if err != nil {
+			helper.ErrorPage(w, http.StatusBadRequest)
+			return
+		}
+
+		_, err = controller.GetPostByID(db, postID)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusBadRequest)
+			return
+		}
 
 		dislike.PostID = postID
-		_, err := controller.CreatePostDislike(db, dislike)
+		_, err = controller.CreatePostDislike(db, dislike)
 		if err != nil {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
@@ -482,10 +502,20 @@ func LikeComment(db *sql.DB) http.HandlerFunc {
 			like.UserID = User.ID
 		}
 
-		commentID, _ := helper.StringToUuid(r, "comment_id")
+		commentID, err := helper.StringToUuid(r, "comment_id")
+		if err != nil {
+			helper.ErrorPage(w, http.StatusBadRequest)
+			return
+		}
+
+		_, err = controller.GetCommentByID(db, commentID)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusBadRequest)
+			return
+		}
 
 		like.CommentID = commentID
-		_, err := controller.CreateCommentLike(db, like)
+		_, err = controller.CreateCommentLike(db, like)
 		if err != nil {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return
@@ -528,10 +558,21 @@ func DislikeComment(db *sql.DB) http.HandlerFunc {
 			dislike.UserID = User.ID
 		}
 
-		commentID, _ := helper.StringToUuid(r, "comment_id")
+		commentID, err := helper.StringToUuid(r, "comment_id")
+
+		if err != nil {
+			helper.ErrorPage(w, http.StatusBadRequest)
+			return
+		}
+
+		_, err = controller.GetCommentByID(db, commentID)
+		if err != nil {
+			helper.ErrorPage(w, http.StatusBadRequest)
+			return
+		}
 
 		dislike.CommentID = commentID
-		_, err := controller.CreateCommentDislike(db, dislike)
+		_, err = controller.CreateCommentDislike(db, dislike)
 		if err != nil {
 			helper.ErrorPage(w, http.StatusInternalServerError)
 			return

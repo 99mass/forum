@@ -99,7 +99,8 @@ func DeleteComment(db *sql.DB, commentID uuid.UUID) error {
 func GetAllComments(db *sql.DB) ([]models.Comment, error) {
 	query := `
         SELECT id, user_id, post_id, content, created_at
-        FROM comments;
+        FROM comments
+		ORDER BY created_at DESC;
     `
 
 	rows, err := db.Query(query)
@@ -128,7 +129,8 @@ func GetCommentsByPostID(db *sql.DB, postID uuid.UUID) ([]models.Comment, error)
 	query := `
         SELECT id, user_id, post_id, content, created_at
         FROM comments
-        WHERE post_id = ?;
+        WHERE post_id = ?
+		ORDER BY created_at DESC;
     `
 
 	rows, err := db.Query(query, postID)
